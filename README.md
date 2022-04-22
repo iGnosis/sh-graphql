@@ -1,0 +1,3 @@
+# A repo to keep track of database Migrations and Hasura metadata
+
+## TODO - Add steps to setup this...
