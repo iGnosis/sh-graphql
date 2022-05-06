@@ -1,0 +1,35 @@
+table:
+  schema: public
+  name: activity
+object_relationships:
+  - name: activity_difficulty
+    using:
+      foreign_key_constraint_on: difficulty
+array_relationships:
+  - name: events
+    using:
+      foreign_key_constraint_on:
+        column: activity
+        table:
+          schema: public
+          name: events
+  - name: program_activities
+    using:
+      foreign_key_constraint_on:
+        column: activity
+        table:
+          schema: public
+          name: careplan_activity
+select_permissions:
+  - role: therapist
+    permission:
+      columns:
+        - createdAt
+        - details
+        - difficulty
+        - duration
+        - id
+        - name
+        - updatedAt
+      filter: {}
+      allow_aggregations: true

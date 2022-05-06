@@ -1,0 +1,118 @@
+table:
+  schema: public
+  name: user
+object_relationships:
+  - name: providerByProvider
+    using:
+      foreign_key_constraint_on: provider
+  - name: user_profile
+    using:
+      foreign_key_constraint_on:
+        column: user
+        table:
+          schema: public
+          name: user_profile
+  - name: user_status
+    using:
+      foreign_key_constraint_on: status
+  - name: user_type
+    using:
+      foreign_key_constraint_on: type
+array_relationships:
+  - name: careplans
+    using:
+      foreign_key_constraint_on:
+        column: createdBy
+        table:
+          schema: public
+          name: careplan
+  - name: events
+    using:
+      foreign_key_constraint_on:
+        column: user
+        table:
+          schema: public
+          name: events
+  - name: patient_notes
+    using:
+      foreign_key_constraint_on:
+        column: author
+        table:
+          schema: public
+          name: patient_notes
+  - name: patients
+    using:
+      foreign_key_constraint_on:
+        column: onboardedBy
+        table:
+          schema: public
+          name: patient
+  - name: patientsByPrimarytherapist
+    using:
+      foreign_key_constraint_on:
+        column: primaryTherapist
+        table:
+          schema: public
+          name: patient
+  - name: subscriptions
+    using:
+      foreign_key_constraint_on:
+        column: user
+        table:
+          schema: public
+          name: subscription
+  - name: userRelationsByFrom
+    using:
+      foreign_key_constraint_on:
+        column: from
+        table:
+          schema: public
+          name: user_relation
+  - name: userRelationsByTo
+    using:
+      foreign_key_constraint_on:
+        column: to
+        table:
+          schema: public
+          name: user_relation
+  - name: user_medical_conditions
+    using:
+      foreign_key_constraint_on:
+        column: user
+        table:
+          schema: public
+          name: user_medical_condition
+  - name: user_preferred_genres
+    using:
+      foreign_key_constraint_on:
+        column: user
+        table:
+          schema: public
+          name: user_preferred_genre
+insert_permissions:
+  - role: therapist
+    permission:
+      check: {}
+      set:
+        status: active
+        type: patient
+        provider: x-hasura-provider-id
+      columns: []
+      backend_only: false
+select_permissions:
+  - role: therapist
+    permission:
+      columns:
+        - createdAt
+        - email
+        - firstName
+        - id
+        - lastActive
+        - lastName
+        - status
+        - type
+        - updatedAt
+      filter:
+        provider:
+          _eq: X-Hasura-Provider-Id
+      allow_aggregations: true

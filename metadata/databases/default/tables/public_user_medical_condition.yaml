@@ -1,0 +1,17 @@
+table:
+  schema: public
+  name: user_medical_condition
+object_relationships:
+  - name: medicalConditionByMedicalCondition
+    using:
+      foreign_key_constraint_on: medical_condition
+  - name: userByUser
+    using:
+      foreign_key_constraint_on: user
+select_permissions:
+  - role: therapist
+    permission:
+      columns:
+        - user
+        - medical_condition
+      filter: {}

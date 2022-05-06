@@ -1,0 +1,12 @@
+table:
+  schema: public
+  name: user_relation_type
+is_enum: true
+array_relationships:
+  - name: user_relations
+    using:
+      foreign_key_constraint_on:
+        column: relation
+        table:
+          schema: public
+          name: user_relation

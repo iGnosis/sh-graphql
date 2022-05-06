@@ -1,0 +1,13 @@
+table:
+  schema: public
+  name: user_relation
+object_relationships:
+  - name: userFrom
+    using:
+      foreign_key_constraint_on: from
+  - name: userTo
+    using:
+      foreign_key_constraint_on: to
+  - name: user_relation_type
+    using:
+      foreign_key_constraint_on: relation

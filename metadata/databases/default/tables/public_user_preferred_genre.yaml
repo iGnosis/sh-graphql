@@ -1,0 +1,16 @@
+table:
+  schema: public
+  name: user_preferred_genre
+object_relationships:
+  - name: genreByGenre
+    using:
+      foreign_key_constraint_on: genre
+  - name: userByUser
+    using:
+      foreign_key_constraint_on: user
+select_permissions:
+  - role: therapist
+    permission:
+      columns:
+        - genre
+      filter: {}

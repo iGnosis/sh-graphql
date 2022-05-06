@@ -1,0 +1,64 @@
+table:
+  schema: public
+  name: provider
+object_relationships:
+  - name: provider_type
+    using:
+      foreign_key_constraint_on: type
+array_relationships:
+  - name: careplan_activities
+    using:
+      foreign_key_constraint_on:
+        column: provider
+        table:
+          schema: public
+          name: careplan_activity
+  - name: careplans
+    using:
+      foreign_key_constraint_on:
+        column: provider
+        table:
+          schema: public
+          name: careplan
+  - name: patient_notes
+    using:
+      foreign_key_constraint_on:
+        column: provider
+        table:
+          schema: public
+          name: patient_notes
+  - name: patients
+    using:
+      foreign_key_constraint_on:
+        column: provider
+        table:
+          schema: public
+          name: patient
+  - name: sessions
+    using:
+      foreign_key_constraint_on:
+        column: provider
+        table:
+          schema: public
+          name: session
+  - name: subscriptions
+    using:
+      foreign_key_constraint_on:
+        column: provider
+        table:
+          schema: public
+          name: subscription
+  - name: user_profiles
+    using:
+      foreign_key_constraint_on:
+        column: provider
+        table:
+          schema: public
+          name: user_profile
+  - name: users
+    using:
+      foreign_key_constraint_on:
+        column: provider
+        table:
+          schema: public
+          name: user

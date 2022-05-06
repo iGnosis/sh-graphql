@@ -1,0 +1,13 @@
+table:
+  schema: public
+  name: patient_notes
+object_relationships:
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
+  - name: providerByProvider
+    using:
+      foreign_key_constraint_on: provider
+  - name: user
+    using:
+      foreign_key_constraint_on: author

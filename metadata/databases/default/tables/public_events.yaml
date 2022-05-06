@@ -1,0 +1,82 @@
+table:
+  schema: public
+  name: events
+object_relationships:
+  - name: activityByActivity
+    using:
+      foreign_key_constraint_on: activity
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
+  - name: userByUser
+    using:
+      foreign_key_constraint_on: user
+insert_permissions:
+  - role: patient
+    permission:
+      check: {}
+      set:
+        patient: x-hasura-user-id
+      columns:
+        - activity
+        - attempt_id
+        - created_at
+        - event_type
+        - score
+        - session
+        - task_id
+        - task_name
+        - user
+      backend_only: false
+  - role: therapist
+    permission:
+      check: {}
+      set:
+        user: x-hasura-User-Id
+      columns:
+        - activity
+        - attempt_id
+        - created_at
+        - event_type
+        - patient
+        - score
+        - session
+        - task_id
+        - task_name
+      backend_only: false
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - id
+        - user
+        - patient
+        - session
+        - activity
+        - task_id
+        - task_name
+        - event_type
+        - created_at
+        - score
+        - attempt_id
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+  - role: therapist
+    permission:
+      columns:
+        - id
+        - user
+        - patient
+        - session
+        - activity
+        - task_id
+        - task_name
+        - event_type
+        - created_at
+        - score
+        - attempt_id
+      filter:
+        user:
+          _eq: X-Hasura-User-Id
+      allow_aggregations: true

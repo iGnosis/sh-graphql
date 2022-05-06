@@ -1,0 +1,26 @@
+table:
+  schema: public
+  name: genre
+is_enum: true
+array_relationships:
+  - name: user_preferred_genres
+    using:
+      foreign_key_constraint_on:
+        column: genre
+        table:
+          schema: public
+          name: user_preferred_genre
+  - name: user_profiles
+    using:
+      foreign_key_constraint_on:
+        column: preferredGenre
+        table:
+          schema: public
+          name: user_profile
+select_permissions:
+  - role: therapist
+    permission:
+      columns:
+        - name
+        - description
+      filter: {}

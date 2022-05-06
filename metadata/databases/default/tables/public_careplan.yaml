@@ -1,0 +1,79 @@
+table:
+  schema: public
+  name: careplan
+object_relationships:
+  - name: providerByProvider
+    using:
+      foreign_key_constraint_on: provider
+  - name: user
+    using:
+      foreign_key_constraint_on: createdBy
+array_relationships:
+  - name: careplan_activities
+    using:
+      foreign_key_constraint_on:
+        column: careplan
+        table:
+          schema: public
+          name: careplan_activity
+  - name: patient_careplans
+    using:
+      foreign_key_constraint_on:
+        column: careplan
+        table:
+          schema: public
+          name: patient_careplan
+  - name: sessions
+    using:
+      foreign_key_constraint_on:
+        column: careplan
+        table:
+          schema: public
+          name: session
+insert_permissions:
+  - role: therapist
+    permission:
+      check: {}
+      set:
+        createdBy: x-hasura-User-Id
+        provider: x-hasura-Provider-Id
+      columns:
+        - description
+        - details
+        - difficultyLevel
+        - estimatedDuration
+        - medicalConditions
+        - name
+        - tags
+      backend_only: false
+select_permissions:
+  - role: therapist
+    permission:
+      columns:
+        - createdAt
+        - createdBy
+        - description
+        - details
+        - difficultyLevel
+        - estimatedDuration
+        - id
+        - medicalConditions
+        - name
+        - provider
+        - tags
+        - updatedAt
+      filter:
+        provider:
+          _eq: X-Hasura-Provider-Id
+      allow_aggregations: true
+update_permissions:
+  - role: therapist
+    permission:
+      columns:
+        - details
+        - name
+        - tags
+      filter:
+        provider:
+          _eq: X-Hasura-Provider-Id
+      check: null

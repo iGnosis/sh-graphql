@@ -1,0 +1,72 @@
+table:
+  schema: public
+  name: patient
+object_relationships:
+  - name: primaryTherapistUser
+    using:
+      foreign_key_constraint_on: primaryTherapist
+  - name: providerByProvider
+    using:
+      foreign_key_constraint_on: provider
+  - name: user
+    using:
+      foreign_key_constraint_on: onboardedBy
+array_relationships:
+  - name: events
+    using:
+      foreign_key_constraint_on:
+        column: patient
+        table:
+          schema: public
+          name: events
+  - name: patient_careplans
+    using:
+      foreign_key_constraint_on:
+        column: patient
+        table:
+          schema: public
+          name: patient_careplan
+  - name: patient_notes
+    using:
+      foreign_key_constraint_on:
+        column: patient
+        table:
+          schema: public
+          name: patient_notes
+  - name: sessions
+    using:
+      foreign_key_constraint_on:
+        column: patient
+        table:
+          schema: public
+          name: session
+insert_permissions:
+  - role: therapist
+    permission:
+      check: {}
+      set:
+        onboardedBy: x-hasura-user-id
+        primaryTherapist: x-hasura-user-id
+        provider: x-hasura-provider-id
+      columns:
+        - identifier
+        - medicalConditions
+        - preferredGenres
+      backend_only: false
+select_permissions:
+  - role: therapist
+    permission:
+      columns:
+        - medicalConditions
+        - preferredGenres
+        - identifier
+        - createdAt
+        - updatedAt
+        - id
+        - onboardedBy
+        - primaryTherapist
+        - provider
+      filter:
+        provider:
+          _eq: X-Hasura-Provider-Id
+      allow_aggregations: true
