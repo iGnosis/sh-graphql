@@ -36,14 +36,18 @@ select_permissions:
   - role: therapist
     permission:
       columns:
-        - id
-        - createdAt
-        - updatedAt
-        - endedAt
-        - patient
         - analytics
-        - provider
         - careplan
+        - createdAt
+        - endedAt
+        - genre
+        - id
+        - patient
+        - postSessionMood
+        - preSessionMood
+        - provider
+        - state
+        - updatedAt
       filter:
         provider:
           _eq: X-Hasura-Provider-Id
@@ -56,6 +60,7 @@ update_permissions:
         - genre
         - postSessionMood
         - preSessionMood
+        - state
       filter:
         provider:
           _eq: X-Hasura-Provider-Id
