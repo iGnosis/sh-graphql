@@ -17,3 +17,15 @@ HASURA_CONSOLE_PORT
 ```
 ## Opening a Hasura console
 Run `run.sh`, open the console that gets served, any change to schema / GraphQL APIs you make should now be tracked in this repository. <strong>Do not forget to commit your changes periodically so that they can be published across the environments</strong>
+
+## Applying migrations to another instance
+```
+# apply metadata, this will connect Hasura to the configured databases.
+hasura metadata apply --endpoint http://another-graphql-instance.hasura.app
+
+# apply migrations to the connected databases.
+hasura migrate apply --all-databases --endpoint http://another-graphql-instance.hasura.app
+
+# reload metadata to make sure Hasura is aware of any newly created database objects.
+hasura metadata reload --endpoint http://another-graphql-instance.hasura.app
+```

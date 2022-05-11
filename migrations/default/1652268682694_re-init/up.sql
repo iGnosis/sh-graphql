@@ -1,50 +1,4 @@
 SET check_function_bodies = false;
-CREATE SCHEMA hdb_catalog;
-CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
-COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
-CREATE FUNCTION hdb_catalog.gen_hasura_uuid() RETURNS uuid
-    LANGUAGE sql
-    AS $$select gen_random_uuid()$$;
-CREATE FUNCTION hdb_catalog.insert_event_log(schema_name text, table_name text, trigger_name text, op text, row_data json) RETURNS text
-    LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    id text;
-    payload json;
-    session_variables json;
-    server_version_num int;
-    trace_context json;
-  BEGIN
-    id := gen_random_uuid();
-    server_version_num := current_setting('server_version_num');
-    IF server_version_num >= 90600 THEN
-      session_variables := current_setting('hasura.user', 't');
-      trace_context := current_setting('hasura.tracecontext', 't');
-    ELSE
-      BEGIN
-        session_variables := current_setting('hasura.user');
-      EXCEPTION WHEN OTHERS THEN
-                  session_variables := NULL;
-      END;
-      BEGIN
-        trace_context := current_setting('hasura.tracecontext');
-      EXCEPTION WHEN OTHERS THEN
-        trace_context := NULL;
-      END;
-    END IF;
-    payload := json_build_object(
-      'op', op,
-      'data', row_data,
-      'session_variables', session_variables,
-      'trace_context', trace_context
-    );
-    INSERT INTO hdb_catalog.event_log
-                (id, schema_name, table_name, trigger_name, payload)
-    VALUES
-    (id, schema_name, table_name, trigger_name, payload);
-    RETURN id;
-  END;
-$$;
 CREATE FUNCTION public."set_current_timestamp_updatedAt"() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
@@ -56,105 +10,6 @@ BEGIN
   RETURN _new;
 END;
 $$;
-CREATE TABLE hdb_catalog.event_invocation_logs (
-    id text DEFAULT hdb_catalog.gen_hasura_uuid() NOT NULL,
-    event_id text,
-    status integer,
-    request json,
-    response json,
-    created_at timestamp without time zone DEFAULT now()
-);
-CREATE TABLE hdb_catalog.event_log (
-    id text DEFAULT hdb_catalog.gen_hasura_uuid() NOT NULL,
-    schema_name text NOT NULL,
-    table_name text NOT NULL,
-    trigger_name text NOT NULL,
-    payload jsonb NOT NULL,
-    delivered boolean DEFAULT false NOT NULL,
-    error boolean DEFAULT false NOT NULL,
-    tries integer DEFAULT 0 NOT NULL,
-    created_at timestamp without time zone DEFAULT now(),
-    locked timestamp with time zone,
-    next_retry_at timestamp without time zone,
-    archived boolean DEFAULT false NOT NULL
-);
-CREATE TABLE hdb_catalog.hdb_action_log (
-    id uuid DEFAULT hdb_catalog.gen_hasura_uuid() NOT NULL,
-    action_name text,
-    input_payload jsonb NOT NULL,
-    request_headers jsonb NOT NULL,
-    session_variables jsonb NOT NULL,
-    response_payload jsonb,
-    errors jsonb,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    response_received_at timestamp with time zone,
-    status text NOT NULL,
-    CONSTRAINT hdb_action_log_status_check CHECK ((status = ANY (ARRAY['created'::text, 'processing'::text, 'completed'::text, 'error'::text])))
-);
-CREATE TABLE hdb_catalog.hdb_cron_event_invocation_logs (
-    id text DEFAULT hdb_catalog.gen_hasura_uuid() NOT NULL,
-    event_id text,
-    status integer,
-    request json,
-    response json,
-    created_at timestamp with time zone DEFAULT now()
-);
-CREATE TABLE hdb_catalog.hdb_cron_events (
-    id text DEFAULT hdb_catalog.gen_hasura_uuid() NOT NULL,
-    trigger_name text NOT NULL,
-    scheduled_time timestamp with time zone NOT NULL,
-    status text DEFAULT 'scheduled'::text NOT NULL,
-    tries integer DEFAULT 0 NOT NULL,
-    created_at timestamp with time zone DEFAULT now(),
-    next_retry_at timestamp with time zone,
-    CONSTRAINT valid_status CHECK ((status = ANY (ARRAY['scheduled'::text, 'locked'::text, 'delivered'::text, 'error'::text, 'dead'::text])))
-);
-CREATE TABLE hdb_catalog.hdb_metadata (
-    id integer NOT NULL,
-    metadata json NOT NULL,
-    resource_version integer DEFAULT 1 NOT NULL
-);
-CREATE TABLE hdb_catalog.hdb_scheduled_event_invocation_logs (
-    id text DEFAULT hdb_catalog.gen_hasura_uuid() NOT NULL,
-    event_id text,
-    status integer,
-    request json,
-    response json,
-    created_at timestamp with time zone DEFAULT now()
-);
-CREATE TABLE hdb_catalog.hdb_scheduled_events (
-    id text DEFAULT hdb_catalog.gen_hasura_uuid() NOT NULL,
-    webhook_conf json NOT NULL,
-    scheduled_time timestamp with time zone NOT NULL,
-    retry_conf json,
-    payload json,
-    header_conf json,
-    status text DEFAULT 'scheduled'::text NOT NULL,
-    tries integer DEFAULT 0 NOT NULL,
-    created_at timestamp with time zone DEFAULT now(),
-    next_retry_at timestamp with time zone,
-    comment text,
-    CONSTRAINT valid_status CHECK ((status = ANY (ARRAY['scheduled'::text, 'locked'::text, 'delivered'::text, 'error'::text, 'dead'::text])))
-);
-CREATE TABLE hdb_catalog.hdb_schema_notifications (
-    id integer NOT NULL,
-    notification json NOT NULL,
-    resource_version integer DEFAULT 1 NOT NULL,
-    instance_id uuid NOT NULL,
-    updated_at timestamp with time zone DEFAULT now(),
-    CONSTRAINT hdb_schema_notifications_id_check CHECK ((id = 1))
-);
-CREATE TABLE hdb_catalog.hdb_source_catalog_version (
-    version text NOT NULL,
-    upgraded_on timestamp with time zone NOT NULL
-);
-CREATE TABLE hdb_catalog.hdb_version (
-    hasura_uuid uuid DEFAULT hdb_catalog.gen_hasura_uuid() NOT NULL,
-    version text NOT NULL,
-    upgraded_on timestamp with time zone NOT NULL,
-    cli_state jsonb DEFAULT '{}'::jsonb NOT NULL,
-    console_state jsonb DEFAULT '{}'::jsonb NOT NULL
-);
 CREATE TABLE public.activity (
     name text NOT NULL,
     details jsonb NOT NULL,
@@ -181,7 +36,8 @@ CREATE TABLE public.careplan (
     "estimatedDuration" integer DEFAULT 0 NOT NULL,
     "medicalConditions" jsonb DEFAULT '[]'::jsonb NOT NULL,
     "difficultyLevel" text DEFAULT 'beginner'::text NOT NULL,
-    description text DEFAULT ' '::text NOT NULL
+    description text DEFAULT ' '::text NOT NULL,
+    options jsonb
 );
 CREATE TABLE public.careplan_activity (
     careplan uuid NOT NULL,
@@ -189,7 +45,8 @@ CREATE TABLE public.careplan_activity (
     "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
     provider uuid NOT NULL,
     reps integer DEFAULT 1 NOT NULL,
-    "createdBy" uuid NOT NULL
+    "createdBy" uuid NOT NULL,
+    options jsonb
 );
 COMMENT ON TABLE public.careplan_activity IS 'M2M table for saving relation between activities and careplans';
 CREATE TABLE public.events (
@@ -265,7 +122,8 @@ CREATE TABLE public.session (
     careplan uuid NOT NULL,
     "preSessionMood" text,
     "postSessionMood" text,
-    genre text
+    genre text,
+    state jsonb
 );
 CREATE TABLE public.subscription (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
@@ -333,28 +191,6 @@ CREATE TABLE public.user_type (
     name text NOT NULL,
     description text NOT NULL
 );
-ALTER TABLE ONLY hdb_catalog.event_invocation_logs
-    ADD CONSTRAINT event_invocation_logs_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY hdb_catalog.event_log
-    ADD CONSTRAINT event_log_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY hdb_catalog.hdb_action_log
-    ADD CONSTRAINT hdb_action_log_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY hdb_catalog.hdb_cron_event_invocation_logs
-    ADD CONSTRAINT hdb_cron_event_invocation_logs_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY hdb_catalog.hdb_cron_events
-    ADD CONSTRAINT hdb_cron_events_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY hdb_catalog.hdb_metadata
-    ADD CONSTRAINT hdb_metadata_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY hdb_catalog.hdb_metadata
-    ADD CONSTRAINT hdb_metadata_resource_version_key UNIQUE (resource_version);
-ALTER TABLE ONLY hdb_catalog.hdb_scheduled_event_invocation_logs
-    ADD CONSTRAINT hdb_scheduled_event_invocation_logs_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY hdb_catalog.hdb_scheduled_events
-    ADD CONSTRAINT hdb_scheduled_events_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY hdb_catalog.hdb_schema_notifications
-    ADD CONSTRAINT hdb_schema_notifications_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY hdb_catalog.hdb_version
-    ADD CONSTRAINT hdb_version_pkey PRIMARY KEY (hasura_uuid);
 ALTER TABLE ONLY public.activity_difficulty
     ADD CONSTRAINT activity_difficulty_pkey PRIMARY KEY (name);
 ALTER TABLE ONLY public.activity
@@ -401,15 +237,6 @@ ALTER TABLE ONLY public.user_status
     ADD CONSTRAINT user_status_pkey PRIMARY KEY (name);
 ALTER TABLE ONLY public.user_type
     ADD CONSTRAINT user_types_pkey PRIMARY KEY (name);
-CREATE INDEX event_invocation_logs_event_id_idx ON hdb_catalog.event_invocation_logs USING btree (event_id);
-CREATE INDEX event_log_fetch_events ON hdb_catalog.event_log USING btree (locked NULLS FIRST, next_retry_at NULLS FIRST, created_at) WHERE ((delivered = false) AND (error = false) AND (archived = false));
-CREATE INDEX event_log_trigger_name_idx ON hdb_catalog.event_log USING btree (trigger_name);
-CREATE INDEX hdb_cron_event_invocation_event_id ON hdb_catalog.hdb_cron_event_invocation_logs USING btree (event_id);
-CREATE INDEX hdb_cron_event_status ON hdb_catalog.hdb_cron_events USING btree (status);
-CREATE UNIQUE INDEX hdb_cron_events_unique_scheduled ON hdb_catalog.hdb_cron_events USING btree (trigger_name, scheduled_time) WHERE (status = 'scheduled'::text);
-CREATE INDEX hdb_scheduled_event_status ON hdb_catalog.hdb_scheduled_events USING btree (status);
-CREATE UNIQUE INDEX hdb_source_catalog_version_one_row ON hdb_catalog.hdb_source_catalog_version USING btree (((version IS NOT NULL)));
-CREATE UNIQUE INDEX hdb_version_one_row ON hdb_catalog.hdb_version USING btree (((version IS NOT NULL)));
 CREATE TRIGGER "set_public_activity_updatedAt" BEFORE UPDATE ON public.activity FOR EACH ROW EXECUTE PROCEDURE public."set_current_timestamp_updatedAt"();
 COMMENT ON TRIGGER "set_public_activity_updatedAt" ON public.activity IS 'trigger to set value of column "updatedAt" to current timestamp on row update';
 CREATE TRIGGER "set_public_careplan_updatedAt" BEFORE UPDATE ON public.careplan FOR EACH ROW EXECUTE PROCEDURE public."set_current_timestamp_updatedAt"();
@@ -428,12 +255,6 @@ CREATE TRIGGER "set_public_user_profile_updatedAt" BEFORE UPDATE ON public.user_
 COMMENT ON TRIGGER "set_public_user_profile_updatedAt" ON public.user_profile IS 'trigger to set value of column "updatedAt" to current timestamp on row update';
 CREATE TRIGGER "set_public_users_updatedAt" BEFORE UPDATE ON public."user" FOR EACH ROW EXECUTE PROCEDURE public."set_current_timestamp_updatedAt"();
 COMMENT ON TRIGGER "set_public_users_updatedAt" ON public."user" IS 'trigger to set value of column "updatedAt" to current timestamp on row update';
-ALTER TABLE ONLY hdb_catalog.event_invocation_logs
-    ADD CONSTRAINT event_invocation_logs_event_id_fkey FOREIGN KEY (event_id) REFERENCES hdb_catalog.event_log(id);
-ALTER TABLE ONLY hdb_catalog.hdb_cron_event_invocation_logs
-    ADD CONSTRAINT hdb_cron_event_invocation_logs_event_id_fkey FOREIGN KEY (event_id) REFERENCES hdb_catalog.hdb_cron_events(id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE ONLY hdb_catalog.hdb_scheduled_event_invocation_logs
-    ADD CONSTRAINT hdb_scheduled_event_invocation_logs_event_id_fkey FOREIGN KEY (event_id) REFERENCES hdb_catalog.hdb_scheduled_events(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY public.activity
     ADD CONSTRAINT activity_difficulty_fkey FOREIGN KEY (difficulty) REFERENCES public.activity_difficulty(name) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.careplan_activity
