@@ -11,6 +11,9 @@ object_relationships:
   - name: providerByProvider
     using:
       foreign_key_constraint_on: provider
+  - name: session_type
+    using:
+      foreign_key_constraint_on: status
 insert_permissions:
   - role: therapist
     permission:
@@ -47,6 +50,7 @@ select_permissions:
         - preSessionMood
         - provider
         - state
+        - status
         - updatedAt
       filter:
         provider:

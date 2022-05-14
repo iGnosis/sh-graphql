@@ -11,6 +11,7 @@
 - "!include public_provider.yaml"
 - "!include public_provider_type.yaml"
 - "!include public_session.yaml"
+- "!include public_session_type.yaml"
 - "!include public_subscription.yaml"
 - "!include public_user.yaml"
 - "!include public_user_medical_condition.yaml"
