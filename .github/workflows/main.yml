@@ -48,13 +48,19 @@ jobs:
           # Listing files
           ls -la
 
+      - name: Installing Node dependencies
+        run: npm i
+
+      - name: Generating a config file
+        run: node generateConfig.js
+
       - name: Applying Migrations
         run: |
-          hasura migrate apply --database-name default --skip-update-check
+          # hasura migrate apply --database-name default --skip-update-check
           hasura migrate status --database-name default --skip-update-check
 
-      - name: Applying Metadata
-        run: |
-          hasura metadata apply --skip-update-check
-          hasura metadata reload --skip-update-check
-          hasura metadata ic list --skip-update-check
+      # - name: Applying Metadata
+      #   run: |
+      #     hasura metadata apply --skip-update-check
+      #     hasura metadata reload --skip-update-check
+      #     hasura metadata ic list --skip-update-check
