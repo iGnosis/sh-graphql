@@ -35,5 +35,17 @@ jobs:
       - name: Installing Hasura CLI
         run: |
           curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
-          /usr/local/bin/hasura -h
+
+          # Verifying Hasura installation
           hasura -h
+
+      - name: Applying Migrations
+        run: |
+          hasura migrate apply --database-name default
+          hasura migrate status --database-name default
+
+      - name: Applying Metadata
+        run: |
+          hasura metadata apply
+          hasura metadata reload
+          hasura metadata ic list
