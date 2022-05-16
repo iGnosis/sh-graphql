@@ -50,11 +50,11 @@ jobs:
 
       - name: Applying Migrations
         run: |
-          hasura migrate apply --database-name default --skip-update-check --envfile $GITHUB_ENV
-          hasura migrate status --database-name default --skip-update-check --envfile $GITHUB_ENV
+          hasura migrate apply --database-name default --skip-update-check
+          hasura migrate status --database-name default --skip-update-check
 
       - name: Applying Metadata
         run: |
-          hasura metadata apply --skip-update-check --envfile $GITHUB_ENV
-          hasura metadata reload --skip-update-check --envfile $GITHUB_ENV
-          hasura metadata ic list --skip-update-check --envfile $GITHUB_ENV
+          hasura metadata apply --skip-update-check
+          hasura metadata reload --skip-update-check
+          hasura metadata ic list --skip-update-check
