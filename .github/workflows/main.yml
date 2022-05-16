@@ -39,6 +39,10 @@ jobs:
           # Verifying Hasura installation
           hasura -h
 
+          ls -la $GITHUB_ENV
+
+          hasura --envfile $GITHUB_ENV
+
       - name: Applying Migrations
         run: |
           hasura migrate apply --database-name default --skip-update-check
