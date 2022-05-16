@@ -37,3 +37,4 @@ hasura metadata reload --endpoint http://another-graphql-instance.hasura.app
 - apply metadata
 - reload metadata
 - run metadat ic list to get inconsistent data if any
+- disable stage and dev Hasura console
