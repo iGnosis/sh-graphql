@@ -58,7 +58,7 @@ jobs:
 
       - name: Applying Migrations
         run: |
-          # hasura migrate apply --database-name default --skip-update-check
+          hasura migrate apply --database-name default --skip-update-check
           hasura migrate status --database-name default --skip-update-check
 
       - name: Applying Metadata
