@@ -29,3 +29,11 @@ hasura migrate apply --all-databases --endpoint http://another-graphql-instance.
 # reload metadata to make sure Hasura is aware of any newly created database objects.
 hasura metadata reload --endpoint http://another-graphql-instance.hasura.app
 ```
+
+# TODO
+- run these in CI pipeline
+- apply migrations
+- check migration status
+- apply metadata
+- reload metadata
+- run metadat ic list to get inconsistent data if any
