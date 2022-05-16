@@ -19,8 +19,6 @@ jobs:
         if: endsWith(github.ref, '/main')
         run: |
           echo "TODO"
-          echo "HASURA_ENDPOINT=${{ secrets.DEV_HASURA_ENDPOINT }}" >> $GITHUB_ENV
-          echo "HASURA_ADMIN_SECRET=${{ secrets.DEV_HASURA_ADMIN_SECRET }}" >> $GITHUB_ENV
 
       - name: Set staging envs
         if: endsWith(github.ref, '/stage')
