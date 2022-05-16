@@ -39,6 +39,15 @@ jobs:
           # Verifying Hasura installation
           hasura -h
 
+          # Print current env
+          echo "Env: $(echo $ENVIRONMENT)"
+
+          # Printing current path
+          echo "Current path: $(pwd)"
+
+          # Listing files
+          ls -la
+
       - name: Applying Migrations
         run: |
           hasura migrate apply --database-name default --skip-update-check --envfile $GITHUB_ENV
