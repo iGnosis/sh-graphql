@@ -1,5 +1,3 @@
-INSERT INTO "public"."session_type"("name", "description") VALUES (E'completed', E'marks session as completed');
-
 -- activity_difficulty
 INSERT INTO "public"."activity_difficulty" ("name", "description") VALUES (E'Easy', E'');
 INSERT INTO "public"."activity_difficulty" ("name", "description") VALUES (E'Moderate', E'');
@@ -8,7 +6,6 @@ INSERT INTO "public"."activity_difficulty" ("name", "description") VALUES (E'Har
 -- genre
 INSERT INTO "public"."genre"("name", "description") VALUES (E'classical', E'');
 INSERT INTO "public"."genre"("name", "description") VALUES (E'jazz', E'');
-
 
 -- medical_condition
 INSERT INTO "public"."medical_condition"("name", "description") VALUES (E'parkinson', E'Parkinson''s');
