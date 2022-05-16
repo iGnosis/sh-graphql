@@ -41,11 +41,11 @@ jobs:
 
       - name: Applying Migrations
         run: |
-          hasura migrate apply --database-name default
-          hasura migrate status --database-name default
+          hasura migrate apply --database-name default --skip-update-check
+          hasura migrate status --database-name default --skip-update-check
 
       - name: Applying Metadata
         run: |
-          hasura metadata apply
-          hasura metadata reload
-          hasura metadata ic list
+          hasura metadata apply --skip-update-check
+          hasura metadata reload --skip-update-check
+          hasura metadata ic list --skip-update-check
