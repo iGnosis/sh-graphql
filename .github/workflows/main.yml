@@ -52,7 +52,7 @@ jobs:
         run: npm i
 
       - name: Generating a config file
-        run: node generateConfig.js
+        run: npm run generate-config
 
       - name: Applying Migrations
         run: |

@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "generate-config": "node generateConfig.js"
+  },
   "dependencies": {
     "js-yaml": "^4.1.0"
   }
