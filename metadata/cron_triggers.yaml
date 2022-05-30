@@ -1,11 +1,1 @@
-- name: forcebly end sessions with no recent activity
-  webhook: '{{ACTION_BASE_URL}}/cron/sessions/complete'
-  schedule: '*/45 * * * *'
-  include_in_metadata: true
-  payload: {}
-- name: set sessions status to trashed
-  webhook: '{{ACTION_BASE_URL}}/cron/sessions/trash'
-  schedule: '*/45 * * * *'
-  include_in_metadata: true
-  payload: {}
-  comment: ""
+[]
