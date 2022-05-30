@@ -17,6 +17,3 @@ HASURA_CONSOLE_PORT
 ```
 ## Opening a Hasura console
 Run `run.sh`, open the console that gets served, any change to schema / GraphQL APIs you make should now be tracked in this repository. <strong>Do not forget to commit your changes periodically so that they can be published across the environments</strong>
-
-# TODO
-- disable stage and dev Hasura console
