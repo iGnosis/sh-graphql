@@ -49,23 +49,35 @@ insert_permissions:
         primaryTherapist: x-hasura-user-id
         provider: x-hasura-provider-id
       columns:
+        - careGiverEmail
+        - careGiverPhoneCountryCode
+        - careGiverPhoneNumber
+        - email
         - identifier
         - medicalConditions
+        - phoneCountryCode
+        - phoneNumber
         - preferredGenres
       backend_only: false
 select_permissions:
   - role: therapist
     permission:
       columns:
-        - medicalConditions
-        - preferredGenres
-        - identifier
+        - careGiverEmail
+        - careGiverPhoneCountryCode
+        - careGiverPhoneNumber
         - createdAt
-        - updatedAt
+        - email
         - id
+        - identifier
+        - medicalConditions
         - onboardedBy
+        - phoneCountryCode
+        - phoneNumber
+        - preferredGenres
         - primaryTherapist
         - provider
+        - updatedAt
       filter:
         provider:
           _eq: X-Hasura-Provider-Id
