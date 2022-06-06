@@ -51,4 +51,3 @@ type Date {
   date: String!
   totalSessionDurationInMin: Int!
 }
-
