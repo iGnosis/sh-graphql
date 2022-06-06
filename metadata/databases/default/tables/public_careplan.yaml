@@ -47,6 +47,25 @@ insert_permissions:
         - tags
       backend_only: false
 select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - createdAt
+        - createdBy
+        - description
+        - details
+        - difficultyLevel
+        - estimatedDuration
+        - id
+        - medicalConditions
+        - name
+        - options
+        - provider
+        - tags
+        - updatedAt
+      filter:
+        id:
+          _eq: X-Hasura-Careplan-Id
   - role: therapist
     permission:
       columns:
