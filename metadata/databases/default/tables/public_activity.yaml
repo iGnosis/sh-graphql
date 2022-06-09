@@ -21,6 +21,17 @@ array_relationships:
           schema: public
           name: careplan_activity
 select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - name
+        - details
+        - id
+        - createdAt
+        - updatedAt
+        - duration
+        - difficulty
+      filter: {}
   - role: therapist
     permission:
       columns:

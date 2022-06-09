@@ -23,6 +23,13 @@ array_relationships:
         table:
           schema: public
           name: patient_careplan
+  - name: patients
+    using:
+      foreign_key_constraint_on:
+        column: activeCareplan
+        table:
+          schema: public
+          name: patient
   - name: sessions
     using:
       foreign_key_constraint_on:
@@ -65,7 +72,7 @@ select_permissions:
         - updatedAt
       filter:
         id:
-          _eq: X-Hasura-Careplan-Id
+          _eq: x-hasura-careplan-id
   - role: therapist
     permission:
       columns:

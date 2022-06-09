@@ -14,6 +14,14 @@ object_relationships:
   - name: session_type
     using:
       foreign_key_constraint_on: status
+array_relationships:
+  - name: events
+    using:
+      foreign_key_constraint_on:
+        column: session
+        table:
+          schema: public
+          name: events
 insert_permissions:
   - role: patient
     permission:
@@ -70,6 +78,19 @@ select_permissions:
           _eq: X-Hasura-Provider-Id
       allow_aggregations: true
 update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - endedAt
+        - genre
+        - postSessionMood
+        - preSessionMood
+        - state
+        - status
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+      check: null
   - role: therapist
     permission:
       columns:
@@ -83,6 +104,27 @@ update_permissions:
           _eq: X-Hasura-Provider-Id
       check: null
 event_triggers:
+  - name: event_session_complete
+    definition:
+      enable_manual: true
+      insert:
+        columns: '*'
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/events/session/start'
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "sessionId": {{$body.event.data.new.id}},
+            "createdAt": {{$body.event.data.new.createdAt}},
+            "patientId" : {{$body.event.data.new.patient}}
+          }
+      version: 2
+      template_engine: Kriti
   - name: session_inspector
     definition:
       enable_manual: true
