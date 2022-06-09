@@ -15,6 +15,18 @@ object_relationships:
     using:
       foreign_key_constraint_on: status
 insert_permissions:
+  - role: patient
+    permission:
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
+      set:
+        patient: x-hasura-User-Id
+      columns:
+        - careplan
+        - createdAt
+        - updatedAt
+      backend_only: false
   - role: therapist
     permission:
       check: {}
@@ -28,6 +40,7 @@ select_permissions:
   - role: patient
     permission:
       columns:
+        - careplan
         - createdAt
         - endedAt
         - id

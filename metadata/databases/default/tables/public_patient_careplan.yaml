@@ -20,6 +20,17 @@ insert_permissions:
         - patient
       backend_only: false
 select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - createdAt
+        - careplan
+        - createdBy
+        - patient
+        - provider
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
   - role: therapist
     permission:
       columns:

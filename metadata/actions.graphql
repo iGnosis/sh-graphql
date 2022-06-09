@@ -1,0 +1,53 @@
+type Query {
+  patientDailyGoals(
+    date: String!
+  ): PatientDailyGoals
+}
+
+type Query {
+  patientMonthlyGoals(
+    year: Int!
+    month: Int!
+  ): PatientMonthlyGoals
+}
+
+type Query {
+  patientSessionStreak: PatientSessionStreak
+}
+
+enum Status {
+  completed
+  partiallycompleted
+  exceeded
+}
+
+type Root {
+  data: [Day]
+}
+
+type Day {
+  day: Int!
+  sessions: [Session]
+}
+
+type Session {
+  id: ID!
+  status: Status!
+}
+
+type PatientMonthlyGoals {
+  data: [Date]
+}
+
+type PatientDailyGoals {
+  dailyMinutesCompleted: Int!
+}
+
+type PatientSessionStreak {
+  streak: Int!
+}
+
+type Date {
+  date: String!
+  totalSessionDurationInMin: Int!
+}

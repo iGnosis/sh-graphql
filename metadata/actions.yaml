@@ -1,6 +1,77 @@
-actions: []
+actions:
+  - name: patientDailyGoals
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient/stats/daily-goals'
+      forward_client_headers: true
+      request_transform:
+        request_headers:
+          remove_headers:
+            - content-type
+          add_headers: {}
+        method: GET
+        version: 2
+        query_params:
+          date: '{{$body.input.date}}'
+        template_engine: Kriti
+    permissions:
+      - role: patient
+  - name: patientMonthlyGoals
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient/stats/monthly-goals'
+      forward_client_headers: true
+      request_transform:
+        request_headers:
+          remove_headers:
+            - content-type
+          add_headers: {}
+        method: GET
+        version: 2
+        query_params:
+          year: '{{$body.input.year}}'
+          month: '{{$body.input.month}}'
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: API to fetch patient monthly goals.
+  - name: patientSessionStreak
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient/stats/streak/'
+      forward_client_headers: true
+      request_transform:
+        request_headers:
+          remove_headers:
+            - content-type
+          add_headers: {}
+        method: GET
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: API to fetch patient sessions streak number.
 custom_types:
-  enums: []
+  enums:
+    - name: Status
+      values:
+        - value: completed
+          is_deprecated: null
+          description: null
+        - value: partiallycompleted
+          is_deprecated: null
+          description: null
+        - value: exceeded
+          is_deprecated: null
+          description: null
   input_objects: []
-  objects: []
+  objects:
+    - name: Root
+    - name: Day
+    - name: Session
+    - name: PatientMonthlyGoals
+    - name: PatientDailyGoals
+    - name: PatientSessionStreak
+    - name: Date
   scalars: []
