@@ -34,7 +34,7 @@ select_permissions:
         - reps
       filter:
         careplan:
-          _eq: X-Hasura-Carplan-Id
+          _eq: X-Hasura-Careplan-Id
   - role: therapist
     permission:
       columns:

@@ -14,6 +14,14 @@ object_relationships:
   - name: session_type
     using:
       foreign_key_constraint_on: status
+array_relationships:
+  - name: events
+    using:
+      foreign_key_constraint_on:
+        column: session
+        table:
+          schema: public
+          name: events
 insert_permissions:
   - role: patient
     permission:
@@ -70,6 +78,19 @@ select_permissions:
           _eq: X-Hasura-Provider-Id
       allow_aggregations: true
 update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - endedAt
+        - genre
+        - postSessionMood
+        - preSessionMood
+        - state
+        - status
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+      check: null
   - role: therapist
     permission:
       columns:

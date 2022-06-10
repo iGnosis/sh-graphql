@@ -59,6 +59,7 @@ insert_permissions:
         - email
         - identifier
         - medicalConditions
+        - password
         - phoneCountryCode
         - phoneNumber
         - preferredGenres
