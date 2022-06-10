@@ -74,4 +74,6 @@ custom_types:
     - name: PatientDailyGoals
     - name: PatientSessionStreak
     - name: Date
+    - name: EventNewPatient
+    - name: EventNewTherapist
   scalars: []

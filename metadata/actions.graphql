@@ -51,3 +51,12 @@ type Date {
   date: String!
   totalSessionDurationInMin: Int!
 }
+
+type EventNewPatient {
+  message: String!
+}
+
+type EventNewTherapist {
+  message: String!
+}
+
