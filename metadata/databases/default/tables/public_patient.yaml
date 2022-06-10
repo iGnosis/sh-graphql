@@ -59,7 +59,6 @@ insert_permissions:
         - email
         - identifier
         - medicalConditions
-        - password
         - phoneCountryCode
         - phoneNumber
         - preferredGenres
@@ -148,7 +147,8 @@ event_triggers:
           {
             "id": {{$body.event.data.new.id}},
             "email": {{$body.event.data.new.email}},
-            "identifier": {{$body.event.data.new.identifier}}
+            "identifier": {{$body.event.data.new.identifier}},
+            "onboardingCode": {{$body.event.data.new.onboardingCode}}
           }
       version: 2
       template_engine: Kriti

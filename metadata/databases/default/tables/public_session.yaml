@@ -30,6 +30,7 @@ insert_permissions:
           _eq: X-Hasura-User-Id
       set:
         patient: x-hasura-User-Id
+        provider: x-hasura-Provider-Id
       columns:
         - careplan
         - createdAt
