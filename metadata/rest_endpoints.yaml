@@ -1,1 +1,9 @@
-[]
+- definition:
+    query:
+      collection_name: allowed-queries
+      query_name: Insert Event
+  url: event
+  methods:
+    - POST
+  name: Insert Event
+  comment: null
