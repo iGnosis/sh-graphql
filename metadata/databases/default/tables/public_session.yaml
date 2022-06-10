@@ -107,20 +107,23 @@ event_triggers:
   - name: event_session_complete
     definition:
       enable_manual: true
-      insert:
-        columns: '*'
+      update:
+        columns:
+          - endedAt
+          - id
+          - patient
     retry_conf:
       num_retries: 0
       interval_sec: 10
       timeout_sec: 60
-    webhook: '{{ACTION_BASE_URL}}/events/session/start'
+    webhook: '{{ACTION_BASE_URL}}/events/session/complete'
     request_transform:
       body:
         action: transform
         template: |-
           {
             "sessionId": {{$body.event.data.new.id}},
-            "createdAt": {{$body.event.data.new.createdAt}},
+            "endedAt": {{$body.event.data.new.endedAt}},
             "patientId" : {{$body.event.data.new.patient}}
           }
       version: 2
