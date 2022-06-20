@@ -108,6 +108,25 @@ select_permissions:
         provider:
           _eq: X-Hasura-Provider-Id
       allow_aggregations: true
+update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - careGiverEmail
+        - careGiverPhoneCountryCode
+        - careGiverPhoneNumber
+        - email
+        - medicalConditions
+        - nickname
+        - password
+        - phoneCountryCode
+        - phoneNumber
+        - preferredActivities
+        - preferredGenres
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
 event_triggers:
   - name: event_added_first_patient
     definition:

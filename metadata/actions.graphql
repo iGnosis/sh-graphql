@@ -15,6 +15,15 @@ type Query {
   patientSessionStreak: PatientSessionStreak
 }
 
+type Mutation {
+  signUpPatient(
+    code: String!
+    nickname: String!
+    password: String!
+    email: String!
+  ): SignUpPatient
+}
+
 enum Status {
   completed
   partiallycompleted
@@ -58,5 +67,17 @@ type EventNewPatient {
 
 type EventNewTherapist {
   message: String!
+}
+
+type SignUpPatient {
+  token: String!
+  patient: Patient!
+}
+
+type Patient {
+  id: String!
+  provider: String!
+  activeCareplan: String!
+  nickname: String
 }
 

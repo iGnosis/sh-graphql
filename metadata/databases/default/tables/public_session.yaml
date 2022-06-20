@@ -111,7 +111,6 @@ event_triggers:
       update:
         columns:
           - endedAt
-          - id
           - patient
     retry_conf:
       num_retries: 0
