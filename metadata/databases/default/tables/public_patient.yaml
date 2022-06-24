@@ -86,6 +86,23 @@ select_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
+  - role: player
+    permission:
+      columns:
+        - createdAt
+        - email
+        - id
+        - identifier
+        - nickname
+        - phoneCountryCode
+        - phoneNumber
+        - preferredActivities
+        - preferredGenres
+        - provider
+        - updatedAt
+      filter:
+        id:
+          _eq: x-hasura-user-id
   - role: therapist
     permission:
       columns:
@@ -127,6 +144,14 @@ update_permissions:
         id:
           _eq: X-Hasura-User-Id
       check: null
+  - role: player
+    permission:
+      columns:
+        - nickname
+      filter:
+        id:
+          _eq: x-hasura-user-id
+      check: {}
 event_triggers:
   - name: event_added_first_patient
     definition:

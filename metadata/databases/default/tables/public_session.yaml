@@ -30,10 +30,29 @@ insert_permissions:
           _eq: X-Hasura-User-Id
       set:
         patient: x-hasura-User-Id
+        careplan: x-hasura-Careplan-Id
+        provider: x-hasura-Provider-Id
+      columns:
+        - createdAt
+        - endedAt
+        - genre
+        - postSessionMood
+        - preSessionMood
+        - state
+        - updatedAt
+      backend_only: false
+  - role: player
+    permission:
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
+      set:
+        patient: x-hasura-User-Id
         provider: x-hasura-Provider-Id
       columns:
         - careplan
         - createdAt
+        - state
         - updatedAt
       backend_only: false
   - role: therapist
@@ -54,6 +73,22 @@ select_permissions:
         - endedAt
         - id
         - patient
+        - provider
+        - state
+        - updatedAt
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+  - role: player
+    permission:
+      columns:
+        - careplan
+        - createdAt
+        - endedAt
+        - id
+        - patient
+        - provider
+        - state
         - updatedAt
       filter:
         patient:
@@ -82,16 +117,38 @@ update_permissions:
   - role: patient
     permission:
       columns:
+        - createdAt
         - endedAt
         - genre
         - postSessionMood
         - preSessionMood
         - state
-        - status
+        - updatedAt
       filter:
         patient:
           _eq: X-Hasura-User-Id
-      check: null
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
+      set:
+        patient: x-hasura-User-Id
+        provider: x-hasura-Provider-Id
+  - role: player
+    permission:
+      columns:
+        - createdAt
+        - endedAt
+        - genre
+        - postSessionMood
+        - preSessionMood
+        - state
+        - updatedAt
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
   - role: therapist
     permission:
       columns:

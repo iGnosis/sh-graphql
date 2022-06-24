@@ -1,0 +1,1 @@
+INSERT INTO "public"."provider"("id", "createdAt", "updatedAt", "name", "type") VALUES (E'00000000-0000-0000-0000-000000000000', E'2022-06-23T15:29:10.115711+00:00', E'2022-06-23T15:29:10.115711+00:00', E'Pointmotion', E'hospital');

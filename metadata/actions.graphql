@@ -1,3 +1,9 @@
+type Mutation {
+  exchangeCodeWithTokens(
+    code: String!
+  ): ExchangeCodeWithTokens
+}
+
 type Query {
   patientDailyGoals(
     date: String!
@@ -13,6 +19,18 @@ type Query {
 
 type Query {
   patientSessionStreak: PatientSessionStreak
+}
+
+type Mutation {
+  refreshTokens(
+    refreshToken: String!
+  ): RefreshTokens
+}
+
+type Mutation {
+  revokeRefreshToken(
+    refreshToken: String!
+  ): RevokeRefreshToken
 }
 
 type Mutation {
@@ -79,5 +97,34 @@ type Patient {
   provider: String!
   activeCareplan: String!
   nickname: String
+}
+
+type ExchangeCodeWithTokens {
+  status: String!
+  data: Tokens
+}
+
+type Tokens {
+  id_token: String!
+  access_token: String!
+  refresh_token: String!
+  expires_in: Int!
+  token_type: String!
+}
+
+type RefreshTokens {
+  status: String!
+  data: RefreshedTokens
+}
+
+type RefreshedTokens {
+  AccessToken: String!
+  ExpiresIn: Int!
+  IdToken: String!
+  TokenType: String!
+}
+
+type RevokeRefreshToken {
+  status: String!
 }
 
