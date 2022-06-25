@@ -1,3 +1,9 @@
+type Mutation {
+  exchangeCodeWithTokens(
+    code: String!
+  ): ExchangeCodeWithTokens
+}
+
 type Query {
   patientDailyGoals(
     date: String!
@@ -13,6 +19,27 @@ type Query {
 
 type Query {
   patientSessionStreak: PatientSessionStreak
+}
+
+type Mutation {
+  refreshTokens(
+    refreshToken: String!
+  ): RefreshTokens
+}
+
+type Mutation {
+  revokeRefreshToken(
+    refreshToken: String!
+  ): RevokeRefreshToken
+}
+
+type Mutation {
+  signUpPatient(
+    code: String!
+    nickname: String!
+    password: String!
+    email: String!
+  ): SignUpPatient
 }
 
 enum Status {
@@ -51,3 +78,53 @@ type Date {
   date: String!
   totalSessionDurationInMin: Int!
 }
+
+type EventNewPatient {
+  message: String!
+}
+
+type EventNewTherapist {
+  message: String!
+}
+
+type SignUpPatient {
+  token: String!
+  patient: Patient!
+}
+
+type Patient {
+  id: String!
+  provider: String!
+  activeCareplan: String!
+  nickname: String
+}
+
+type ExchangeCodeWithTokens {
+  status: String!
+  data: Tokens
+}
+
+type Tokens {
+  id_token: String!
+  access_token: String!
+  refresh_token: String!
+  expires_in: Int!
+  token_type: String!
+}
+
+type RefreshTokens {
+  status: String!
+  data: RefreshedTokens
+}
+
+type RefreshedTokens {
+  AccessToken: String!
+  ExpiresIn: Int!
+  IdToken: String!
+  TokenType: String!
+}
+
+type RevokeRefreshToken {
+  status: String!
+}
+

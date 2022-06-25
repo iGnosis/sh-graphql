@@ -15,5 +15,11 @@ HASURA_ENDPOINT
 HASURA_ADMIN_SECRET
 HASURA_CONSOLE_PORT
 ```
+
+## Generate a configuration file
+```
+npm run generate-config
+```
+
 ## Opening a Hasura console
 Run `run.sh`, open the console that gets served, any change to schema / GraphQL APIs you make should now be tracked in this repository. <strong>Do not forget to commit your changes periodically so that they can be published across the environments</strong>

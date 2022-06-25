@@ -1,4 +1,23 @@
 actions:
+  - name: exchangeCodeWithTokens
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/cognito/login'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "code": {{$body.input.code}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: guest
+    comment: OAuth API that exchages code to get access, id and refresh tokens.
   - name: patientDailyGoals
     definition:
       kind: ""
@@ -15,6 +34,7 @@ actions:
           date: '{{$body.input.date}}'
         template_engine: Kriti
     permissions:
+      - role: player
       - role: patient
   - name: patientMonthlyGoals
     definition:
@@ -33,6 +53,7 @@ actions:
           month: '{{$body.input.month}}'
         template_engine: Kriti
     permissions:
+      - role: player
       - role: patient
     comment: API to fetch patient monthly goals.
   - name: patientSessionStreak
@@ -50,8 +71,71 @@ actions:
         query_params: {}
         template_engine: Kriti
     permissions:
+      - role: player
       - role: patient
     comment: API to fetch patient sessions streak number.
+  - name: refreshTokens
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/cognito/refresh-tokens'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "refreshToken": {{$body.input.refreshToken}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: player
+      - role: guest
+      - role: patient
+    comment: OAuth API to refresh tokens.
+  - name: revokeRefreshToken
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/cognito/logout'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "refreshToken": {{$body.input.refreshToken}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: player
+      - role: patient
+    comment: OAuth API to revoke a refresh token.
+  - name: signUpPatient
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/auth/patient/signup'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "code": {{$body.input.code}},
+              "nickname": {{$body.input.nickname}},
+              "password": {{$body.input.password}},
+              "email": {{$body.input.email}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: guest
+    comment: API to SignUp Patient
 custom_types:
   enums:
     - name: Status
@@ -74,4 +158,13 @@ custom_types:
     - name: PatientDailyGoals
     - name: PatientSessionStreak
     - name: Date
+    - name: EventNewPatient
+    - name: EventNewTherapist
+    - name: SignUpPatient
+    - name: Patient
+    - name: ExchangeCodeWithTokens
+    - name: Tokens
+    - name: RefreshTokens
+    - name: RefreshedTokens
+    - name: RevokeRefreshToken
   scalars: []

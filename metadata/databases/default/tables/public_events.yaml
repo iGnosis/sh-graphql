@@ -8,20 +8,41 @@ object_relationships:
   - name: patientByPatient
     using:
       foreign_key_constraint_on: patient
+  - name: sessionBySession
+    using:
+      foreign_key_constraint_on: session
   - name: userByUser
     using:
       foreign_key_constraint_on: user
 insert_permissions:
   - role: patient
     permission:
-      check: {}
-      set:
-        patient: x-hasura-user-id
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
       columns:
         - activity
         - attempt_id
         - created_at
         - event_type
+        - patient
+        - score
+        - session
+        - task_id
+        - task_name
+        - user
+      backend_only: false
+  - role: player
+    permission:
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
+      columns:
+        - activity
+        - attempt_id
+        - created_at
+        - event_type
+        - patient
         - score
         - session
         - task_id
@@ -59,6 +80,23 @@ select_permissions:
         - created_at
         - score
         - attempt_id
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+  - role: player
+    permission:
+      columns:
+        - activity
+        - attempt_id
+        - created_at
+        - event_type
+        - id
+        - patient
+        - score
+        - session
+        - task_id
+        - task_name
+        - user
       filter:
         patient:
           _eq: X-Hasura-User-Id
