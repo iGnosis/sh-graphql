@@ -29,10 +29,10 @@ insert_permissions:
         patient:
           _eq: X-Hasura-User-Id
       set:
-        patient: x-hasura-User-Id
-        careplan: x-hasura-Careplan-Id
-        provider: x-hasura-Provider-Id
+        patient: x-hasura-user-id
+        provider: x-hasura-provider-id
       columns:
+        - careplan
         - createdAt
         - endedAt
         - genre
