@@ -1,0 +1,1 @@
+INSERT INTO "public"."activity"("id", "name", "details", "createdAt", "updatedAt", "duration", "difficulty") VALUES (E'0fa7d873-fd22-4784-8095-780028ceb08e', E'Sit to Stand', E'{}', E'2022-01-07T07:17:48.29297+00:00', E'2022-02-15T09:29:36.468346+00:00', 5, E'Easy')

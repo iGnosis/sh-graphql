@@ -1,0 +1,1 @@
+INSERT INTO "public"."careplan_activity"("careplan", "activity", "createdAt", "provider", "reps", "createdBy", "options") VALUES (E'4319023a-a24b-4d19-af82-be92d14f09de', E'0fa7d873-fd22-4784-8095-780028ceb08e', E'2022-06-27T05:13:25.689997+00:00', E'00000000-0000-0000-0000-000000000000', 10, E'4f3ad942-8f9d-41d2-9856-dcff5b5e8065', null);
