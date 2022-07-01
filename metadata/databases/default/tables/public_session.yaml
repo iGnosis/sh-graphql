@@ -71,8 +71,11 @@ select_permissions:
         - careplan
         - createdAt
         - endedAt
+        - genre
         - id
         - patient
+        - postSessionMood
+        - preSessionMood
         - provider
         - state
         - updatedAt
@@ -85,8 +88,11 @@ select_permissions:
         - careplan
         - createdAt
         - endedAt
+        - genre
         - id
         - patient
+        - postSessionMood
+        - preSessionMood
         - provider
         - state
         - updatedAt
