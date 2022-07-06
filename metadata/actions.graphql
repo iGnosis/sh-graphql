@@ -5,6 +5,12 @@ type Mutation {
 }
 
 type Query {
+  generateSpeech(
+    text: String!
+  ): GenerateSpeech
+}
+
+type Query {
   patientDailyGoals(
     date: String!
   ): PatientDailyGoals
@@ -126,5 +132,9 @@ type RefreshedTokens {
 
 type RevokeRefreshToken {
   status: String!
+}
+
+type GenerateSpeech {
+  speech: String!
 }
 
