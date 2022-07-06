@@ -76,9 +76,11 @@ select_permissions:
         - id
         - identifier
         - medicalConditions
+        - nickname
         - onboardedBy
         - phoneCountryCode
         - phoneNumber
+        - preferredActivities
         - preferredGenres
         - primaryTherapist
         - provider
@@ -89,15 +91,22 @@ select_permissions:
   - role: player
     permission:
       columns:
+        - activeCareplan
+        - careGiverEmail
+        - careGiverPhoneCountryCode
+        - careGiverPhoneNumber
         - createdAt
         - email
         - id
         - identifier
+        - medicalConditions
         - nickname
+        - onboardedBy
         - phoneCountryCode
         - phoneNumber
         - preferredActivities
         - preferredGenres
+        - primaryTherapist
         - provider
         - updatedAt
       filter:

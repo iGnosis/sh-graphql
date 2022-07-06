@@ -18,6 +18,24 @@ actions:
     permissions:
       - role: guest
     comment: OAuth API that exchages code to get access, id and refresh tokens.
+  - name: generateSpeech
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/speech/generate'
+      forward_client_headers: true
+      request_transform:
+        request_headers:
+          remove_headers:
+            - content-type
+          add_headers: {}
+        body:
+          action: remove
+        method: GET
+        version: 2
+        query_params:
+          text: '{{$body.input.text}}'
+        template_engine: Kriti
+    comment: Speech Synthesis API
   - name: patientDailyGoals
     definition:
       kind: ""
@@ -167,4 +185,5 @@ custom_types:
     - name: RefreshTokens
     - name: RefreshedTokens
     - name: RevokeRefreshToken
+    - name: GenerateSpeech
   scalars: []
