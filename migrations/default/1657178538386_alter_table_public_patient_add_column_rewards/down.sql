@@ -1,0 +1,4 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- alter table "public"."patient" add column "rewards" jsonb
+--  null default '[{"isUnlocked":false,"isAccessed":false,"tier":"bronze","description":"10% off on all therapy equipment from EXERTOOLS","unlockAtDayCompleted":5},{"isUnlocked":false,"isAccessed":false,"tier":"silver","description":"15% off on all therapy equipment from EXERTOOLS","unlockAtDayCompleted":10},{"isUnlocked":false,"isAccessed":false,"tier":"gold","description":"20% off on all therapy equipment from EXERTOOLS","unlockAtDayCompleted":15}]';

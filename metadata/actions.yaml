@@ -35,25 +35,44 @@ actions:
         query_params:
           text: '{{$body.input.text}}'
         template_engine: Kriti
-    comment: Speech Synthesis API
+    comment: Speech Synthesis API.
+  - name: markRewardAsViewed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient/rewards/viewed'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "rewardTier": "{{$body.input.rewardTier}}"
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    comment: Marks a reward as viewed.
   - name: patientDailyGoals
     definition:
       kind: ""
       handler: '{{ACTION_BASE_URL}}/patient/stats/daily-goals'
       forward_client_headers: true
       request_transform:
-        request_headers:
-          remove_headers:
-            - content-type
-          add_headers: {}
-        method: GET
+        body:
+          action: transform
+          template: |-
+            {
+              "input": {{$body.input}}
+            }
+        method: POST
         version: 2
-        query_params:
-          date: '{{$body.input.date}}'
+        query_params: {}
         template_engine: Kriti
     permissions:
       - role: player
       - role: patient
+    comment: API to fetch patient daily goals.
   - name: patientMonthlyGoals
     definition:
       kind: ""
@@ -67,13 +86,14 @@ actions:
         method: GET
         version: 2
         query_params:
-          year: '{{$body.input.year}}'
-          month: '{{$body.input.month}}'
+          endDate: '{{$body.input.endDate}}'
+          startDate: '{{$body.input.startDate}}'
+          userTimezone: '{{$body.input.userTimezone}}'
         template_engine: Kriti
     permissions:
       - role: player
       - role: patient
-    comment: API to fetch patient monthly goals.
+    comment: API to fetch patient monthly goals. Start and end dates are inclusive.
   - name: patientSessionStreak
     definition:
       kind: ""
@@ -154,6 +174,20 @@ actions:
     permissions:
       - role: guest
     comment: API to SignUp Patient
+  - name: updateRewards
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient/rewards/update'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: player
+      - role: patient
+    comment: Updates Rewards based on patient's monthly activity.
 custom_types:
   enums:
     - name: Status
@@ -186,4 +220,9 @@ custom_types:
     - name: RefreshedTokens
     - name: RevokeRefreshToken
     - name: GenerateSpeech
+    - name: PatientMonthlyGoalsData
+    - name: PatientDailyGoalsData
+    - name: PatientDailyGoalsDataActivities
+    - name: UpdateRewards
+    - name: MarkRewardAsViewed
   scalars: []

@@ -1,0 +1,1 @@
+INSERT INTO "public"."activity"("name", "details", "id", "createdAt", "updatedAt", "duration", "difficulty") VALUES (E'Sound Slash', '{}', E'62a46cbc-4cd8-488a-aef9-148681c91be8', E'2022-07-07T11:12:54.642426+00:00', E'2022-07-07T11:12:54.642426+00:00', 10, E'Easy');
