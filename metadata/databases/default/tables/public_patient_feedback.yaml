@@ -1,0 +1,68 @@
+table:
+  schema: public
+  name: patient_feedback
+object_relationships:
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
+insert_permissions:
+  - role: patient
+    permission:
+      check: {}
+      set:
+        patient: x-hasura-user-id
+      columns:
+        - description
+        - rating
+        - recommendationScore
+      backend_only: false
+  - role: player
+    permission:
+      check: {}
+      set:
+        patient: x-hasura-user-id
+      columns:
+        - description
+        - rating
+        - recommendationScore
+      backend_only: false
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - rating
+        - recommendationScore
+        - description
+        - createdAt
+        - updatedAt
+        - id
+        - patient
+      filter:
+        patient:
+          _eq: x-hasura-user-id
+  - role: player
+    permission:
+      columns:
+        - description
+        - rating
+        - recommendationScore
+      filter: {}
+update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - recommendationScore
+      filter:
+        patient:
+          _eq: x-hasura-user-id
+      check: {}
+  - role: player
+    permission:
+      columns:
+        - description
+        - rating
+        - recommendationScore
+      filter: {}
+      check: {}
+      set:
+        patient: x-hasura-user-id

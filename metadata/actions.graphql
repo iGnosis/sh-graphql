@@ -32,7 +32,9 @@ type Query {
 }
 
 type Query {
-  patientSessionStreak: PatientSessionStreak
+  patientSessionStreak(
+    userTimezone: String!
+  ): PatientSessionStreak
 }
 
 type Mutation {
