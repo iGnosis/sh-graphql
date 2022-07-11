@@ -4,10 +4,24 @@ type Mutation {
   ): ExchangeCodeWithTokens
 }
 
+type Mutation {
+  faqAccessed: FaqAccessed
+}
+
+type Mutation {
+  freeParkinsonResourcesAccessed: FreeParkinsonResourcesAccessed
+}
+
 type Query {
   generateSpeech(
     text: String!
   ): GenerateSpeech
+}
+
+type Mutation {
+  markRewardAsAccessed(
+    rewardTier: String!
+  ): MarkRewardAsAccessed
 }
 
 type Mutation {
@@ -173,6 +187,18 @@ type UpdateRewards {
 }
 
 type MarkRewardAsViewed {
+  status: String!
+}
+
+type FaqAccessed {
+  status: String!
+}
+
+type FreeParkinsonResourcesAccessed {
+  status: String!
+}
+
+type MarkRewardAsAccessed {
   status: String!
 }
 

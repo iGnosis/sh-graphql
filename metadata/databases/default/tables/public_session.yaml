@@ -185,7 +185,6 @@ event_triggers:
         action: transform
         template: |-
           {
-            "sessionId": {{$body.event.data.new.id}},
             "endedAt": {{$body.event.data.new.endedAt}},
             "patientId" : {{$body.event.data.new.patient}}
           }
@@ -207,7 +206,8 @@ event_triggers:
         template: |-
           {
             "sessionId": {{$body.event.data.new.id}},
-            "createdAt": {{$body.event.data.new.createdAt}}
+            "createdAt": {{$body.event.data.new.createdAt}},
+            "patientId": {{$body.event.data.new.patient}}
           }
       version: 2
       template_engine: Kriti

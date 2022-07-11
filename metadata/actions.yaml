@@ -18,6 +18,28 @@ actions:
     permissions:
       - role: guest
     comment: OAuth API that exchages code to get access, id and refresh tokens.
+  - name: faqAccessed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/help-accessed/soundhealth-faq'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: player
+      - role: patient
+    comment: Pinpoint - called when Soundhealth FAQs are accessed.
+  - name: freeParkinsonResourcesAccessed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/help-accessed/free-resources'
+    permissions:
+      - role: player
+      - role: patient
+    comment: Pinpoint - called when free resources by Parkinson’s foundation are accessed.
   - name: generateSpeech
     definition:
       kind: ""
@@ -36,6 +58,25 @@ actions:
           text: '{{$body.input.text}}'
         template_engine: Kriti
     comment: Speech Synthesis API.
+  - name: markRewardAsAccessed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient/rewards/accessed'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "rewardTier": {{$body.input.rewardTier}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: player
+      - role: patient
+    comment: Marks a reward as accessed.
   - name: markRewardAsViewed
     definition:
       kind: synchronous
@@ -231,4 +272,7 @@ custom_types:
     - name: PatientDailyGoalsDataActivities
     - name: UpdateRewards
     - name: MarkRewardAsViewed
+    - name: FaqAccessed
+    - name: FreeParkinsonResourcesAccessed
+    - name: MarkRewardAsAccessed
   scalars: []
