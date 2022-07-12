@@ -1,0 +1,47 @@
+table:
+  schema: public
+  name: checkin
+insert_permissions:
+  - role: patient
+    permission:
+      check: {}
+      columns:
+        - mood
+        - patient
+      backend_only: false
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - mood
+        - patient
+      filter: {}
+  - role: player
+    permission:
+      columns:
+        - mood
+        - created_at
+        - updated_at
+        - id
+        - patient
+      filter: {}
+  - role: therapist
+    permission:
+      columns:
+        - mood
+        - created_at
+        - updated_at
+        - id
+        - patient
+      filter: {}
+update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - mood
+        - patient
+      filter: {}
+      check: null

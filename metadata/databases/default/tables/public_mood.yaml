@@ -1,0 +1,4 @@
+table:
+  schema: public
+  name: mood
+is_enum: true
