@@ -36,6 +36,7 @@ actions:
     definition:
       kind: synchronous
       handler: '{{ACTION_BASE_URL}}/events/help-accessed/free-resources'
+      forward_client_headers: true
     permissions:
       - role: player
       - role: patient
@@ -62,6 +63,7 @@ actions:
     definition:
       kind: synchronous
       handler: '{{ACTION_BASE_URL}}/patient/rewards/accessed'
+      forward_client_headers: true
       request_transform:
         body:
           action: transform

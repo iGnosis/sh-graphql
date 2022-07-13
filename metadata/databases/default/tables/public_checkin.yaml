@@ -5,43 +5,50 @@ insert_permissions:
   - role: patient
     permission:
       check: {}
+      set:
+        patient: x-hasura-user-id
       columns:
-        - mood
-        - patient
+        - type
+        - value
       backend_only: false
 select_permissions:
   - role: patient
     permission:
       columns:
         - id
-        - created_at
-        - updated_at
-        - mood
+        - createdAt
+        - updatedAt
         - patient
+        - type
+        - value
       filter: {}
   - role: player
     permission:
       columns:
-        - mood
-        - created_at
-        - updated_at
         - id
+        - createdAt
+        - updatedAt
         - patient
+        - type
+        - value
       filter: {}
   - role: therapist
     permission:
       columns:
-        - mood
-        - created_at
-        - updated_at
         - id
+        - createdAt
+        - updatedAt
         - patient
+        - type
+        - value
       filter: {}
 update_permissions:
   - role: patient
     permission:
       columns:
-        - mood
-        - patient
+        - type
+        - value
       filter: {}
-      check: null
+      check: {}
+      set:
+        patient: x-hasura-user-id

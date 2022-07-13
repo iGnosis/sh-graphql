@@ -1,0 +1,4 @@
+table:
+  schema: public
+  name: checkin_type
+is_enum: true
