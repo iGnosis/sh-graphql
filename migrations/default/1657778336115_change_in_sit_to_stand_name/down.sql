@@ -1,0 +1,5 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- UPDATE activity
+-- SET name = 'Sit, Stand, Achieve'
+-- WHERE id = '0fa7d873-fd22-4784-8095-780028ceb08e';
