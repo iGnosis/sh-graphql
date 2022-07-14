@@ -1,0 +1,90 @@
+table:
+  schema: public
+  name: patient_feedback
+object_relationships:
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
+insert_permissions:
+  - role: patient
+    permission:
+      check: {}
+      set:
+        patient: x-hasura-user-id
+      columns:
+        - description
+        - rating
+        - recommendationScore
+      backend_only: false
+  - role: player
+    permission:
+      check: {}
+      set:
+        patient: x-hasura-user-id
+      columns:
+        - description
+        - rating
+        - recommendationScore
+      backend_only: false
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - rating
+        - recommendationScore
+        - description
+        - createdAt
+        - updatedAt
+        - id
+        - patient
+      filter:
+        patient:
+          _eq: x-hasura-user-id
+  - role: player
+    permission:
+      columns:
+        - description
+        - rating
+        - recommendationScore
+      filter: {}
+update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - recommendationScore
+      filter:
+        patient:
+          _eq: x-hasura-user-id
+      check: {}
+  - role: player
+    permission:
+      columns:
+        - description
+        - rating
+        - recommendationScore
+      filter: {}
+      check: {}
+      set:
+        patient: x-hasura-user-id
+event_triggers:
+  - name: schedule_email_feedback
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/cron/email-patient-feedback'
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "feedbackId": {{$body.event.data.new.id}}
+          }
+      method: POST
+      version: 2
+      query_params: {}
+      template_engine: Kriti

@@ -84,6 +84,8 @@ select_permissions:
         - preferredGenres
         - primaryTherapist
         - provider
+        - rewards
+        - timezone
         - updatedAt
       filter:
         id:
@@ -108,6 +110,8 @@ select_permissions:
         - preferredGenres
         - primaryTherapist
         - provider
+        - rewards
+        - timezone
         - updatedAt
       filter:
         id:
@@ -149,6 +153,7 @@ update_permissions:
         - phoneNumber
         - preferredActivities
         - preferredGenres
+        - timezone
       filter:
         id:
           _eq: X-Hasura-User-Id
@@ -157,6 +162,7 @@ update_permissions:
     permission:
       columns:
         - nickname
+        - timezone
       filter:
         id:
           _eq: x-hasura-user-id

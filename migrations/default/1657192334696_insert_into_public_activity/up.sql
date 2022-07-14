@@ -1,0 +1,1 @@
+INSERT INTO "public"."activity"("name", "details", "id", "createdAt", "updatedAt", "duration", "difficulty") VALUES (E'Beat Boxer', '{}', E'bbc80a1d-935b-4188-bbc9-e15173907c38', E'2022-07-07T11:12:14.604678+00:00', E'2022-07-07T11:12:14.604678+00:00', 15, E'Easy');

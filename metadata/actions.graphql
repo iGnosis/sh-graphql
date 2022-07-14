@@ -4,27 +4,55 @@ type Mutation {
   ): ExchangeCodeWithTokens
 }
 
+type Mutation {
+  faqAccessed: FaqAccessed
+}
+
+type Mutation {
+  freeParkinsonResourcesAccessed: FreeParkinsonResourcesAccessed
+}
+
+type Mutation {
+  freeRewardAccessed: FreeRewardAccessed
+}
+
 type Query {
   generateSpeech(
     text: String!
   ): GenerateSpeech
 }
 
+type Mutation {
+  markRewardAsAccessed(
+    rewardTier: String!
+  ): MarkRewardAsAccessed
+}
+
+type Mutation {
+  markRewardAsViewed(
+    rewardTier: String!
+  ): MarkRewardAsViewed
+}
+
 type Query {
   patientDailyGoals(
     date: String!
+    activityIds: [String!]!
   ): PatientDailyGoals
 }
 
 type Query {
   patientMonthlyGoals(
-    year: Int!
-    month: Int!
+    startDate: String!
+    endDate: String!
+    userTimezone: String!
   ): PatientMonthlyGoals
 }
 
 type Query {
-  patientSessionStreak: PatientSessionStreak
+  patientSessionStreak(
+    userTimezone: String!
+  ): PatientSessionStreak
 }
 
 type Mutation {
@@ -48,6 +76,10 @@ type Mutation {
   ): SignUpPatient
 }
 
+type Mutation {
+  updateRewards: UpdateRewards
+}
+
 enum Status {
   completed
   partiallycompleted
@@ -69,11 +101,13 @@ type Session {
 }
 
 type PatientMonthlyGoals {
-  data: [Date]
+  status: String!
+  data: PatientMonthlyGoalsData
 }
 
 type PatientDailyGoals {
-  dailyMinutesCompleted: Int!
+  status: String!
+  data: PatientDailyGoalsData
 }
 
 type PatientSessionStreak {
@@ -136,5 +170,43 @@ type RevokeRefreshToken {
 
 type GenerateSpeech {
   speech: String!
+}
+
+type PatientMonthlyGoalsData {
+  daysCompleted: Int!
+  rewardsCountDown: [Int!]!
+}
+
+type PatientDailyGoalsData {
+  activities: [PatientDailyGoalsDataActivities]!
+}
+
+type PatientDailyGoalsDataActivities {
+  id: String!
+  isCompleted: Boolean!
+}
+
+type UpdateRewards {
+  status: String!
+}
+
+type MarkRewardAsViewed {
+  status: String!
+}
+
+type FaqAccessed {
+  status: String!
+}
+
+type FreeParkinsonResourcesAccessed {
+  status: String!
+}
+
+type MarkRewardAsAccessed {
+  status: String!
+}
+
+type FreeRewardAccessed {
+  status: String!
 }
 
