@@ -36,10 +36,25 @@ actions:
     definition:
       kind: synchronous
       handler: '{{ACTION_BASE_URL}}/events/help-accessed/free-resources'
+      forward_client_headers: true
     permissions:
       - role: player
       - role: patient
     comment: Pinpoint - called when free resources by Parkinson’s foundation are accessed.
+  - name: freeRewardAccessed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/help-accessed/free-reward-accessed'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: player
+      - role: patient
+    comment: Free reward accessed.
   - name: generateSpeech
     definition:
       kind: ""
@@ -62,6 +77,7 @@ actions:
     definition:
       kind: synchronous
       handler: '{{ACTION_BASE_URL}}/patient/rewards/accessed'
+      forward_client_headers: true
       request_transform:
         body:
           action: transform
@@ -275,4 +291,5 @@ custom_types:
     - name: FaqAccessed
     - name: FreeParkinsonResourcesAccessed
     - name: MarkRewardAsAccessed
+    - name: FreeRewardAccessed
   scalars: []

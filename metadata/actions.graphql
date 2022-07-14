@@ -12,6 +12,10 @@ type Mutation {
   freeParkinsonResourcesAccessed: FreeParkinsonResourcesAccessed
 }
 
+type Mutation {
+  freeRewardAccessed: FreeRewardAccessed
+}
+
 type Query {
   generateSpeech(
     text: String!
@@ -199,6 +203,10 @@ type FreeParkinsonResourcesAccessed {
 }
 
 type MarkRewardAsAccessed {
+  status: String!
+}
+
+type FreeRewardAccessed {
   status: String!
 }
 
