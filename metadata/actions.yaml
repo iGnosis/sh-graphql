@@ -57,7 +57,7 @@ actions:
     comment: Free reward accessed.
   - name: generateSpeech
     definition:
-      kind: ""
+      kind: synchronous
       handler: '{{ACTION_BASE_URL}}/speech/generate'
       forward_client_headers: true
       request_transform:
@@ -135,7 +135,7 @@ actions:
     comment: Marks a reward as viewed.
   - name: patientDailyGoals
     definition:
-      kind: ""
+      kind: synchronous
       handler: '{{ACTION_BASE_URL}}/patient/stats/daily-goals'
       forward_client_headers: true
       request_transform:
@@ -155,7 +155,7 @@ actions:
     comment: API to fetch patient daily goals.
   - name: patientMonthlyGoals
     definition:
-      kind: ""
+      kind: synchronous
       handler: '{{ACTION_BASE_URL}}/patient/stats/monthly-goals'
       forward_client_headers: true
       request_transform:
@@ -176,7 +176,7 @@ actions:
     comment: API to fetch patient monthly goals. Start and end dates are inclusive.
   - name: patientSessionStreak
     definition:
-      kind: ""
+      kind: synchronous
       handler: '{{ACTION_BASE_URL}}/patient/stats/streak/'
       forward_client_headers: true
       request_transform:
