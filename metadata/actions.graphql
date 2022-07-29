@@ -219,3 +219,4 @@ type FreeRewardAccessed {
 type Output {
   isTutorialNeeded: Boolean!
 }
+
