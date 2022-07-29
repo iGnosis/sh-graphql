@@ -17,6 +17,8 @@ select_permissions:
       columns:
         - createdAt
         - id
+        - type
+        - value
       filter:
         patient:
           _eq: X-Hasura-User-Id

@@ -73,6 +73,26 @@ actions:
           text: '{{$body.input.text}}'
         template_engine: Kriti
     comment: Speech Synthesis API.
+  - name: isTutorialNeeded
+    definition:
+      kind: synchronous
+      handler: https://webhook.site/3c0034f3-142d-4a2f-aff1-71003eea7997
+      request_transform:
+        request_headers:
+          remove_headers:
+            - content-type
+          add_headers: {}
+        body:
+          action: transform
+          template: |-
+            {
+              "game": {{$body.input.game}}
+            }
+        method: GET
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    comment: isTutorialNeeded
   - name: markRewardAsAccessed
     definition:
       kind: synchronous
@@ -292,4 +312,5 @@ custom_types:
     - name: FreeParkinsonResourcesAccessed
     - name: MarkRewardAsAccessed
     - name: FreeRewardAccessed
+    - name: Output
   scalars: []

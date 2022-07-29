@@ -1,0 +1,44 @@
+table:
+  schema: public
+  name: game
+insert_permissions:
+  - role: patient
+    permission:
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
+      set:
+        patient: x-hasura-user-id
+      columns:
+        - createdAt
+        - game
+        - updatedAt
+      backend_only: false
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - repsCompleted
+        - totalDuration
+        - analytics
+        - game
+        - createdAt
+        - endedAt
+        - updatedAt
+        - id
+        - patient
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - analytics
+        - endedAt
+        - repsCompleted
+        - totalDuration
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+      check: {}
