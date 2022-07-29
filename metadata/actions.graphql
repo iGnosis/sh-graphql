@@ -74,18 +74,6 @@ type Mutation {
 }
 
 type Mutation {
-  refreshTokens(
-    refreshToken: String!
-  ): RefreshTokens
-}
-
-type Mutation {
-  revokeRefreshToken(
-    refreshToken: String!
-  ): RevokeRefreshToken
-}
-
-type Mutation {
   signUpPatient(
     code: String!
     nickname: String!
