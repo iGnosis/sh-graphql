@@ -50,6 +50,19 @@ insert_permissions:
         patient: x-hasura-User-Id
         provider: x-hasura-Provider-Id
       columns:
+        - createdAt
+        - state
+        - updatedAt
+      backend_only: false
+  - role: player
+    permission:
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
+      set:
+        patient: x-hasura-User-Id
+        provider: x-hasura-Provider-Id
+      columns:
         - careplan
         - createdAt
         - state
@@ -68,7 +81,6 @@ select_permissions:
   - role: patient
     permission:
       columns:
-        - careplan
         - createdAt
         - endedAt
         - genre
