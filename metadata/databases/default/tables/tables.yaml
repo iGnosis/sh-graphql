@@ -5,6 +5,8 @@
 - "!include public_checkin.yaml"
 - "!include public_checkin_type.yaml"
 - "!include public_events.yaml"
+- "!include public_game.yaml"
+- "!include public_game_name.yaml"
 - "!include public_genre.yaml"
 - "!include public_medical_condition.yaml"
 - "!include public_patient.yaml"

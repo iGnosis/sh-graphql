@@ -23,6 +23,12 @@ type Query {
 }
 
 type Mutation {
+  isTutorialNeeded(
+    game: String!
+  ): Output
+}
+
+type Mutation {
   markRewardAsAccessed(
     rewardTier: String!
   ): MarkRewardAsAccessed
@@ -208,5 +214,9 @@ type MarkRewardAsAccessed {
 
 type FreeRewardAccessed {
   status: String!
+}
+
+type Output {
+  isTutorialNeeded: Boolean!
 }
 
