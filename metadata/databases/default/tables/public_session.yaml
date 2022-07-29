@@ -68,6 +68,7 @@ select_permissions:
   - role: patient
     permission:
       columns:
+        - careplan
         - createdAt
         - endedAt
         - genre
