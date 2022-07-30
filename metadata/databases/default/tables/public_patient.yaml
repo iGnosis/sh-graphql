@@ -78,6 +78,7 @@ select_permissions:
         - medicalConditions
         - nickname
         - onboardedBy
+        - onboardingStatus
         - phoneCountryCode
         - phoneNumber
         - preferredActivities
@@ -148,6 +149,7 @@ update_permissions:
         - email
         - medicalConditions
         - nickname
+        - onboardingStatus
         - password
         - phoneCountryCode
         - phoneNumber
