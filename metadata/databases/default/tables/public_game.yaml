@@ -42,3 +42,26 @@ update_permissions:
         patient:
           _eq: X-Hasura-User-Id
       check: null
+event_triggers:
+  - name: game_created
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/events/game/start'
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "patientId": {{$body.event.data.new.patient}},
+            "createdAt": {{$body.event.data.new.createdAt}}
+          }
+      method: POST
+      version: 2
+      query_params: {}
+      template_engine: Kriti

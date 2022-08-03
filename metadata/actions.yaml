@@ -1,23 +1,17 @@
 actions:
-  - name: exchangeCodeWithTokens
+  - name: appAccessed
     definition:
       kind: synchronous
-      handler: '{{ACTION_BASE_URL}}/cognito/login'
+      handler: '{{ACTION_BASE_URL}}/events/game/app-accessed'
       forward_client_headers: true
       request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "code": {{$body.input.code}}
-            }
         method: POST
         version: 2
         query_params: {}
         template_engine: Kriti
     permissions:
-      - role: guest
-    comment: OAuth API that exchages code to get access, id and refresh tokens.
+      - role: patient
+    comment: Pinpoint - called when Soundhealth App is accessed.
   - name: faqAccessed
     definition:
       kind: synchronous
@@ -55,6 +49,28 @@ actions:
       - role: player
       - role: patient
     comment: Free reward accessed.
+  - name: gameCompleted
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/game/complete'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "startDate": {{$body.input.startDate}},
+              "currentDate": {{$body.input.currentDate}},
+              "endDate": {{$body.input.endDate}},
+              "userTimezone": {{$body.input.userTimezone}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: Called when a game has been completed.
   - name: generateSpeech
     definition:
       kind: ""
@@ -195,74 +211,20 @@ actions:
       - role: player
       - role: patient
     comment: API to fetch patient sessions streak number.
-  - name: refreshTokens
-    definition:
-      kind: synchronous
-      handler: '{{ACTION_BASE_URL}}/cognito/refresh-tokens'
-      forward_client_headers: true
-      request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "refreshToken": {{$body.input.refreshToken}}
-            }
-        method: POST
-        version: 2
-        query_params: {}
-        template_engine: Kriti
-    permissions:
-      - role: player
-      - role: guest
-      - role: patient
-    comment: OAuth API to refresh tokens.
-  - name: revokeRefreshToken
-    definition:
-      kind: synchronous
-      handler: '{{ACTION_BASE_URL}}/cognito/logout'
-      forward_client_headers: true
-      request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "refreshToken": {{$body.input.refreshToken}}
-            }
-        method: POST
-        version: 2
-        query_params: {}
-        template_engine: Kriti
-    permissions:
-      - role: player
-      - role: patient
-    comment: OAuth API to revoke a refresh token.
-  - name: signUpPatient
-    definition:
-      kind: synchronous
-      handler: '{{ACTION_BASE_URL}}/auth/patient/signup'
-      request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "code": {{$body.input.code}},
-              "nickname": {{$body.input.nickname}},
-              "password": {{$body.input.password}},
-              "email": {{$body.input.email}}
-            }
-        method: POST
-        version: 2
-        query_params: {}
-        template_engine: Kriti
-    permissions:
-      - role: guest
-    comment: API to SignUp Patient
   - name: updateRewards
     definition:
       kind: synchronous
       handler: '{{ACTION_BASE_URL}}/patient/rewards/update'
       forward_client_headers: true
       request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "startDate": {{$body.input.startDate}},
+              "endDate": {{$body.input.endDate}},
+              "userTimezone": {{$body.input.userTimezone}}
+            }
         method: POST
         version: 2
         query_params: {}
@@ -313,4 +275,6 @@ custom_types:
     - name: MarkRewardAsAccessed
     - name: FreeRewardAccessed
     - name: Output
+    - name: GameCompleted
+    - name: AppAccessed
   scalars: []

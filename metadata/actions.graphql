@@ -1,7 +1,5 @@
 type Mutation {
-  exchangeCodeWithTokens(
-    code: String!
-  ): ExchangeCodeWithTokens
+  appAccessed: AppAccessed
 }
 
 type Mutation {
@@ -14,6 +12,15 @@ type Mutation {
 
 type Mutation {
   freeRewardAccessed: FreeRewardAccessed
+}
+
+type Mutation {
+  gameCompleted(
+    startDate: String!
+    currentDate: String!
+    endDate: String!
+    userTimezone: String!
+  ): GameCompleted
 }
 
 type Query {
@@ -62,28 +69,11 @@ type Query {
 }
 
 type Mutation {
-  refreshTokens(
-    refreshToken: String!
-  ): RefreshTokens
-}
-
-type Mutation {
-  revokeRefreshToken(
-    refreshToken: String!
-  ): RevokeRefreshToken
-}
-
-type Mutation {
-  signUpPatient(
-    code: String!
-    nickname: String!
-    password: String!
-    email: String!
-  ): SignUpPatient
-}
-
-type Mutation {
-  updateRewards: UpdateRewards
+  updateRewards(
+    startDate: String!
+    endDate: String!
+    userTimezone: String!
+  ): UpdateRewards
 }
 
 enum Status {
@@ -218,5 +208,13 @@ type FreeRewardAccessed {
 
 type Output {
   isTutorialNeeded: Boolean!
+}
+
+type GameCompleted {
+  status: String!
+}
+
+type AppAccessed {
+  status: String!
 }
 

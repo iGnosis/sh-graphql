@@ -78,6 +78,7 @@ select_permissions:
         - medicalConditions
         - nickname
         - onboardedBy
+        - onboardingStatus
         - phoneCountryCode
         - phoneNumber
         - preferredActivities
@@ -148,6 +149,7 @@ update_permissions:
         - email
         - medicalConditions
         - nickname
+        - onboardingStatus
         - password
         - phoneCountryCode
         - phoneNumber
@@ -192,8 +194,9 @@ event_triggers:
   - name: event_new_patient
     definition:
       enable_manual: true
-      insert:
-        columns: '*'
+      update:
+        columns:
+          - email
     retry_conf:
       num_retries: 0
       interval_sec: 10
@@ -206,8 +209,7 @@ event_triggers:
           {
             "id": {{$body.event.data.new.id}},
             "email": {{$body.event.data.new.email}},
-            "identifier": {{$body.event.data.new.identifier}},
-            "onboardingCode": {{$body.event.data.new.onboardingCode}}
+            "nickname": {{$body.event.data.new.nickname}}
           }
       version: 2
       template_engine: Kriti
