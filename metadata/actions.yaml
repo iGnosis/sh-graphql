@@ -23,7 +23,6 @@ actions:
         query_params: {}
         template_engine: Kriti
     permissions:
-      - role: player
       - role: patient
     comment: Pinpoint - called when Soundhealth FAQs are accessed.
   - name: freeParkinsonResourcesAccessed
@@ -32,7 +31,6 @@ actions:
       handler: '{{ACTION_BASE_URL}}/events/help-accessed/free-resources'
       forward_client_headers: true
     permissions:
-      - role: player
       - role: patient
     comment: Pinpoint - called when free resources by Parkinson’s foundation are accessed.
   - name: freeRewardAccessed
@@ -46,7 +44,6 @@ actions:
         query_params: {}
         template_engine: Kriti
     permissions:
-      - role: player
       - role: patient
     comment: Free reward accessed.
   - name: gameCompleted
@@ -126,7 +123,6 @@ actions:
         query_params: {}
         template_engine: Kriti
     permissions:
-      - role: player
       - role: patient
     comment: Marks a reward as accessed.
   - name: markRewardAsViewed
@@ -146,7 +142,6 @@ actions:
         query_params: {}
         template_engine: Kriti
     permissions:
-      - role: player
       - role: patient
     comment: Marks a reward as viewed.
   - name: patientDailyGoals
@@ -166,7 +161,6 @@ actions:
         query_params: {}
         template_engine: Kriti
     permissions:
-      - role: player
       - role: patient
     comment: API to fetch patient daily goals.
   - name: patientMonthlyGoals
@@ -187,7 +181,6 @@ actions:
           userTimezone: '{{$body.input.userTimezone}}'
         template_engine: Kriti
     permissions:
-      - role: player
       - role: patient
     comment: API to fetch patient monthly goals. Start and end dates are inclusive.
   - name: patientSessionStreak
@@ -208,7 +201,6 @@ actions:
           userTimezone: '{{$body.input.userTimezone}}'
         template_engine: Kriti
     permissions:
-      - role: player
       - role: patient
     comment: API to fetch patient sessions streak number.
   - name: updateRewards
@@ -230,7 +222,6 @@ actions:
         query_params: {}
         template_engine: Kriti
     permissions:
-      - role: player
       - role: patient
     comment: Updates Rewards based on patient's monthly activity.
 custom_types:
