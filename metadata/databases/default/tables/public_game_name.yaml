@@ -8,8 +8,3 @@ select_permissions:
       columns:
         - name
       filter: {}
-  - role: player
-    permission:
-      columns:
-        - name
-      filter: {}

@@ -41,20 +41,6 @@ insert_permissions:
         - state
         - updatedAt
       backend_only: false
-  - role: player
-    permission:
-      check:
-        patient:
-          _eq: X-Hasura-User-Id
-      set:
-        patient: x-hasura-User-Id
-        provider: x-hasura-Provider-Id
-      columns:
-        - careplan
-        - createdAt
-        - state
-        - updatedAt
-      backend_only: false
   - role: therapist
     permission:
       check: {}
@@ -66,23 +52,6 @@ insert_permissions:
       backend_only: false
 select_permissions:
   - role: patient
-    permission:
-      columns:
-        - careplan
-        - createdAt
-        - endedAt
-        - genre
-        - id
-        - patient
-        - postSessionMood
-        - preSessionMood
-        - provider
-        - state
-        - updatedAt
-      filter:
-        patient:
-          _eq: X-Hasura-User-Id
-  - role: player
     permission:
       columns:
         - careplan
@@ -139,22 +108,6 @@ update_permissions:
       set:
         patient: x-hasura-User-Id
         provider: x-hasura-Provider-Id
-  - role: player
-    permission:
-      columns:
-        - createdAt
-        - endedAt
-        - genre
-        - postSessionMood
-        - preSessionMood
-        - state
-        - updatedAt
-      filter:
-        patient:
-          _eq: X-Hasura-User-Id
-      check:
-        patient:
-          _eq: X-Hasura-User-Id
   - role: therapist
     permission:
       columns:

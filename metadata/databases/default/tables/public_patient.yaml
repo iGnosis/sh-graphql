@@ -91,32 +91,6 @@ select_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
-  - role: player
-    permission:
-      columns:
-        - activeCareplan
-        - careGiverEmail
-        - careGiverPhoneCountryCode
-        - careGiverPhoneNumber
-        - createdAt
-        - email
-        - id
-        - identifier
-        - medicalConditions
-        - nickname
-        - onboardedBy
-        - phoneCountryCode
-        - phoneNumber
-        - preferredActivities
-        - preferredGenres
-        - primaryTherapist
-        - provider
-        - rewards
-        - timezone
-        - updatedAt
-      filter:
-        id:
-          _eq: x-hasura-user-id
   - role: therapist
     permission:
       columns:
@@ -160,15 +134,6 @@ update_permissions:
         id:
           _eq: X-Hasura-User-Id
       check: null
-  - role: player
-    permission:
-      columns:
-        - nickname
-        - timezone
-      filter:
-        id:
-          _eq: x-hasura-user-id
-      check: {}
 event_triggers:
   - name: event_added_first_patient
     definition:

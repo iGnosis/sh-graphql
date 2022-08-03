@@ -32,17 +32,6 @@ select_permissions:
         - duration
         - difficulty
       filter: {}
-  - role: player
-    permission:
-      columns:
-        - name
-        - details
-        - id
-        - createdAt
-        - updatedAt
-        - duration
-        - difficulty
-      filter: {}
   - role: therapist
     permission:
       columns:
