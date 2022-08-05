@@ -24,6 +24,17 @@ insert_permissions:
         - reps
       backend_only: false
 select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - activity
+        - careplan
+        - createdAt
+        - provider
+        - reps
+      filter:
+        careplan:
+          _eq: X-Hasura-Careplan-Id
   - role: therapist
     permission:
       columns:

@@ -1,6 +1,271 @@
-actions: []
+actions:
+  - name: appAccessed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/game/app-accessed'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: Pinpoint - called when Soundhealth App is accessed.
+  - name: faqAccessed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/help-accessed/soundhealth-faq'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: Pinpoint - called when Soundhealth FAQs are accessed.
+  - name: freeParkinsonResourcesAccessed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/help-accessed/free-resources'
+      forward_client_headers: true
+    permissions:
+      - role: patient
+    comment: Pinpoint - called when free resources by Parkinson’s foundation are accessed.
+  - name: freeRewardAccessed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/help-accessed/free-reward-accessed'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: Free reward accessed.
+  - name: gameCompleted
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/game/complete'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "startDate": {{$body.input.startDate}},
+              "currentDate": {{$body.input.currentDate}},
+              "endDate": {{$body.input.endDate}},
+              "userTimezone": {{$body.input.userTimezone}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: Called when a game has been completed.
+  - name: generateSpeech
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/speech/generate'
+      forward_client_headers: true
+      request_transform:
+        request_headers:
+          remove_headers:
+            - content-type
+          add_headers: {}
+        body:
+          action: remove
+        method: GET
+        version: 2
+        query_params:
+          text: '{{$body.input.text}}'
+        template_engine: Kriti
+    comment: Speech Synthesis API.
+  - name: isTutorialNeeded
+    definition:
+      kind: synchronous
+      handler: https://webhook.site/3c0034f3-142d-4a2f-aff1-71003eea7997
+      request_transform:
+        request_headers:
+          remove_headers:
+            - content-type
+          add_headers: {}
+        body:
+          action: transform
+          template: |-
+            {
+              "game": {{$body.input.game}}
+            }
+        method: GET
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    comment: isTutorialNeeded
+  - name: markRewardAsAccessed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient/rewards/accessed'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "rewardTier": {{$body.input.rewardTier}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: Marks a reward as accessed.
+  - name: markRewardAsViewed
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient/rewards/viewed'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "rewardTier": "{{$body.input.rewardTier}}"
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: Marks a reward as viewed.
+  - name: patientDailyGoals
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient/stats/daily-goals'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "input": {{$body.input}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: API to fetch patient daily goals.
+  - name: patientMonthlyGoals
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient/stats/monthly-goals'
+      forward_client_headers: true
+      request_transform:
+        request_headers:
+          remove_headers:
+            - content-type
+          add_headers: {}
+        method: GET
+        version: 2
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          startDate: '{{$body.input.startDate}}'
+          userTimezone: '{{$body.input.userTimezone}}'
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: API to fetch patient monthly goals. Start and end dates are inclusive.
+  - name: patientSessionStreak
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient/stats/streak/'
+      forward_client_headers: true
+      request_transform:
+        request_headers:
+          remove_headers:
+            - content-type
+          add_headers: {}
+        body:
+          action: remove
+        method: GET
+        version: 2
+        query_params:
+          userTimezone: '{{$body.input.userTimezone}}'
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: API to fetch patient sessions streak number.
+  - name: updateRewards
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient/rewards/update'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "startDate": {{$body.input.startDate}},
+              "endDate": {{$body.input.endDate}},
+              "userTimezone": {{$body.input.userTimezone}}
+            }
+        method: POST
+        version: 2
+        query_params: {}
+        template_engine: Kriti
+    permissions:
+      - role: patient
+    comment: Updates Rewards based on patient's monthly activity.
 custom_types:
-  enums: []
+  enums:
+    - name: Status
+      values:
+        - value: completed
+          is_deprecated: null
+          description: null
+        - value: partiallycompleted
+          is_deprecated: null
+          description: null
+        - value: exceeded
+          is_deprecated: null
+          description: null
   input_objects: []
-  objects: []
+  objects:
+    - name: Root
+    - name: Day
+    - name: Session
+    - name: PatientMonthlyGoals
+    - name: PatientDailyGoals
+    - name: PatientSessionStreak
+    - name: Date
+    - name: EventNewPatient
+    - name: EventNewTherapist
+    - name: SignUpPatient
+    - name: Patient
+    - name: ExchangeCodeWithTokens
+    - name: Tokens
+    - name: RefreshTokens
+    - name: RefreshedTokens
+    - name: RevokeRefreshToken
+    - name: GenerateSpeech
+    - name: PatientMonthlyGoalsData
+    - name: PatientDailyGoalsData
+    - name: PatientDailyGoalsDataActivities
+    - name: UpdateRewards
+    - name: MarkRewardAsViewed
+    - name: FaqAccessed
+    - name: FreeParkinsonResourcesAccessed
+    - name: MarkRewardAsAccessed
+    - name: FreeRewardAccessed
+    - name: Output
+    - name: GameCompleted
+    - name: AppAccessed
   scalars: []

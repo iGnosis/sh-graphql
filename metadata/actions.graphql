@@ -1,0 +1,220 @@
+type Mutation {
+  appAccessed: AppAccessed
+}
+
+type Mutation {
+  faqAccessed: FaqAccessed
+}
+
+type Mutation {
+  freeParkinsonResourcesAccessed: FreeParkinsonResourcesAccessed
+}
+
+type Mutation {
+  freeRewardAccessed: FreeRewardAccessed
+}
+
+type Mutation {
+  gameCompleted(
+    startDate: String!
+    currentDate: String!
+    endDate: String!
+    userTimezone: String!
+  ): GameCompleted
+}
+
+type Query {
+  generateSpeech(
+    text: String!
+  ): GenerateSpeech
+}
+
+type Mutation {
+  isTutorialNeeded(
+    game: String!
+  ): Output
+}
+
+type Mutation {
+  markRewardAsAccessed(
+    rewardTier: String!
+  ): MarkRewardAsAccessed
+}
+
+type Mutation {
+  markRewardAsViewed(
+    rewardTier: String!
+  ): MarkRewardAsViewed
+}
+
+type Query {
+  patientDailyGoals(
+    date: String!
+    activityIds: [String!]!
+  ): PatientDailyGoals
+}
+
+type Query {
+  patientMonthlyGoals(
+    startDate: String!
+    endDate: String!
+    userTimezone: String!
+  ): PatientMonthlyGoals
+}
+
+type Query {
+  patientSessionStreak(
+    userTimezone: String!
+  ): PatientSessionStreak
+}
+
+type Mutation {
+  updateRewards(
+    startDate: String!
+    endDate: String!
+    userTimezone: String!
+  ): UpdateRewards
+}
+
+enum Status {
+  completed
+  partiallycompleted
+  exceeded
+}
+
+type Root {
+  data: [Day]
+}
+
+type Day {
+  day: Int!
+  sessions: [Session]
+}
+
+type Session {
+  id: ID!
+  status: Status!
+}
+
+type PatientMonthlyGoals {
+  status: String!
+  data: PatientMonthlyGoalsData
+}
+
+type PatientDailyGoals {
+  status: String!
+  data: PatientDailyGoalsData
+}
+
+type PatientSessionStreak {
+  streak: Int!
+}
+
+type Date {
+  date: String!
+  totalSessionDurationInMin: Int!
+}
+
+type EventNewPatient {
+  message: String!
+}
+
+type EventNewTherapist {
+  message: String!
+}
+
+type SignUpPatient {
+  token: String!
+  patient: Patient!
+}
+
+type Patient {
+  id: String!
+  provider: String!
+  activeCareplan: String!
+  nickname: String
+}
+
+type ExchangeCodeWithTokens {
+  status: String!
+  data: Tokens
+}
+
+type Tokens {
+  id_token: String!
+  access_token: String!
+  refresh_token: String!
+  expires_in: Int!
+  token_type: String!
+}
+
+type RefreshTokens {
+  status: String!
+  data: RefreshedTokens
+}
+
+type RefreshedTokens {
+  AccessToken: String!
+  ExpiresIn: Int!
+  IdToken: String!
+  TokenType: String!
+}
+
+type RevokeRefreshToken {
+  status: String!
+}
+
+type GenerateSpeech {
+  speech: String!
+}
+
+type PatientMonthlyGoalsData {
+  daysCompleted: Int!
+  rewardsCountDown: [Int!]!
+}
+
+type PatientDailyGoalsData {
+  activities: [PatientDailyGoalsDataActivities]!
+}
+
+type PatientDailyGoalsDataActivities {
+  id: String!
+  isCompleted: Boolean!
+}
+
+type UpdateRewards {
+  status: String!
+}
+
+type MarkRewardAsViewed {
+  status: String!
+}
+
+type FaqAccessed {
+  status: String!
+}
+
+type FreeParkinsonResourcesAccessed {
+  status: String!
+}
+
+type MarkRewardAsAccessed {
+  status: String!
+}
+
+type FreeRewardAccessed {
+  status: String!
+}
+
+type Output {
+  isTutorialNeeded: Boolean!
+}
+
+type GameCompleted {
+  status: String!
+}
+
+type AppAccessed {
+  status: String!
+}
+

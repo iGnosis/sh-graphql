@@ -14,7 +14,33 @@ object_relationships:
   - name: session_type
     using:
       foreign_key_constraint_on: status
+array_relationships:
+  - name: events
+    using:
+      foreign_key_constraint_on:
+        column: session
+        table:
+          schema: public
+          name: events
 insert_permissions:
+  - role: patient
+    permission:
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
+      set:
+        patient: x-hasura-user-id
+        provider: x-hasura-provider-id
+      columns:
+        - careplan
+        - createdAt
+        - endedAt
+        - genre
+        - postSessionMood
+        - preSessionMood
+        - state
+        - updatedAt
+      backend_only: false
   - role: therapist
     permission:
       check: {}
@@ -28,10 +54,16 @@ select_permissions:
   - role: patient
     permission:
       columns:
+        - careplan
         - createdAt
         - endedAt
+        - genre
         - id
         - patient
+        - postSessionMood
+        - preSessionMood
+        - provider
+        - state
         - updatedAt
       filter:
         patient:
@@ -57,6 +89,25 @@ select_permissions:
           _eq: X-Hasura-Provider-Id
       allow_aggregations: true
 update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - createdAt
+        - endedAt
+        - genre
+        - postSessionMood
+        - preSessionMood
+        - state
+        - updatedAt
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+      check:
+        patient:
+          _eq: X-Hasura-User-Id
+      set:
+        patient: x-hasura-User-Id
+        provider: x-hasura-Provider-Id
   - role: therapist
     permission:
       columns:
@@ -69,24 +120,3 @@ update_permissions:
         provider:
           _eq: X-Hasura-Provider-Id
       check: null
-event_triggers:
-  - name: session_inspector
-    definition:
-      enable_manual: true
-      insert:
-        columns: '*'
-    retry_conf:
-      num_retries: 0
-      interval_sec: 10
-      timeout_sec: 60
-    webhook: '{{ACTION_BASE_URL}}/cron/schedule-session-inspector'
-    request_transform:
-      body:
-        action: transform
-        template: |-
-          {
-            "sessionId": {{$body.event.data.new.id}},
-            "createdAt": {{$body.event.data.new.createdAt}}
-          }
-      version: 2
-      template_engine: Kriti

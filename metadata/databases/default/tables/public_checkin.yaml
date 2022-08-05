@@ -1,0 +1,34 @@
+table:
+  schema: public
+  name: checkin
+insert_permissions:
+  - role: patient
+    permission:
+      check: {}
+      set:
+        patient: x-hasura-user-id
+      columns:
+        - type
+        - value
+      backend_only: false
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - createdAt
+        - id
+        - type
+        - value
+      filter:
+        patient:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - type
+        - value
+      filter: {}
+      check: {}
+      set:
+        patient: x-hasura-user-id

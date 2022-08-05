@@ -1,0 +1,1 @@
+alter table "public"."game" add column "onboardingstatus" text null
