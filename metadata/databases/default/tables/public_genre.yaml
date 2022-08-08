@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: genre
+  schema: public
 is_enum: true
 array_relationships:
   - name: user_preferred_genres
@@ -8,15 +8,15 @@ array_relationships:
       foreign_key_constraint_on:
         column: genre
         table:
-          schema: public
           name: user_preferred_genre
+          schema: public
   - name: user_profiles
     using:
       foreign_key_constraint_on:
         column: preferredGenre
         table:
-          schema: public
           name: user_profile
+          schema: public
 select_permissions:
   - role: therapist
     permission:

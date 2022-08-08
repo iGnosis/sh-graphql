@@ -6,9 +6,9 @@ actions:
       forward_client_headers: true
       request_transform:
         method: POST
-        version: 2
         query_params: {}
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: Pinpoint - called when Soundhealth App is accessed.
@@ -19,9 +19,9 @@ actions:
       forward_client_headers: true
       request_transform:
         method: POST
-        version: 2
         query_params: {}
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: Pinpoint - called when Soundhealth FAQs are accessed.
@@ -40,9 +40,9 @@ actions:
       forward_client_headers: true
       request_transform:
         method: POST
-        version: 2
         query_params: {}
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: Free reward accessed.
@@ -62,9 +62,9 @@ actions:
               "userTimezone": {{$body.input.userTimezone}}
             }
         method: POST
-        version: 2
         query_params: {}
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: Called when a game has been completed.
@@ -74,27 +74,23 @@ actions:
       handler: '{{ACTION_BASE_URL}}/speech/generate'
       forward_client_headers: true
       request_transform:
-        request_headers:
-          remove_headers:
-            - content-type
-          add_headers: {}
         body:
           action: remove
         method: GET
-        version: 2
         query_params:
           text: '{{$body.input.text}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
         template_engine: Kriti
+        version: 2
     comment: Speech Synthesis API.
   - name: isTutorialNeeded
     definition:
       kind: synchronous
       handler: https://webhook.site/3c0034f3-142d-4a2f-aff1-71003eea7997
       request_transform:
-        request_headers:
-          remove_headers:
-            - content-type
-          add_headers: {}
         body:
           action: transform
           template: |-
@@ -102,9 +98,13 @@ actions:
               "game": {{$body.input.game}}
             }
         method: GET
-        version: 2
         query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
         template_engine: Kriti
+        version: 2
     comment: isTutorialNeeded
   - name: markRewardAsAccessed
     definition:
@@ -119,9 +119,9 @@ actions:
               "rewardTier": {{$body.input.rewardTier}}
             }
         method: POST
-        version: 2
         query_params: {}
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: Marks a reward as accessed.
@@ -138,9 +138,9 @@ actions:
               "rewardTier": "{{$body.input.rewardTier}}"
             }
         method: POST
-        version: 2
         query_params: {}
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: Marks a reward as viewed.
@@ -157,9 +157,9 @@ actions:
               "input": {{$body.input}}
             }
         method: POST
-        version: 2
         query_params: {}
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: API to fetch patient daily goals.
@@ -169,17 +169,17 @@ actions:
       handler: '{{ACTION_BASE_URL}}/patient/stats/monthly-goals'
       forward_client_headers: true
       request_transform:
-        request_headers:
-          remove_headers:
-            - content-type
-          add_headers: {}
         method: GET
-        version: 2
         query_params:
           endDate: '{{$body.input.endDate}}'
           startDate: '{{$body.input.startDate}}'
           userTimezone: '{{$body.input.userTimezone}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: API to fetch patient monthly goals. Start and end dates are inclusive.
@@ -189,17 +189,17 @@ actions:
       handler: '{{ACTION_BASE_URL}}/patient/stats/streak/'
       forward_client_headers: true
       request_transform:
-        request_headers:
-          remove_headers:
-            - content-type
-          add_headers: {}
         body:
           action: remove
         method: GET
-        version: 2
         query_params:
           userTimezone: '{{$body.input.userTimezone}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: API to fetch patient sessions streak number.
@@ -218,9 +218,9 @@ actions:
               "userTimezone": {{$body.input.userTimezone}}
             }
         method: POST
-        version: 2
         query_params: {}
         template_engine: Kriti
+        version: 2
     permissions:
       - role: patient
     comment: Updates Rewards based on patient's monthly activity.
@@ -228,15 +228,15 @@ custom_types:
   enums:
     - name: Status
       values:
-        - value: completed
+        - description: null
           is_deprecated: null
-          description: null
-        - value: partiallycompleted
+          value: completed
+        - description: null
           is_deprecated: null
-          description: null
-        - value: exceeded
+          value: partiallycompleted
+        - description: null
           is_deprecated: null
-          description: null
+          value: exceeded
   input_objects: []
   objects:
     - name: Root
@@ -268,4 +268,6 @@ custom_types:
     - name: Output
     - name: GameCompleted
     - name: AppAccessed
+    - name: TestMutation
+    - name: TestData
   scalars: []

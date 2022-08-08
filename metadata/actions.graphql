@@ -218,3 +218,12 @@ type AppAccessed {
   status: String!
 }
 
+type TestMutation {
+  status: String!
+  data: TestData
+}
+
+type TestData {
+  name: String!
+}
+

@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: user_preferred_genre
+  schema: public
 object_relationships:
   - name: genreByGenre
     using:

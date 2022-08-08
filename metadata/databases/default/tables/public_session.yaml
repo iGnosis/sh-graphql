@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: session
+  schema: public
 object_relationships:
   - name: careplanByCareplan
     using:
@@ -20,8 +20,8 @@ array_relationships:
       foreign_key_constraint_on:
         column: session
         table:
-          schema: public
           name: events
+          schema: public
 insert_permissions:
   - role: patient
     permission:
@@ -40,7 +40,6 @@ insert_permissions:
         - preSessionMood
         - state
         - updatedAt
-      backend_only: false
   - role: therapist
     permission:
       check: {}
@@ -49,7 +48,6 @@ insert_permissions:
       columns:
         - careplan
         - patient
-      backend_only: false
 select_permissions:
   - role: patient
     permission:

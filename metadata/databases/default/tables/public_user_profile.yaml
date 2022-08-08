@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: user_profile
+  schema: public
 object_relationships:
   - name: genre
     using:

@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: patient_careplan
+  schema: public
 object_relationships:
   - name: careplanByCareplan
     using:
@@ -18,7 +18,6 @@ insert_permissions:
       columns:
         - careplan
         - patient
-      backend_only: false
 select_permissions:
   - role: patient
     permission:
@@ -45,6 +44,7 @@ select_permissions:
 delete_permissions:
   - role: therapist
     permission:
+      backend_only: false
       filter:
         provider:
           _eq: X-Hasura-Provider-Id

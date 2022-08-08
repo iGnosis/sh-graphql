@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: provider
+  schema: public
 object_relationships:
   - name: provider_type
     using:
@@ -11,54 +11,54 @@ array_relationships:
       foreign_key_constraint_on:
         column: provider
         table:
-          schema: public
           name: careplan_activity
+          schema: public
   - name: careplans
     using:
       foreign_key_constraint_on:
         column: provider
         table:
-          schema: public
           name: careplan
+          schema: public
   - name: patient_notes
     using:
       foreign_key_constraint_on:
         column: provider
         table:
-          schema: public
           name: patient_notes
+          schema: public
   - name: patients
     using:
       foreign_key_constraint_on:
         column: provider
         table:
-          schema: public
           name: patient
+          schema: public
   - name: sessions
     using:
       foreign_key_constraint_on:
         column: provider
         table:
-          schema: public
           name: session
+          schema: public
   - name: subscriptions
     using:
       foreign_key_constraint_on:
         column: provider
         table:
-          schema: public
           name: subscription
+          schema: public
   - name: user_profiles
     using:
       foreign_key_constraint_on:
         column: provider
         table:
-          schema: public
           name: user_profile
+          schema: public
   - name: users
     using:
       foreign_key_constraint_on:
         column: provider
         table:
-          schema: public
           name: user
+          schema: public
