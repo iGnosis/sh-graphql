@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: user
+  schema: public
 object_relationships:
   - name: providerByProvider
     using:
@@ -10,8 +10,8 @@ object_relationships:
       foreign_key_constraint_on:
         column: user
         table:
-          schema: public
           name: user_profile
+          schema: public
   - name: user_status
     using:
       foreign_key_constraint_on: status
@@ -24,81 +24,80 @@ array_relationships:
       foreign_key_constraint_on:
         column: createdBy
         table:
-          schema: public
           name: careplan
+          schema: public
   - name: events
     using:
       foreign_key_constraint_on:
         column: user
         table:
-          schema: public
           name: events
+          schema: public
   - name: patient_notes
     using:
       foreign_key_constraint_on:
         column: author
         table:
-          schema: public
           name: patient_notes
+          schema: public
   - name: patients
     using:
       foreign_key_constraint_on:
         column: onboardedBy
         table:
-          schema: public
           name: patient
+          schema: public
   - name: patientsByPrimarytherapist
     using:
       foreign_key_constraint_on:
         column: primaryTherapist
         table:
-          schema: public
           name: patient
+          schema: public
   - name: subscriptions
     using:
       foreign_key_constraint_on:
         column: user
         table:
-          schema: public
           name: subscription
+          schema: public
   - name: userRelationsByFrom
     using:
       foreign_key_constraint_on:
         column: from
         table:
-          schema: public
           name: user_relation
+          schema: public
   - name: userRelationsByTo
     using:
       foreign_key_constraint_on:
         column: to
         table:
-          schema: public
           name: user_relation
+          schema: public
   - name: user_medical_conditions
     using:
       foreign_key_constraint_on:
         column: user
         table:
-          schema: public
           name: user_medical_condition
+          schema: public
   - name: user_preferred_genres
     using:
       foreign_key_constraint_on:
         column: user
         table:
-          schema: public
           name: user_preferred_genre
+          schema: public
 insert_permissions:
   - role: therapist
     permission:
       check: {}
       set:
+        provider: x-hasura-provider-id
         status: active
         type: patient
-        provider: x-hasura-provider-id
       columns: []
-      backend_only: false
 select_permissions:
   - role: therapist
     permission:
@@ -123,8 +122,8 @@ event_triggers:
       insert:
         columns: '*'
     retry_conf:
-      num_retries: 0
       interval_sec: 10
+      num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/events/therapist/new'
     request_transform:
@@ -138,5 +137,5 @@ event_triggers:
             "lastName": {{$body.event.data.new.lastName}},
             "type": {{$body.event.data.new.type}}
           }
-      version: 2
       template_engine: Kriti
+      version: 2

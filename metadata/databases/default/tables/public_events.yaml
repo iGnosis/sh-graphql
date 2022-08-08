@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: events
+  schema: public
 object_relationships:
   - name: activityByActivity
     using:
@@ -31,7 +31,6 @@ insert_permissions:
         - task_id
         - task_name
         - user
-      backend_only: false
   - role: therapist
     permission:
       check: {}
@@ -47,7 +46,6 @@ insert_permissions:
         - session
         - task_id
         - task_name
-      backend_only: false
 select_permissions:
   - role: patient
     permission:

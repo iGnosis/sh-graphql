@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: provider_type
+  schema: public
 is_enum: true
 array_relationships:
   - name: providers
@@ -8,5 +8,5 @@ array_relationships:
       foreign_key_constraint_on:
         column: type
         table:
-          schema: public
           name: provider
+          schema: public

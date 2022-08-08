@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: user_type
+  schema: public
 is_enum: true
 array_relationships:
   - name: users
@@ -8,5 +8,5 @@ array_relationships:
       foreign_key_constraint_on:
         column: type
         table:
-          schema: public
           name: user
+          schema: public

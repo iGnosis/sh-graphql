@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: patient_feedback
+  schema: public
 object_relationships:
   - name: patientByPatient
     using:
@@ -15,7 +15,6 @@ insert_permissions:
         - description
         - rating
         - recommendationScore
-      backend_only: false
 select_permissions:
   - role: patient
     permission:
@@ -46,8 +45,8 @@ event_triggers:
       insert:
         columns: '*'
     retry_conf:
-      num_retries: 0
       interval_sec: 10
+      num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/cron/email-patient-feedback'
     request_transform:
@@ -58,6 +57,6 @@ event_triggers:
             "feedbackId": {{$body.event.data.new.id}}
           }
       method: POST
-      version: 2
       query_params: {}
       template_engine: Kriti
+      version: 2

@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: game
+  schema: public
 insert_permissions:
   - role: patient
     permission:
@@ -13,7 +13,6 @@ insert_permissions:
         - createdAt
         - game
         - updatedAt
-      backend_only: false
 select_permissions:
   - role: patient
     permission:
@@ -49,8 +48,8 @@ event_triggers:
       insert:
         columns: '*'
     retry_conf:
-      num_retries: 0
       interval_sec: 10
+      num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/events/game/start'
     request_transform:
@@ -62,6 +61,6 @@ event_triggers:
             "createdAt": {{$body.event.data.new.createdAt}}
           }
       method: POST
-      version: 2
       query_params: {}
       template_engine: Kriti
+      version: 2

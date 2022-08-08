@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: checkin
+  schema: public
 insert_permissions:
   - role: patient
     permission:
@@ -10,7 +10,6 @@ insert_permissions:
       columns:
         - type
         - value
-      backend_only: false
 select_permissions:
   - role: patient
     permission:
