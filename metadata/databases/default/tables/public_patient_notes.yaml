@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: patient_notes
+  schema: public
 object_relationships:
   - name: patientByPatient
     using:

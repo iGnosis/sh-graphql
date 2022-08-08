@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: user_relation_type
+  schema: public
 is_enum: true
 array_relationships:
   - name: user_relations
@@ -8,5 +8,5 @@ array_relationships:
       foreign_key_constraint_on:
         column: relation
         table:
-          schema: public
           name: user_relation
+          schema: public

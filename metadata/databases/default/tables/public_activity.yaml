@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: activity
+  schema: public
 object_relationships:
   - name: activity_difficulty
     using:
@@ -11,28 +11,17 @@ array_relationships:
       foreign_key_constraint_on:
         column: activity
         table:
-          schema: public
           name: events
+          schema: public
   - name: program_activities
     using:
       foreign_key_constraint_on:
         column: activity
         table:
-          schema: public
           name: careplan_activity
+          schema: public
 select_permissions:
   - role: patient
-    permission:
-      columns:
-        - name
-        - details
-        - id
-        - createdAt
-        - updatedAt
-        - duration
-        - difficulty
-      filter: {}
-  - role: player
     permission:
       columns:
         - name

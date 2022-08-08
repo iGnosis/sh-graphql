@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: careplan_activity
+  schema: public
 object_relationships:
   - name: activityByActivity
     using:
@@ -22,7 +22,6 @@ insert_permissions:
         - activity
         - careplan
         - reps
-      backend_only: false
 select_permissions:
   - role: patient
     permission:
@@ -50,6 +49,7 @@ select_permissions:
 delete_permissions:
   - role: therapist
     permission:
+      backend_only: false
       filter:
         provider:
           _eq: X-Hasura-Provider-Id

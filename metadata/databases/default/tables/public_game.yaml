@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: game
+  schema: public
 insert_permissions:
   - role: patient
     permission:
@@ -13,7 +13,6 @@ insert_permissions:
         - createdAt
         - game
         - updatedAt
-      backend_only: false
 select_permissions:
   - role: patient
     permission:
@@ -42,3 +41,26 @@ update_permissions:
         patient:
           _eq: X-Hasura-User-Id
       check: null
+event_triggers:
+  - name: game_created
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/events/game/start'
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "patientId": {{$body.event.data.new.patient}},
+            "createdAt": {{$body.event.data.new.createdAt}}
+          }
+      method: POST
+      query_params: {}
+      template_engine: Kriti
+      version: 2

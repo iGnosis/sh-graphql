@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: careplan
+  schema: public
 object_relationships:
   - name: providerByProvider
     using:
@@ -14,29 +14,29 @@ array_relationships:
       foreign_key_constraint_on:
         column: careplan
         table:
-          schema: public
           name: careplan_activity
+          schema: public
   - name: patient_careplans
     using:
       foreign_key_constraint_on:
         column: careplan
         table:
-          schema: public
           name: patient_careplan
+          schema: public
   - name: patients
     using:
       foreign_key_constraint_on:
         column: activeCareplan
         table:
-          schema: public
           name: patient
+          schema: public
   - name: sessions
     using:
       foreign_key_constraint_on:
         column: careplan
         table:
-          schema: public
           name: session
+          schema: public
 insert_permissions:
   - role: therapist
     permission:
@@ -52,7 +52,6 @@ insert_permissions:
         - medicalConditions
         - name
         - tags
-      backend_only: false
 select_permissions:
   - role: patient
     permission:

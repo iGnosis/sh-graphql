@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: session
+  schema: public
 object_relationships:
   - name: careplanByCareplan
     using:
@@ -20,8 +20,8 @@ array_relationships:
       foreign_key_constraint_on:
         column: session
         table:
-          schema: public
           name: events
+          schema: public
 insert_permissions:
   - role: patient
     permission:
@@ -40,21 +40,6 @@ insert_permissions:
         - preSessionMood
         - state
         - updatedAt
-      backend_only: false
-  - role: player
-    permission:
-      check:
-        patient:
-          _eq: X-Hasura-User-Id
-      set:
-        patient: x-hasura-User-Id
-        provider: x-hasura-Provider-Id
-      columns:
-        - careplan
-        - createdAt
-        - state
-        - updatedAt
-      backend_only: false
   - role: therapist
     permission:
       check: {}
@@ -63,26 +48,8 @@ insert_permissions:
       columns:
         - careplan
         - patient
-      backend_only: false
 select_permissions:
   - role: patient
-    permission:
-      columns:
-        - careplan
-        - createdAt
-        - endedAt
-        - genre
-        - id
-        - patient
-        - postSessionMood
-        - preSessionMood
-        - provider
-        - state
-        - updatedAt
-      filter:
-        patient:
-          _eq: X-Hasura-User-Id
-  - role: player
     permission:
       columns:
         - careplan
@@ -139,22 +106,6 @@ update_permissions:
       set:
         patient: x-hasura-User-Id
         provider: x-hasura-Provider-Id
-  - role: player
-    permission:
-      columns:
-        - createdAt
-        - endedAt
-        - genre
-        - postSessionMood
-        - preSessionMood
-        - state
-        - updatedAt
-      filter:
-        patient:
-          _eq: X-Hasura-User-Id
-      check:
-        patient:
-          _eq: X-Hasura-User-Id
   - role: therapist
     permission:
       columns:
@@ -167,47 +118,3 @@ update_permissions:
         provider:
           _eq: X-Hasura-Provider-Id
       check: null
-event_triggers:
-  - name: event_session_complete
-    definition:
-      enable_manual: true
-      update:
-        columns:
-          - endedAt
-          - patient
-    retry_conf:
-      num_retries: 0
-      interval_sec: 10
-      timeout_sec: 60
-    webhook: '{{ACTION_BASE_URL}}/events/session/complete'
-    request_transform:
-      body:
-        action: transform
-        template: |-
-          {
-            "endedAt": {{$body.event.data.new.endedAt}},
-            "patientId" : {{$body.event.data.new.patient}}
-          }
-      version: 2
-      template_engine: Kriti
-  - name: session_inspector
-    definition:
-      enable_manual: true
-      insert:
-        columns: '*'
-    retry_conf:
-      num_retries: 0
-      interval_sec: 10
-      timeout_sec: 60
-    webhook: '{{ACTION_BASE_URL}}/cron/schedule-session-inspector'
-    request_transform:
-      body:
-        action: transform
-        template: |-
-          {
-            "sessionId": {{$body.event.data.new.id}},
-            "createdAt": {{$body.event.data.new.createdAt}},
-            "patientId": {{$body.event.data.new.patient}}
-          }
-      version: 2
-      template_engine: Kriti

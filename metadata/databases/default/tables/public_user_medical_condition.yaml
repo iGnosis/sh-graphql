@@ -1,6 +1,6 @@
 table:
-  schema: public
   name: user_medical_condition
+  schema: public
 object_relationships:
   - name: medicalConditionByMedicalCondition
     using:
