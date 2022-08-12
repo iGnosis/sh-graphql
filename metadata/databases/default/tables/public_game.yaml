@@ -17,15 +17,16 @@ select_permissions:
   - role: patient
     permission:
       columns:
-        - repsCompleted
-        - totalDuration
         - analytics
-        - game
+        - calibrationDuration
         - createdAt
         - endedAt
-        - updatedAt
+        - game
         - id
         - patient
+        - repsCompleted
+        - totalDuration
+        - updatedAt
       filter:
         patient:
           _eq: X-Hasura-User-Id
@@ -34,6 +35,7 @@ update_permissions:
     permission:
       columns:
         - analytics
+        - calibrationDuration
         - endedAt
         - repsCompleted
         - totalDuration
