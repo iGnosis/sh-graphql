@@ -48,13 +48,6 @@ type Mutation {
 }
 
 type Query {
-  patientDailyGoals(
-    date: String!
-    activityIds: [String!]!
-  ): PatientDailyGoals
-}
-
-type Query {
   patientMonthlyGoals(
     startDate: String!
     endDate: String!
@@ -69,11 +62,33 @@ type Query {
 }
 
 type Mutation {
+  requestLoginOtp(
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): RequestLoginOtp
+}
+
+type Mutation {
+  resendLoginOtp(
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): ResendLoginOtp
+}
+
+type Mutation {
   updateRewards(
     startDate: String!
     endDate: String!
     userTimezone: String!
   ): UpdateRewards
+}
+
+type Mutation {
+  verifyLoginOtp(
+    phoneCountryCode: String!
+    phoneNumber: String!
+    otp: Int!
+  ): VerifyLoginOtp
 }
 
 enum Status {
@@ -225,5 +240,29 @@ type TestMutation {
 
 type TestData {
   name: String!
+}
+
+type RequestLoginOtp {
+  data: RequestLoginOtpData
+}
+
+type RequestLoginOtpData {
+  message: String
+}
+
+type VerifyLoginOtp {
+  data: VerifyLoginOtpData
+}
+
+type VerifyLoginOtpData {
+  token: String!
+}
+
+type ResendLoginOtp {
+  data: ResendLoginOtpData
+}
+
+type ResendLoginOtpData {
+  message: String
 }
 
