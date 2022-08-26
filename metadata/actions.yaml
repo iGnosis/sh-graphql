@@ -144,25 +144,6 @@ actions:
     permissions:
       - role: patient
     comment: Marks a reward as viewed.
-  - name: patientDailyGoals
-    definition:
-      kind: ""
-      handler: '{{ACTION_BASE_URL}}/patient/stats/daily-goals'
-      forward_client_headers: true
-      request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "input": {{$body.input}}
-            }
-        method: POST
-        query_params: {}
-        template_engine: Kriti
-        version: 2
-    permissions:
-      - role: patient
-    comment: API to fetch patient daily goals.
   - name: patientMonthlyGoals
     definition:
       kind: ""
@@ -203,6 +184,44 @@ actions:
     permissions:
       - role: patient
     comment: API to fetch patient sessions streak number.
+  - name: requestLoginOtp
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/sms-auth/login'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Login API for SMS Based Auth
+  - name: resendLoginOtp
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/sms-auth/resend-otp'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Re-send OTP API for SMS Based Auth
   - name: updateRewards
     definition:
       kind: synchronous
@@ -224,6 +243,26 @@ actions:
     permissions:
       - role: patient
     comment: Updates Rewards based on patient's monthly activity.
+  - name: verifyLoginOtp
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/sms-auth/verify-otp'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}},
+              "otp": {{$body.input.otp}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Verify API for SMS Based Auth
 custom_types:
   enums:
     - name: Status
@@ -270,4 +309,10 @@ custom_types:
     - name: AppAccessed
     - name: TestMutation
     - name: TestData
+    - name: RequestLoginOtp
+    - name: RequestLoginOtpData
+    - name: VerifyLoginOtp
+    - name: VerifyLoginOtpData
+    - name: ResendLoginOtp
+    - name: ResendLoginOtpData
   scalars: []
