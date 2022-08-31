@@ -72,6 +72,7 @@ event_triggers:
       update:
         columns:
           - endedAt
+          - analytics
           - id
           - patient
     retry_conf:
@@ -86,6 +87,7 @@ event_triggers:
           {
             "gameId": {{$body.event.data.new.id}},
             "patientId": {{$body.event.data.new.patient}},
+            "analytics": {{$body.event.data.new.analytics}},
             "endedAt": {{$body.event.data.new.endedAt}}
           }
       method: POST
