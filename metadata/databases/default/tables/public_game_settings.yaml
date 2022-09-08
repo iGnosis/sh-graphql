@@ -1,3 +1,15 @@
 table:
   name: game_settings
   schema: public
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - configuration
+        - createdAt
+        - gameName
+        - patient
+        - updatedAt
+      filter:
+        patient:
+          _eq: x-hasura-user-id
