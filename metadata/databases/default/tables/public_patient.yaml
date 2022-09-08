@@ -48,6 +48,7 @@ insert_permissions:
         - careGiverEmail
         - careGiverPhoneCountryCode
         - careGiverPhoneNumber
+        - careplan
         - email
         - identifier
         - medicalConditions
