@@ -6,6 +6,7 @@
 - "!include public_events.yaml"
 - "!include public_game.yaml"
 - "!include public_game_name.yaml"
+- "!include public_game_settings.yaml"
 - "!include public_genre.yaml"
 - "!include public_medical_condition.yaml"
 - "!include public_patient.yaml"
