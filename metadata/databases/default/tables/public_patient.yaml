@@ -2,9 +2,6 @@ table:
   name: patient
   schema: public
 object_relationships:
-  - name: careplan
-    using:
-      foreign_key_constraint_on: activeCareplan
   - name: primaryTherapistUser
     using:
       foreign_key_constraint_on: primaryTherapist
@@ -25,13 +22,6 @@ array_relationships:
         column: patient
         table:
           name: game
-          schema: public
-  - name: patient_careplans
-    using:
-      foreign_key_constraint_on:
-        column: patient
-        table:
-          name: patient_careplan
           schema: public
   - name: patient_notes
     using:
@@ -55,7 +45,6 @@ insert_permissions:
         onboardedBy: x-hasura-user-id
         primaryTherapist: x-hasura-user-id
       columns:
-        - activeCareplan
         - careGiverEmail
         - careGiverPhoneCountryCode
         - careGiverPhoneNumber
@@ -69,7 +58,6 @@ select_permissions:
   - role: patient
     permission:
       columns:
-        - activeCareplan
         - careGiverEmail
         - careGiverPhoneCountryCode
         - careGiverPhoneNumber

@@ -2,9 +2,6 @@ table:
   name: session
   schema: public
 object_relationships:
-  - name: careplanByCareplan
-    using:
-      foreign_key_constraint_on: careplan
   - name: patientByPatient
     using:
       foreign_key_constraint_on: patient
