@@ -5,9 +5,6 @@ object_relationships:
   - name: genre
     using:
       foreign_key_constraint_on: preferredGenre
-  - name: providerByProvider
-    using:
-      foreign_key_constraint_on: provider
   - name: userByUser
     using:
       foreign_key_constraint_on: user

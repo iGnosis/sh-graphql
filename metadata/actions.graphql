@@ -14,6 +14,12 @@ type Mutation {
   freeRewardAccessed: FreeRewardAccessed
 }
 
+type Query {
+  gameAchievementRatio(
+    gameId: ID!
+  ): GameAchievementRatio
+}
+
 type Mutation {
   gameCompleted(
     startDate: String!
@@ -45,6 +51,27 @@ type Mutation {
   markRewardAsViewed(
     rewardTier: String!
   ): MarkRewardAsViewed
+}
+
+type Query {
+  patientChart(
+    startDate: String!
+    endDate: String!
+    userTimezone: String!
+    patientId: ID!
+    chartType: ChartTypeEnum!
+    groupBy: GroupByEnum!
+    isGroupByGames: Boolean
+  ): PatientChart
+}
+
+type Query {
+  patientEngagementChart(
+    startDate: String!
+    endDate: String!
+    userTimezone: String!
+    patientId: String!
+  ): PatientEngagementChart
 }
 
 type Query {
@@ -95,6 +122,23 @@ enum Status {
   completed
   partiallycompleted
   exceeded
+}
+
+enum ChartTypeEnum {
+  avgAchievementRatio
+  avgCompletionTime
+  avgEngagementRatio
+}
+
+enum GroupByEnum {
+  day
+  week
+  month
+}
+
+input SampleInput {
+  username: String!
+  password: String!
 }
 
 type Root {
@@ -264,5 +308,31 @@ type ResendLoginOtp {
 
 type ResendLoginOtpData {
   message: String
+}
+
+type SampleOutput {
+  accessToken: String!
+}
+
+type PatientEngagementChart {
+  data: PatientEngagementChartData!
+}
+
+type PatientEngagementChartData {
+  labels: [String]!
+  engagementPercentage: [Float]!
+}
+
+type PatientChart {
+  data: String!
+}
+
+type GameAchievementRatio {
+  data: GameAchievementRatioData!
+}
+
+type GameAchievementRatioData {
+  labels: [String!]!
+  data: [Int!]!
 }
 

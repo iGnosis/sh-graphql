@@ -2,9 +2,6 @@ table:
   name: subscription
   schema: public
 object_relationships:
-  - name: providerByProvider
-    using:
-      foreign_key_constraint_on: provider
   - name: userByUser
     using:
       foreign_key_constraint_on: user

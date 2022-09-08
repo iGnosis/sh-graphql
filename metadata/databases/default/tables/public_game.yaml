@@ -30,6 +30,22 @@ select_permissions:
       filter:
         patient:
           _eq: X-Hasura-User-Id
+  - role: therapist
+    permission:
+      columns:
+        - id
+        - createdAt
+        - updatedAt
+        - endedAt
+        - game
+        - repsCompleted
+        - totalDuration
+        - analytics
+        - patient
+        - calibrationDuration
+        - aggregateAnalytics
+      filter: {}
+      allow_aggregations: true
 update_permissions:
   - role: patient
     permission:

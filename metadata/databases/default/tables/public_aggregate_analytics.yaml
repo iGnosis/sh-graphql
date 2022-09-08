@@ -1,0 +1,3 @@
+table:
+  name: aggregate_analytics
+  schema: public

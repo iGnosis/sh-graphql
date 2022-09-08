@@ -2,9 +2,6 @@ table:
   name: careplan
   schema: public
 object_relationships:
-  - name: providerByProvider
-    using:
-      foreign_key_constraint_on: provider
   - name: user
     using:
       foreign_key_constraint_on: createdBy
@@ -43,7 +40,6 @@ insert_permissions:
       check: {}
       set:
         createdBy: x-hasura-User-Id
-        provider: x-hasura-Provider-Id
       columns:
         - description
         - details
@@ -66,7 +62,6 @@ select_permissions:
         - medicalConditions
         - name
         - options
-        - provider
         - tags
         - updatedAt
       filter:
@@ -84,12 +79,9 @@ select_permissions:
         - id
         - medicalConditions
         - name
-        - provider
         - tags
         - updatedAt
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id
+      filter: {}
       allow_aggregations: true
 update_permissions:
   - role: therapist
@@ -98,7 +90,5 @@ update_permissions:
         - details
         - name
         - tags
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id
+      filter: {}
       check: null
