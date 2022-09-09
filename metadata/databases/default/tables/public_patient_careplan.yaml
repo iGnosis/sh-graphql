@@ -1,20 +1,12 @@
 table:
   name: patient_careplan
   schema: public
-object_relationships:
-  - name: careplanByCareplan
-    using:
-      foreign_key_constraint_on: careplan
-  - name: patientByPatient
-    using:
-      foreign_key_constraint_on: patient
 insert_permissions:
   - role: therapist
     permission:
       check: {}
       set:
         createdBy: x-hasura-User-Id
-        provider: x-hasura-Provider-Id
       columns:
         - careplan
         - patient
@@ -22,29 +14,23 @@ select_permissions:
   - role: patient
     permission:
       columns:
-        - createdAt
         - careplan
+        - createdAt
         - createdBy
         - patient
-        - provider
       filter:
         patient:
           _eq: X-Hasura-User-Id
   - role: therapist
     permission:
       columns:
-        - createdAt
         - careplan
+        - createdAt
         - createdBy
         - patient
-        - provider
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id
+      filter: {}
 delete_permissions:
   - role: therapist
     permission:
       backend_only: false
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id
+      filter: {}

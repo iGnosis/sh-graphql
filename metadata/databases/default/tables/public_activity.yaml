@@ -13,13 +13,6 @@ array_relationships:
         table:
           name: events
           schema: public
-  - name: program_activities
-    using:
-      foreign_key_constraint_on:
-        column: activity
-        table:
-          name: careplan_activity
-          schema: public
 select_permissions:
   - role: patient
     permission:

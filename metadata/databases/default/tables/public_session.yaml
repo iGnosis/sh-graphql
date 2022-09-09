@@ -2,15 +2,9 @@ table:
   name: session
   schema: public
 object_relationships:
-  - name: careplanByCareplan
-    using:
-      foreign_key_constraint_on: careplan
   - name: patientByPatient
     using:
       foreign_key_constraint_on: patient
-  - name: providerByProvider
-    using:
-      foreign_key_constraint_on: provider
   - name: session_type
     using:
       foreign_key_constraint_on: status
@@ -30,7 +24,6 @@ insert_permissions:
           _eq: X-Hasura-User-Id
       set:
         patient: x-hasura-user-id
-        provider: x-hasura-provider-id
       columns:
         - careplan
         - createdAt
@@ -43,8 +36,6 @@ insert_permissions:
   - role: therapist
     permission:
       check: {}
-      set:
-        provider: x-hasura-Provider-Id
       columns:
         - careplan
         - patient
@@ -60,7 +51,6 @@ select_permissions:
         - patient
         - postSessionMood
         - preSessionMood
-        - provider
         - state
         - updatedAt
       filter:
@@ -78,13 +68,10 @@ select_permissions:
         - patient
         - postSessionMood
         - preSessionMood
-        - provider
         - state
         - status
         - updatedAt
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id
+      filter: {}
       allow_aggregations: true
 update_permissions:
   - role: patient
@@ -105,7 +92,6 @@ update_permissions:
           _eq: X-Hasura-User-Id
       set:
         patient: x-hasura-User-Id
-        provider: x-hasura-Provider-Id
   - role: therapist
     permission:
       columns:
@@ -114,7 +100,5 @@ update_permissions:
         - postSessionMood
         - preSessionMood
         - state
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id
+      filter: {}
       check: null

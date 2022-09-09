@@ -2,9 +2,6 @@ table:
   name: user
   schema: public
 object_relationships:
-  - name: providerByProvider
-    using:
-      foreign_key_constraint_on: provider
   - name: user_profile
     using:
       foreign_key_constraint_on:
@@ -19,13 +16,6 @@ object_relationships:
     using:
       foreign_key_constraint_on: type
 array_relationships:
-  - name: careplans
-    using:
-      foreign_key_constraint_on:
-        column: createdBy
-        table:
-          name: careplan
-          schema: public
   - name: events
     using:
       foreign_key_constraint_on:
@@ -94,7 +84,6 @@ insert_permissions:
     permission:
       check: {}
       set:
-        provider: x-hasura-provider-id
         status: active
         type: patient
       columns: []
@@ -111,9 +100,7 @@ select_permissions:
         - status
         - type
         - updatedAt
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id
+      filter: {}
       allow_aggregations: true
 event_triggers:
   - name: event_new_therapist

@@ -14,6 +14,12 @@ type Mutation {
   freeRewardAccessed: FreeRewardAccessed
 }
 
+type Query {
+  gameAchievementRatio(
+    gameId: ID!
+  ): GameAchievementRatio
+}
+
 type Mutation {
   gameCompleted(
     startDate: String!
@@ -48,10 +54,24 @@ type Mutation {
 }
 
 type Query {
-  patientDailyGoals(
-    date: String!
-    activityIds: [String!]!
-  ): PatientDailyGoals
+  patientChart(
+    startDate: String!
+    endDate: String!
+    userTimezone: String!
+    patientId: ID!
+    chartType: ChartTypeEnum!
+    groupBy: GroupByEnum!
+    isGroupByGames: Boolean
+  ): PatientChart
+}
+
+type Query {
+  patientEngagementChart(
+    startDate: String!
+    endDate: String!
+    userTimezone: String!
+    patientId: String!
+  ): PatientEngagementChart
 }
 
 type Query {
@@ -69,6 +89,20 @@ type Query {
 }
 
 type Mutation {
+  requestLoginOtp(
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): RequestLoginOtp
+}
+
+type Mutation {
+  resendLoginOtp(
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): ResendLoginOtp
+}
+
+type Mutation {
   updateRewards(
     startDate: String!
     endDate: String!
@@ -76,10 +110,35 @@ type Mutation {
   ): UpdateRewards
 }
 
+type Mutation {
+  verifyLoginOtp(
+    phoneCountryCode: String!
+    phoneNumber: String!
+    otp: Int!
+  ): VerifyLoginOtp
+}
+
 enum Status {
   completed
   partiallycompleted
   exceeded
+}
+
+enum ChartTypeEnum {
+  avgAchievementRatio
+  avgCompletionTime
+  avgEngagementRatio
+}
+
+enum GroupByEnum {
+  day
+  week
+  month
+}
+
+input SampleInput {
+  username: String!
+  password: String!
 }
 
 type Root {
@@ -225,5 +284,55 @@ type TestMutation {
 
 type TestData {
   name: String!
+}
+
+type RequestLoginOtp {
+  data: RequestLoginOtpData
+}
+
+type RequestLoginOtpData {
+  message: String
+}
+
+type VerifyLoginOtp {
+  data: VerifyLoginOtpData
+}
+
+type VerifyLoginOtpData {
+  token: String!
+}
+
+type ResendLoginOtp {
+  data: ResendLoginOtpData
+}
+
+type ResendLoginOtpData {
+  message: String
+}
+
+type SampleOutput {
+  accessToken: String!
+}
+
+type PatientEngagementChart {
+  data: PatientEngagementChartData!
+}
+
+type PatientEngagementChartData {
+  labels: [String]!
+  engagementPercentage: [Float]!
+}
+
+type PatientChart {
+  data: String!
+}
+
+type GameAchievementRatio {
+  data: GameAchievementRatioData!
+}
+
+type GameAchievementRatioData {
+  labels: [String!]!
+  data: [Int!]!
 }
 

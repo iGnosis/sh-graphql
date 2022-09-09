@@ -1,0 +1,6 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- CREATE TRIGGER trigger_log_careplan_update
+-- AFTER UPDATE OF careplan
+-- ON patient
+-- FOR EACH ROW EXECUTE PROCEDURE triggerLogCareplanUpdate();

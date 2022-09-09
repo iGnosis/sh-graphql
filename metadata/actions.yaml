@@ -46,6 +46,24 @@ actions:
     permissions:
       - role: patient
     comment: Free reward accessed.
+  - name: gameAchievementRatio
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/provider-charts/game-achievement-ratio'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          gameId: '{{$body.input.gameId}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: therapist
+    comment: API to fetch game achievement ratio
   - name: gameCompleted
     definition:
       kind: synchronous
@@ -144,25 +162,51 @@ actions:
     permissions:
       - role: patient
     comment: Marks a reward as viewed.
-  - name: patientDailyGoals
+  - name: patientChart
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/patient/stats/daily-goals'
+      handler: '{{ACTION_BASE_URL}}/provider-charts/'
       forward_client_headers: true
       request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "input": {{$body.input}}
-            }
-        method: POST
-        query_params: {}
+        method: GET
+        query_params:
+          chartType: '{{$body.input.chartType}}'
+          endDate: '{{$body.input.endDate}}'
+          groupBy: '{{$body.input.groupBy}}'
+          isGroupByGames: '{{$body.input.isGroupByGames}}'
+          patientId: '{{$body.input.patientId}}'
+          startDate: '{{$body.input.startDate}}'
+          userTimezone: '{{$body.input.userTimezone}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
         template_engine: Kriti
         version: 2
     permissions:
-      - role: patient
-    comment: API to fetch patient daily goals.
+      - role: therapist
+    comment: API for consuming chartable data
+  - name: patientEngagementChart
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient/engagement-ratio'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          patientId: '{{$body.input.patientId}}'
+          startDate: '{{$body.input.startDate}}'
+          userTimezone: '{{$body.input.userTimezone}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: therapist
+    comment: API to fetch patient engagement chart data.
   - name: patientMonthlyGoals
     definition:
       kind: ""
@@ -203,6 +247,46 @@ actions:
     permissions:
       - role: patient
     comment: API to fetch patient sessions streak number.
+  - name: requestLoginOtp
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/sms-auth/login'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Login API for SMS Based Auth
+  - name: resendLoginOtp
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/sms-auth/resend-otp'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Re-send OTP API for SMS Based Auth
   - name: updateRewards
     definition:
       kind: synchronous
@@ -224,6 +308,27 @@ actions:
     permissions:
       - role: patient
     comment: Updates Rewards based on patient's monthly activity.
+  - name: verifyLoginOtp
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/sms-auth/verify-otp'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}},
+              "otp": {{$body.input.otp}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Verify API for SMS Based Auth
 custom_types:
   enums:
     - name: Status
@@ -237,7 +342,30 @@ custom_types:
         - description: null
           is_deprecated: null
           value: exceeded
-  input_objects: []
+    - name: ChartTypeEnum
+      values:
+        - description: null
+          is_deprecated: null
+          value: avgAchievementRatio
+        - description: null
+          is_deprecated: null
+          value: avgCompletionTime
+        - description: null
+          is_deprecated: null
+          value: avgEngagementRatio
+    - name: GroupByEnum
+      values:
+        - description: null
+          is_deprecated: null
+          value: day
+        - description: null
+          is_deprecated: null
+          value: week
+        - description: null
+          is_deprecated: null
+          value: month
+  input_objects:
+    - name: SampleInput
   objects:
     - name: Root
     - name: Day
@@ -270,4 +398,16 @@ custom_types:
     - name: AppAccessed
     - name: TestMutation
     - name: TestData
+    - name: RequestLoginOtp
+    - name: RequestLoginOtpData
+    - name: VerifyLoginOtp
+    - name: VerifyLoginOtpData
+    - name: ResendLoginOtp
+    - name: ResendLoginOtpData
+    - name: SampleOutput
+    - name: PatientEngagementChart
+    - name: PatientEngagementChartData
+    - name: PatientChart
+    - name: GameAchievementRatio
+    - name: GameAchievementRatioData
   scalars: []

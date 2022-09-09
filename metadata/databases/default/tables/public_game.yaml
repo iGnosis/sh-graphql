@@ -17,23 +17,41 @@ select_permissions:
   - role: patient
     permission:
       columns:
-        - repsCompleted
-        - totalDuration
         - analytics
-        - game
+        - calibrationDuration
         - createdAt
         - endedAt
-        - updatedAt
+        - game
         - id
         - patient
+        - repsCompleted
+        - totalDuration
+        - updatedAt
       filter:
         patient:
           _eq: X-Hasura-User-Id
+  - role: therapist
+    permission:
+      columns:
+        - id
+        - createdAt
+        - updatedAt
+        - endedAt
+        - game
+        - repsCompleted
+        - totalDuration
+        - analytics
+        - patient
+        - calibrationDuration
+        - aggregateAnalytics
+      filter: {}
+      allow_aggregations: true
 update_permissions:
   - role: patient
     permission:
       columns:
         - analytics
+        - calibrationDuration
         - endedAt
         - repsCompleted
         - totalDuration
@@ -59,6 +77,34 @@ event_triggers:
           {
             "patientId": {{$body.event.data.new.patient}},
             "createdAt": {{$body.event.data.new.createdAt}}
+          }
+      method: POST
+      query_params: {}
+      template_engine: Kriti
+      version: 2
+  - name: game_ended
+    definition:
+      enable_manual: true
+      update:
+        columns:
+          - endedAt
+          - analytics
+          - id
+          - patient
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/events/game/end'
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "gameId": {{$body.event.data.new.id}},
+            "patientId": {{$body.event.data.new.patient}},
+            "analytics": {{$body.event.data.new.analytics}},
+            "endedAt": {{$body.event.data.new.endedAt}}
           }
       method: POST
       query_params: {}
