@@ -1,15 +1,3 @@
 table:
   name: provider
   schema: public
-object_relationships:
-  - name: provider_type
-    using:
-      foreign_key_constraint_on: type
-array_relationships:
-  - name: user_profiles
-    using:
-      foreign_key_constraint_on:
-        column: provider
-        table:
-          name: user_profile
-          schema: public
