@@ -174,7 +174,12 @@ actions:
           endDate: '{{$body.input.endDate}}'
           groupBy: '{{$body.input.groupBy}}'
           isGroupByGames: '{{$body.input.isGroupByGames}}'
+          limit: '{{$body.input.limit}}'
+          offset: '{{$body.input.offset}}'
           patientId: '{{$body.input.patientId}}'
+          showInactive: '{{$body.input.showInactive}}'
+          sortBy: '{{$body.input.sortBy}}'
+          sortDirection: '{{$body.input.sortDirection}}'
           startDate: '{{$body.input.startDate}}'
           userTimezone: '{{$body.input.userTimezone}}'
         request_headers:
@@ -353,6 +358,9 @@ custom_types:
         - description: null
           is_deprecated: null
           value: avgEngagementRatio
+        - description: null
+          is_deprecated: null
+          value: patientsCompletionHeatmap
     - name: GroupByEnum
       values:
         - description: null
@@ -364,6 +372,22 @@ custom_types:
         - description: null
           is_deprecated: null
           value: month
+    - name: SortByEnum
+      values:
+        - description: null
+          is_deprecated: null
+          value: recentActivity
+        - description: null
+          is_deprecated: null
+          value: overallActivity
+    - name: SortDirectionEnum
+      values:
+        - description: null
+          is_deprecated: null
+          value: asc
+        - description: null
+          is_deprecated: null
+          value: desc
   input_objects:
     - name: SampleInput
   objects:
