@@ -1,0 +1,3 @@
+table:
+  name: patient_change_logs
+  schema: public

@@ -1,0 +1,1 @@
+ALTER TABLE "public"."patient" ADD COLUMN "careplan" jsonb DEFAULT jsonb_build_object();

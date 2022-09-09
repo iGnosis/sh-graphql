@@ -8,3 +8,9 @@ select_permissions:
       columns:
         - name
       filter: {}
+  - role: therapist
+    permission:
+      columns:
+        - name
+      filter: {}
+      allow_aggregations: true

@@ -1,0 +1,2 @@
+CREATE TABLE "public"."patient_change_logs" ("id" uuid NOT NULL DEFAULT gen_random_uuid(), "createdAt" timestamptz NOT NULL DEFAULT now(), "patient" uuid NOT NULL, "tableName" text NOT NULL, "oldValue" jsonb NOT NULL, "newValue" jsonb NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("patient") REFERENCES "public"."patient"("id") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"));COMMENT ON TABLE "public"."patient_change_logs" IS E'A generic table for storing patients\' database update changelogs.';
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
