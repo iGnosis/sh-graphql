@@ -8,16 +8,12 @@ object_relationships:
   - name: careplanByCareplan
     using:
       foreign_key_constraint_on: careplan
-  - name: providerByProvider
-    using:
-      foreign_key_constraint_on: provider
 insert_permissions:
   - role: therapist
     permission:
       check: {}
       set:
         createdBy: x-hasura-User-Id
-        provider: x-hasura-Provider-Id
       columns:
         - activity
         - careplan
@@ -29,7 +25,6 @@ select_permissions:
         - activity
         - careplan
         - createdAt
-        - provider
         - reps
       filter:
         careplan:
@@ -40,16 +35,6 @@ select_permissions:
         - activity
         - careplan
         - createdAt
-        - provider
         - reps
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id
+      filter: {}
       allow_aggregations: true
-delete_permissions:
-  - role: therapist
-    permission:
-      backend_only: false
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id

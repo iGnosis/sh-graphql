@@ -8,9 +8,6 @@ object_relationships:
   - name: primaryTherapistUser
     using:
       foreign_key_constraint_on: primaryTherapist
-  - name: providerByProvider
-    using:
-      foreign_key_constraint_on: provider
   - name: user
     using:
       foreign_key_constraint_on: onboardedBy
@@ -50,7 +47,6 @@ insert_permissions:
       set:
         onboardedBy: x-hasura-user-id
         primaryTherapist: x-hasura-user-id
-        provider: x-hasura-provider-id
       columns:
         - activeCareplan
         - careGiverEmail
@@ -83,7 +79,6 @@ select_permissions:
         - preferredActivities
         - preferredGenres
         - primaryTherapist
-        - provider
         - rewards
         - timezone
         - updatedAt
@@ -101,16 +96,15 @@ select_permissions:
         - id
         - identifier
         - medicalConditions
+        - nickname
         - onboardedBy
         - phoneCountryCode
         - phoneNumber
         - preferredGenres
         - primaryTherapist
-        - provider
+        - timezone
         - updatedAt
-      filter:
-        provider:
-          _eq: X-Hasura-Provider-Id
+      filter: {}
       allow_aggregations: true
 update_permissions:
   - role: patient
