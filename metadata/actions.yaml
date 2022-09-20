@@ -174,12 +174,7 @@ actions:
           endDate: '{{$body.input.endDate}}'
           groupBy: '{{$body.input.groupBy}}'
           isGroupByGames: '{{$body.input.isGroupByGames}}'
-          limit: '{{$body.input.limit}}'
-          offset: '{{$body.input.offset}}'
           patientId: '{{$body.input.patientId}}'
-          showInactive: '{{$body.input.showInactive}}'
-          sortBy: '{{$body.input.sortBy}}'
-          sortDirection: '{{$body.input.sortDirection}}'
           startDate: '{{$body.input.startDate}}'
           userTimezone: '{{$body.input.userTimezone}}'
         request_headers:
@@ -212,6 +207,30 @@ actions:
     permissions:
       - role: therapist
     comment: API to fetch patient engagement chart data.
+  - name: patientMonthlyCompletion
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-monthly-completion/'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          limit: '{{$body.input.limit}}'
+          offset: '{{$body.input.offset}}'
+          showInactive: '{{$body.input.showInactive}}'
+          sortBy: '{{$body.input.sortBy}}'
+          sortDirection: '{{$body.input.sortDirection}}'
+          startDate: '{{$body.input.startDate}}'
+          userTimezone: '{{$body.input.userTimezone}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: therapist
   - name: patientMonthlyGoals
     definition:
       kind: ""
@@ -434,4 +453,5 @@ custom_types:
     - name: PatientChart
     - name: GameAchievementRatio
     - name: GameAchievementRatioData
+    - name: PatientMonthlyCompletion
   scalars: []

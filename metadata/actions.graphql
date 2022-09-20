@@ -62,11 +62,6 @@ type Query {
     chartType: ChartTypeEnum!
     groupBy: GroupByEnum!
     isGroupByGames: Boolean
-    sortBy: SortByEnum
-    sortDirection: SortDirectionEnum
-    limit: String
-    offset: String
-    showInactive: Boolean
   ): PatientChart
 }
 
@@ -77,6 +72,19 @@ type Query {
     userTimezone: String!
     patientId: String!
   ): PatientEngagementChart
+}
+
+type Query {
+  patientMonthlyCompletion(
+    startDate: String!
+    endDate: String!
+    userTimezone: String!
+    sortBy: SortByEnum!
+    sortDirection: SortDirectionEnum!
+    limit: String!
+    offset: String!
+    showInactive: Boolean!
+  ): PatientMonthlyCompletion
 }
 
 type Query {
@@ -350,5 +358,9 @@ type GameAchievementRatio {
 type GameAchievementRatioData {
   labels: [String!]!
   data: [Int!]!
+}
+
+type PatientMonthlyCompletion {
+  data: String!
 }
 
