@@ -1,0 +1,5 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- UPDATE game_name
+-- SET name = 'sound_explorer'
+-- WHERE name = 'sound_slicer';
