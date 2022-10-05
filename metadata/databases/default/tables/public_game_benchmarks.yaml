@@ -2,28 +2,28 @@ table:
   name: game_benchmarks
   schema: public
 insert_permissions:
-  - role: tester
+  - role: benchmark
     permission:
       check: {}
       columns:
         - analytics
-        - createdAt
         - gameId
         - systemSpec
 select_permissions:
-  - role: tester
+  - role: benchmark
     permission:
       columns:
-        - gameId
-        - createdAt
         - analytics
-        - id
         - systemSpec
+        - createdAt
+        - gameId
+        - id
       filter: {}
 update_permissions:
-  - role: tester
+  - role: benchmark
     permission:
       columns:
         - analytics
+        - systemSpec
       filter: {}
       check: null

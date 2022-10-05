@@ -2,7 +2,7 @@ table:
   name: game_manual_calculations
   schema: public
 insert_permissions:
-  - role: tester
+  - role: benchmark
     permission:
       check: {}
       columns:
@@ -11,7 +11,7 @@ insert_permissions:
         - metricValue
         - promptId
 select_permissions:
-  - role: tester
+  - role: benchmark
     permission:
       columns:
         - metricValue
@@ -23,9 +23,10 @@ select_permissions:
         - promptId
       filter: {}
 update_permissions:
-  - role: tester
+  - role: benchmark
     permission:
       columns:
+        - metricName
         - metricValue
       filter: {}
       check: null
