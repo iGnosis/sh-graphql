@@ -1,3 +1,31 @@
 table:
   name: game_manual_calculations
   schema: public
+insert_permissions:
+  - role: tester
+    permission:
+      check: {}
+      columns:
+        - gameId
+        - metricName
+        - metricValue
+        - promptId
+select_permissions:
+  - role: tester
+    permission:
+      columns:
+        - metricValue
+        - metricName
+        - createdAt
+        - updatedAt
+        - gameId
+        - id
+        - promptId
+      filter: {}
+update_permissions:
+  - role: tester
+    permission:
+      columns:
+        - metricValue
+      filter: {}
+      check: null

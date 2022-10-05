@@ -1,3 +1,29 @@
 table:
   name: game_benchmarks
   schema: public
+insert_permissions:
+  - role: tester
+    permission:
+      check: {}
+      columns:
+        - analytics
+        - createdAt
+        - gameId
+        - systemSpec
+select_permissions:
+  - role: tester
+    permission:
+      columns:
+        - gameId
+        - createdAt
+        - analytics
+        - id
+        - systemSpec
+      filter: {}
+update_permissions:
+  - role: tester
+    permission:
+      columns:
+        - analytics
+      filter: {}
+      check: null
