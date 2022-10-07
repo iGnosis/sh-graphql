@@ -1,0 +1,26 @@
+table:
+  name: game_benchmark_config
+  schema: public
+insert_permissions:
+  - role: benchmark
+    permission:
+      check: {}
+      columns:
+        - manualCalculations
+        - originalGameId
+select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - originalGameId
+        - manualCalculations
+        - rawVideoUrl
+        - screenRecordingUrl
+      filter: {}
+update_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - manualCalculations
+      filter: {}
+      check: null

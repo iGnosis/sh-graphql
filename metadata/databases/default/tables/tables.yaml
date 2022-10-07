@@ -5,6 +5,7 @@
 - "!include public_checkin_type.yaml"
 - "!include public_events.yaml"
 - "!include public_game.yaml"
+- "!include public_game_benchmark_config.yaml"
 - "!include public_game_benchmarks.yaml"
 - "!include public_game_manual_calculations.yaml"
 - "!include public_game_name.yaml"
