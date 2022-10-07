@@ -8,22 +8,25 @@ insert_permissions:
       columns:
         - analytics
         - gameId
+        - originalGameId
         - systemSpec
 select_permissions:
   - role: benchmark
     permission:
       columns:
         - analytics
-        - systemSpec
         - createdAt
         - gameId
         - id
+        - originalGameId
+        - systemSpec
       filter: {}
 update_permissions:
   - role: benchmark
     permission:
       columns:
         - analytics
+        - originalGameId
         - systemSpec
       filter: {}
       check: null

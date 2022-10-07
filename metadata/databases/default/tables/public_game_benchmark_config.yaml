@@ -12,10 +12,13 @@ select_permissions:
   - role: benchmark
     permission:
       columns:
-        - originalGameId
         - manualCalculations
         - rawVideoUrl
         - screenRecordingUrl
+        - createdAt
+        - updatedAt
+        - id
+        - originalGameId
       filter: {}
 update_permissions:
   - role: benchmark

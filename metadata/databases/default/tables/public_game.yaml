@@ -1,6 +1,13 @@
 table:
   name: game
   schema: public
+object_relationships:
+  - name: game_name
+    using:
+      foreign_key_constraint_on: game
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
 insert_permissions:
   - role: patient
     permission:
