@@ -332,6 +332,24 @@ actions:
     permissions:
       - role: patient
     comment: Updates Rewards based on patient's monthly activity.
+  - name: uploadBenchmarkVideos
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/game-benchmarking/upload-video'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          benchmarkConfigId: '{{$body.input.benchmarkConfigId}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: benchmark
+    comment: Returns signed URLs that are to be used for uploading benchmarking videos.
   - name: verifyLoginOtp
     definition:
       kind: synchronous
@@ -454,4 +472,6 @@ custom_types:
     - name: GameAchievementRatio
     - name: GameAchievementRatioData
     - name: PatientMonthlyCompletion
+    - name: UploadBenchmarkVideosOutput
+    - name: UploadBenchmarkVideosOutputData
   scalars: []

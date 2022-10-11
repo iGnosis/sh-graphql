@@ -21,6 +21,21 @@ insert_permissions:
         - game
         - updatedAt
 select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - calibrationDuration
+        - repsCompleted
+        - totalDuration
+        - aggregateAnalytics
+        - analytics
+        - game
+        - createdAt
+        - endedAt
+        - updatedAt
+        - id
+        - patient
+      filter: {}
   - role: patient
     permission:
       columns:
@@ -95,9 +110,6 @@ event_triggers:
       update:
         columns:
           - endedAt
-          - analytics
-          - id
-          - patient
     retry_conf:
       interval_sec: 10
       num_retries: 0

@@ -124,6 +124,12 @@ type Mutation {
 }
 
 type Mutation {
+  uploadBenchmarkVideos(
+    benchmarkConfigId: ID!
+  ): UploadBenchmarkVideosOutput
+}
+
+type Mutation {
   verifyLoginOtp(
     phoneCountryCode: String!
     phoneNumber: String!
@@ -362,5 +368,14 @@ type GameAchievementRatioData {
 
 type PatientMonthlyCompletion {
   data: String!
+}
+
+type UploadBenchmarkVideosOutput {
+  data: UploadBenchmarkVideosOutputData!
+}
+
+type UploadBenchmarkVideosOutputData {
+  webcamUploadUrl: String
+  screenCaptureUploadUrl: String
 }
 

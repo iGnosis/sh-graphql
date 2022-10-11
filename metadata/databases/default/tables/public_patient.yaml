@@ -56,6 +56,11 @@ insert_permissions:
         - phoneNumber
         - preferredGenres
 select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - nickname
+      filter: {}
   - role: patient
     permission:
       columns:
