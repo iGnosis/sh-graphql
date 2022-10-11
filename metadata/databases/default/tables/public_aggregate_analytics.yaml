@@ -1,3 +1,15 @@
 table:
   name: aggregate_analytics
   schema: public
+select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - noOfSamples
+        - value
+        - key
+        - createdAt
+        - game
+        - id
+        - patient
+      filter: {}

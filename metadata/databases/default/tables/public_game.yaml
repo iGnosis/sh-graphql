@@ -8,6 +8,14 @@ object_relationships:
   - name: patientByPatient
     using:
       foreign_key_constraint_on: patient
+array_relationships:
+  - name: aggregate_analytics
+    using:
+      foreign_key_constraint_on:
+        column: game
+        table:
+          name: aggregate_analytics
+          schema: public
 insert_permissions:
   - role: patient
     permission:
