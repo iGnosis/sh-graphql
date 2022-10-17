@@ -116,11 +116,24 @@ type Mutation {
 }
 
 type Mutation {
+  transcodeVideo(
+    benchmarkConfigId: ID!
+    type: transcodeVideoType!
+  ): transcodeVideoOutput
+}
+
+type Mutation {
   updateRewards(
     startDate: String!
     endDate: String!
     userTimezone: String!
   ): UpdateRewards
+}
+
+type Mutation {
+  uploadBenchmarkVideos(
+    benchmarkConfigId: ID!
+  ): UploadBenchmarkVideosOutput
 }
 
 type Mutation {
@@ -158,6 +171,11 @@ enum SortByEnum {
 enum SortDirectionEnum {
   asc
   desc
+}
+
+enum transcodeVideoType {
+  webcam
+  screenCapture
 }
 
 input SampleInput {
@@ -362,5 +380,22 @@ type GameAchievementRatioData {
 
 type PatientMonthlyCompletion {
   data: String!
+}
+
+type UploadBenchmarkVideosOutput {
+  data: UploadBenchmarkVideosOutputData!
+}
+
+type UploadBenchmarkVideosOutputData {
+  webcamUploadUrl: String
+  screenCaptureUploadUrl: String
+}
+
+type transcodeVideoOutput {
+  data: transcodeVideoOutputData
+}
+
+type transcodeVideoOutputData {
+  status: String!
 }
 

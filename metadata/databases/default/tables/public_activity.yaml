@@ -17,13 +17,13 @@ select_permissions:
   - role: patient
     permission:
       columns:
-        - name
-        - details
-        - id
         - createdAt
-        - updatedAt
-        - duration
+        - details
         - difficulty
+        - duration
+        - id
+        - name
+        - updatedAt
       filter: {}
   - role: therapist
     permission:

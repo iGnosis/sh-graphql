@@ -1,0 +1,37 @@
+table:
+  name: game_benchmark_config
+  schema: public
+object_relationships:
+  - name: game
+    using:
+      foreign_key_constraint_on: originalGameId
+insert_permissions:
+  - role: benchmark
+    permission:
+      check: {}
+      columns:
+        - manualCalculations
+        - originalGameId
+select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - createdAt
+        - id
+        - manualCalculations
+        - originalGameId
+        - rawVideoUploadStatus
+        - rawVideoUrl
+        - screenRecordingUploadStatus
+        - screenRecordingUrl
+        - updatedAt
+      filter: {}
+update_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - manualCalculations
+        - rawVideoUploadStatus
+        - screenRecordingUploadStatus
+      filter: {}
+      check: null

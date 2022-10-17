@@ -311,6 +311,26 @@ actions:
     permissions:
       - role: guest
     comment: Re-send OTP API for SMS Based Auth
+  - name: transcodeVideo
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/game-benchmarking/transcode-video'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |
+            {
+              "benchmarkConfigId": {{$body.input.benchmarkConfigId}},
+              "type": {{$body.input.type}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: benchmark
+    comment: API to transcode videos.
   - name: updateRewards
     definition:
       kind: synchronous
@@ -332,6 +352,24 @@ actions:
     permissions:
       - role: patient
     comment: Updates Rewards based on patient's monthly activity.
+  - name: uploadBenchmarkVideos
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/game-benchmarking/upload-video'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          benchmarkConfigId: '{{$body.input.benchmarkConfigId}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: benchmark
+    comment: Returns signed URLs that are to be used for uploading benchmarking videos.
   - name: verifyLoginOtp
     definition:
       kind: synchronous
@@ -407,6 +445,14 @@ custom_types:
         - description: null
           is_deprecated: null
           value: desc
+    - name: transcodeVideoType
+      values:
+        - description: null
+          is_deprecated: null
+          value: webcam
+        - description: null
+          is_deprecated: null
+          value: screenCapture
   input_objects:
     - name: SampleInput
   objects:
@@ -454,4 +500,8 @@ custom_types:
     - name: GameAchievementRatio
     - name: GameAchievementRatioData
     - name: PatientMonthlyCompletion
+    - name: UploadBenchmarkVideosOutput
+    - name: UploadBenchmarkVideosOutputData
+    - name: transcodeVideoOutput
+    - name: transcodeVideoOutputData
   scalars: []

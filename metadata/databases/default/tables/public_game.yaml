@@ -1,6 +1,21 @@
 table:
   name: game
   schema: public
+object_relationships:
+  - name: game_name
+    using:
+      foreign_key_constraint_on: game
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
+array_relationships:
+  - name: aggregate_analytics
+    using:
+      foreign_key_constraint_on:
+        column: game
+        table:
+          name: aggregate_analytics
+          schema: public
 insert_permissions:
   - role: patient
     permission:
@@ -14,6 +29,21 @@ insert_permissions:
         - game
         - updatedAt
 select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - calibrationDuration
+        - repsCompleted
+        - totalDuration
+        - aggregateAnalytics
+        - analytics
+        - game
+        - createdAt
+        - endedAt
+        - updatedAt
+        - id
+        - patient
+      filter: {}
   - role: patient
     permission:
       columns:
@@ -88,9 +118,6 @@ event_triggers:
       update:
         columns:
           - endedAt
-          - analytics
-          - id
-          - patient
     retry_conf:
       interval_sec: 10
       num_retries: 0
