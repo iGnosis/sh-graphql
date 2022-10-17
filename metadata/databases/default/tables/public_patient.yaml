@@ -56,6 +56,17 @@ insert_permissions:
         - phoneNumber
         - preferredGenres
 select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - canBenchmark
+        - createdAt
+        - id
+        - identifier
+        - nickname
+        - preferredGenres
+        - updatedAt
+      filter: {}
   - role: patient
     permission:
       columns:
@@ -103,6 +114,26 @@ select_permissions:
       filter: {}
       allow_aggregations: true
 update_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - careGiverEmail
+        - careGiverPhoneCountryCode
+        - careGiverPhoneNumber
+        - email
+        - medicalConditions
+        - nickname
+        - onboardingStatus
+        - password
+        - phoneCountryCode
+        - phoneNumber
+        - preferredActivities
+        - preferredGenres
+        - timezone
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
   - role: patient
     permission:
       columns:

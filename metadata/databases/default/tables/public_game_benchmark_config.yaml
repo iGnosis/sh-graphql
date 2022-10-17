@@ -16,18 +16,22 @@ select_permissions:
   - role: benchmark
     permission:
       columns:
-        - manualCalculations
-        - rawVideoUrl
-        - screenRecordingUrl
         - createdAt
-        - updatedAt
         - id
+        - manualCalculations
         - originalGameId
+        - rawVideoUploadStatus
+        - rawVideoUrl
+        - screenRecordingUploadStatus
+        - screenRecordingUrl
+        - updatedAt
       filter: {}
 update_permissions:
   - role: benchmark
     permission:
       columns:
         - manualCalculations
+        - rawVideoUploadStatus
+        - screenRecordingUploadStatus
       filter: {}
       check: null
