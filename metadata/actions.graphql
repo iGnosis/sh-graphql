@@ -334,6 +334,7 @@ type RequestLoginOtp {
 
 type RequestLoginOtpData {
   message: String
+  isExistingUser: Boolean
 }
 
 type VerifyLoginOtp {
@@ -350,6 +351,7 @@ type ResendLoginOtp {
 
 type ResendLoginOtpData {
   message: String
+  isExistingUser: Boolean
 }
 
 type SampleOutput {

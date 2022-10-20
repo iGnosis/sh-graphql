@@ -13,3 +13,12 @@ select_permissions:
       filter:
         patient:
           _eq: x-hasura-user-id
+update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - configuration
+      filter:
+        patient:
+          _eq: x-hasura-user-id
+      check: null
