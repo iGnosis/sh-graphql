@@ -11,6 +11,8 @@ services:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
     image: hasura/graphql-engine:v2.13.0.cli-migrations-v3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
     - "8080:8080"
     depends_on:
