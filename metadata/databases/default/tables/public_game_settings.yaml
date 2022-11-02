@@ -7,6 +7,8 @@ insert_permissions:
       check:
         patient:
           _eq: x-hasura-user-id
+      set:
+        patient: x-hasura-user-id
       columns:
         - configuration
         - gameName
