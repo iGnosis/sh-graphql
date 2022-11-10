@@ -1,6 +1,17 @@
 table:
   name: game_settings
   schema: public
+insert_permissions:
+  - role: patient
+    permission:
+      check:
+        patient:
+          _eq: x-hasura-user-id
+      set:
+        patient: x-hasura-user-id
+      columns:
+        - configuration
+        - gameName
 select_permissions:
   - role: patient
     permission:
@@ -13,3 +24,12 @@ select_permissions:
       filter:
         patient:
           _eq: x-hasura-user-id
+update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - configuration
+      filter:
+        patient:
+          _eq: x-hasura-user-id
+      check: null

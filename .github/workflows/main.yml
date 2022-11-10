@@ -12,7 +12,6 @@ on:
 jobs:
   cd-cd:
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/dev'
     steps:
       - uses: actions/checkout@v2
 
@@ -27,6 +26,13 @@ jobs:
         run: |
           echo "HASURA_ENDPOINT=${{ secrets.STAGE_HASURA_ENDPOINT }}" >> $GITHUB_ENV
           echo "HASURA_ADMIN_SECRET=${{ secrets.STAGE_HASURA_ADMIN_SECRET }}" >> $GITHUB_ENV
+
+      - name: Set dev envs
+        if: endsWith(github.ref, '/dev')
+        run: |
+          echo "HASURA_ENDPOINT=${{ secrets.DEV_HASURA_ENDPOINT }}" >> $GITHUB_ENV
+          echo "HASURA_ADMIN_SECRET=${{ secrets.DEV_HASURA_ADMIN_SECRET }}" >> $GITHUB_ENV
+
 
       - name: Installing Hasura CLI
         run: |
