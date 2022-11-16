@@ -1,5 +1,5 @@
 table:
-  name: user_type
+  name: staff_type
   schema: public
 is_enum: true
 array_relationships:

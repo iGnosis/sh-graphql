@@ -1,0 +1,2 @@
+CREATE TABLE "public"."auth" ("id" uuid NOT NULL DEFAULT gen_random_uuid(), "staff" uuid, "patient" uuid, "otp" integer NOT NULL, "createdAt" timestamptz NOT NULL DEFAULT now(), "expiryAt" timestamptz NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("staff") REFERENCES "public"."staff"("id") ON UPDATE restrict ON DELETE restrict, FOREIGN KEY ("patient") REFERENCES "public"."patient"("id") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"), UNIQUE ("staff"), UNIQUE ("patient"));
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
