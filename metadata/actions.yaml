@@ -271,6 +271,25 @@ actions:
     permissions:
       - role: patient
     comment: API to fetch patient monthly goals. Start and end dates are inclusive.
+  - name: patientOverviewChart
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-overview/'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          startDate: '{{$body.input.startDate}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: therapist
+    comment: Fetches Patient Overview chart data
   - name: patientSessionStreak
     definition:
       kind: ""
@@ -526,4 +545,7 @@ custom_types:
     - name: transcodeVideoOutputData
     - name: PatientAdherenceChart
     - name: PatientAdherenceChartOutput
+    - name: PatientOverviewChart
+    - name: PatientOverviewChartData
+    - name: PatientAdherenceChartData
   scalars: []

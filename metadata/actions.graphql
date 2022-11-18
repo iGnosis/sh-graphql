@@ -104,6 +104,13 @@ type Query {
 }
 
 type Query {
+  patientOverviewChart(
+    startDate: String!
+    endDate: String!
+  ): PatientOverviewChart
+}
+
+type Query {
   patientSessionStreak(
     userTimezone: String!
   ): PatientSessionStreak
@@ -410,10 +417,26 @@ type transcodeVideoOutputData {
 }
 
 type PatientAdherenceChart {
-  data: PatientAdherenceChartOutput!
+  data: PatientAdherenceChartData!
 }
 
 type PatientAdherenceChartOutput {
+  activePatientsCount: Int!
+  totalNumOfPatients: Int!
+}
+
+type PatientOverviewChart {
+  data: [PatientOverviewChartData!]!
+}
+
+type PatientOverviewChartData {
+  patient: String!
+  gamesPlayedCount: Int!
+  engagementRatio: Int!
+  avgAchievementPercentage: Int!
+}
+
+type PatientAdherenceChartData {
   activePatientsCount: Int!
   totalNumOfPatients: Int!
 }
