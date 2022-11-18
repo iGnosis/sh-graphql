@@ -162,6 +162,26 @@ actions:
     permissions:
       - role: patient
     comment: Marks a reward as viewed.
+  - name: patientAdherenceChart
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-adherence/'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          groupBy: '{{$body.input.groupBy}}'
+          startDate: '{{$body.input.startDate}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: therapist
+    comment: Fetches Adherence chart data
   - name: patientChart
     definition:
       kind: ""
@@ -504,4 +524,6 @@ custom_types:
     - name: UploadBenchmarkVideosOutputData
     - name: transcodeVideoOutput
     - name: transcodeVideoOutputData
+    - name: PatientAdherenceChart
+    - name: PatientAdherenceChartOutput
   scalars: []

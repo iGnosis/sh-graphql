@@ -54,6 +54,14 @@ type Mutation {
 }
 
 type Query {
+  patientAdherenceChart(
+    startDate: String!
+    endDate: String!
+    groupBy: GroupByEnum!
+  ): PatientAdherenceChart
+}
+
+type Query {
   patientChart(
     startDate: String!
     endDate: String!
@@ -399,5 +407,14 @@ type transcodeVideoOutput {
 
 type transcodeVideoOutputData {
   status: String!
+}
+
+type PatientAdherenceChart {
+  data: PatientAdherenceChartOutput!
+}
+
+type PatientAdherenceChartOutput {
+  activePatientsCount: Int!
+  totalNumOfPatients: Int!
 }
 
