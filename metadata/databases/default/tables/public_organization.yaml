@@ -1,6 +1,32 @@
 table:
   name: organization
   schema: public
+array_relationships:
+  - name: patients
+    using:
+      foreign_key_constraint_on:
+        column: organizationId
+        table:
+          name: patient
+          schema: public
+  - name: staffs
+    using:
+      foreign_key_constraint_on:
+        column: organizationId
+        table:
+          name: staff
+          schema: public
+insert_permissions:
+  - role: sh_admin
+    permission:
+      check: {}
+      columns:
+        - configuration
+        - createdAt
+        - id
+        - name
+        - type
+        - updatedAt
 select_permissions:
   - role: patient
     permission:
@@ -11,4 +37,28 @@ select_permissions:
         - createdAt
         - updatedAt
         - id
+      filter: {}
+  - role: sh_admin
+    permission:
+      columns:
+        - configuration
+        - name
+        - type
+        - createdAt
+        - updatedAt
+        - id
+      filter: {}
+update_permissions:
+  - role: sh_admin
+    permission:
+      columns:
+        - configuration
+        - name
+        - type
+      filter: {}
+      check: null
+delete_permissions:
+  - role: sh_admin
+    permission:
+      backend_only: false
       filter: {}

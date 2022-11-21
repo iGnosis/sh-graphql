@@ -85,6 +85,33 @@ select_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
+  - role: sh_admin
+    permission:
+      columns:
+        - canBenchmark
+        - careGiverEmail
+        - careGiverPhoneCountryCode
+        - careGiverPhoneNumber
+        - careplan
+        - createdAt
+        - email
+        - id
+        - identifier
+        - medicalConditions
+        - nickname
+        - onboardedBy
+        - onboardingStatus
+        - organizationId
+        - phoneCountryCode
+        - phoneNumber
+        - preferredActivities
+        - preferredGenres
+        - primaryTherapist
+        - rewards
+        - timezone
+        - updatedAt
+      filter: {}
+      allow_aggregations: true
   - role: therapist
     permission:
       columns:
