@@ -1,3 +1,14 @@
 table:
   name: organization
   schema: public
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - configuration
+        - name
+        - type
+        - createdAt
+        - updatedAt
+        - id
+      filter: {}
