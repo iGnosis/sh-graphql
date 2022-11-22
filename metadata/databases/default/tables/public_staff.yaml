@@ -84,17 +84,7 @@ select_permissions:
   - role: sh_admin
     permission:
       columns:
-        - email
-        - firstName
-        - lastName
-        - phoneCountryCode
-        - phoneNumber
-        - status
-        - type
-        - createdAt
-        - updatedAt
         - id
-        - organizationId
       filter: {}
       allow_aggregations: true
   - role: therapist
