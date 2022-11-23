@@ -10,6 +10,7 @@
 - "!include public_game_name.yaml"
 - "!include public_game_settings.yaml"
 - "!include public_genre.yaml"
+- "!include public_invite_organization.yaml"
 - "!include public_medical_condition.yaml"
 - "!include public_organization.yaml"
 - "!include public_organization_type.yaml"

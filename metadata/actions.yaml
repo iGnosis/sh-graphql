@@ -12,6 +12,33 @@ actions:
     permissions:
       - role: patient
     comment: Pinpoint - called when Soundhealth App is accessed.
+  - name: createOrganization
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/create-organization'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "inviteCode": {{$body.input.createOrganizationInput.inviteCode}},
+              "adminDetails": {
+                "phoneCountryCode": {{$body.input.createOrganizationInput.adminDetails.phoneCountryCode}},
+                "phoneNumber": {{$body.input.createOrganizationInput.adminDetails.phoneNumber}},
+                "email": {{$body.input.createOrganizationInput.adminDetails.email}}
+              },
+              "orgDetails": {
+                "name": {{$body.input.createOrganizationInput.orgDetails.name}},
+                "type": {{$body.input.createOrganizationInput.orgDetails.type}}
+              }
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Create an organization
   - name: faqAccessed
     definition:
       kind: synchronous
@@ -86,6 +113,23 @@ actions:
     permissions:
       - role: patient
     comment: Called when a game has been completed.
+  - name: generateOrganizationInviteCode
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/invite-organization/generate-invite-code'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: sh_admin
+    comment: Get Invite code
   - name: generateSpeech
     definition:
       kind: ""
@@ -104,6 +148,26 @@ actions:
         template_engine: Kriti
         version: 2
     comment: Speech Synthesis API.
+  - name: inviteOrganizationViaEmail
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/invite-organization/send-email-invite'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "email": {{$body.input.email}},
+              "redirectUrl": {{$body.input.redirectUrl}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: sh_admin
+    comment: Sends invite via Email
   - name: isTutorialNeeded
     definition:
       kind: synchronous
@@ -494,6 +558,9 @@ custom_types:
           value: screenCapture
   input_objects:
     - name: SampleInput
+    - name: CreateOrganizationInput
+    - name: AdminDetails
+    - name: OrgDetails
   objects:
     - name: Root
     - name: Day
@@ -548,4 +615,12 @@ custom_types:
     - name: PatientOverviewChart
     - name: PatientOverviewChartData
     - name: PatientAdherenceChartData
+    - name: GenerateOrganiationInviteCode
+    - name: GenerateOrganiationInviteCodeData
+    - name: GenerateOrganizationInviteCode
+    - name: GenerateOrganizationInviteCodeData
+    - name: InviteOrganizationViaEmail
+    - name: InviteOrganizationViaEmailData
+    - name: CreateOrganization
+    - name: CreateOrganizationData
   scalars: []
