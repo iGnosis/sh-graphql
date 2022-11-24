@@ -1,3 +1,24 @@
 table:
   name: invite_organization
   schema: public
+insert_permissions:
+  - role: sh_admin
+    permission:
+      check: {}
+      columns:
+        - expiryAt
+        - maxUseCount
+select_permissions:
+  - role: sh_admin
+    permission:
+      columns:
+        - inviteCode
+      filter: {}
+update_permissions:
+  - role: sh_admin
+    permission:
+      columns:
+        - expiryAt
+        - maxUseCount
+      filter: {}
+      check: null
