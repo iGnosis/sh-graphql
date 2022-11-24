@@ -3,6 +3,12 @@ type Mutation {
 }
 
 type Mutation {
+  createOrganization(
+    createOrganizationInput: CreateOrganizationInput!
+  ): CreateOrganization
+}
+
+type Mutation {
   faqAccessed: FaqAccessed
 }
 
@@ -30,9 +36,20 @@ type Mutation {
 }
 
 type Query {
+  generateOrganizationInviteCode: GenerateOrganizationInviteCode
+}
+
+type Query {
   generateSpeech(
     text: String!
   ): GenerateSpeech
+}
+
+type Mutation {
+  inviteOrganizationViaEmail(
+    redirectUrl: String!
+    email: String!
+  ): InviteOrganizationViaEmail
 }
 
 type Mutation {
@@ -196,6 +213,23 @@ enum transcodeVideoType {
 input SampleInput {
   username: String!
   password: String!
+}
+
+input CreateOrganizationInput {
+  inviteCode: String!
+  adminDetails: AdminDetails!
+  orgDetails: OrgDetails!
+}
+
+input AdminDetails {
+  phoneCountryCode: String!
+  phoneNumber: String!
+  email: String!
+}
+
+input OrgDetails {
+  name: String!
+  type: String!
 }
 
 type Root {
@@ -439,5 +473,37 @@ type PatientOverviewChartData {
 type PatientAdherenceChartData {
   activePatientsCount: Int!
   totalNumOfPatients: Int!
+}
+
+type GenerateOrganiationInviteCode {
+  data: GenerateOrganiationInviteCodeData!
+}
+
+type GenerateOrganiationInviteCodeData {
+  inviteCode: String!
+}
+
+type GenerateOrganizationInviteCode {
+  data: GenerateOrganiationInviteCodeData!
+}
+
+type GenerateOrganizationInviteCodeData {
+  inviteCode: String!
+}
+
+type InviteOrganizationViaEmail {
+  data: InviteOrganizationViaEmailData!
+}
+
+type InviteOrganizationViaEmailData {
+  message: String!
+}
+
+type CreateOrganization {
+  data: CreateOrganizationData!
+}
+
+type CreateOrganizationData {
+  message: String!
 }
 

@@ -48,13 +48,6 @@ select_permissions:
         - updatedAt
         - id
       filter: {}
-  - role: therapist
-    permission:
-      columns:
-        - configuration
-      filter:
-        id:
-          _eq: x-hasura-organization-id
 update_permissions:
   - role: sh_admin
     permission:
