@@ -189,7 +189,8 @@ actions:
           template: |-
             {
               "email": {{$body.input.email}},
-              "redirectUrl": {{$body.input.redirectUrl}}
+              "redirectUrl": {{$body.input.redirectUrl}},
+              "inviteCode": {{$body.input.inviteCode}}
             }
         method: POST
         query_params: {}
@@ -205,7 +206,9 @@ actions:
       forward_client_headers: true
       request_transform:
         method: GET
-        query_params: {}
+        query_params:
+          email: '{{$body.input.email}}'
+          shouldSendEmail: '{{$body.input.shouldSendEmail}}'
         request_headers:
           add_headers: {}
           remove_headers:
@@ -223,6 +226,8 @@ actions:
       request_transform:
         method: GET
         query_params:
+          email: '{{$body.input.email}}'
+          shouldSendEmail: '{{$body.input.shouldSendEmail}}'
           staffType: '{{$body.input.staffType}}'
         request_headers:
           add_headers: {}

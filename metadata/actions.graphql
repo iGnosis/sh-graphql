@@ -68,16 +68,22 @@ type Mutation {
   inviteOrganizationViaEmail(
     redirectUrl: String!
     email: String!
+    inviteCode: String!
   ): InviteOrganizationViaEmail
 }
 
 type Query {
-  invitePatient: InvitePatient
+  invitePatient(
+    shouldSendEmail: Boolean
+    email: String
+  ): InvitePatient
 }
 
 type Query {
   inviteStaff(
     staffType: StaffType!
+    shouldSendEmail: Boolean
+    email: String
   ): InviteStaff
 }
 
