@@ -2,6 +2,9 @@ table:
   name: staff
   schema: public
 object_relationships:
+  - name: organization
+    using:
+      foreign_key_constraint_on: organizationId
   - name: user_profile
     using:
       foreign_key_constraint_on:

@@ -2,6 +2,9 @@ table:
   name: patient
   schema: public
 object_relationships:
+  - name: organization
+    using:
+      foreign_key_constraint_on: organizationId
   - name: primaryTherapistUser
     using:
       foreign_key_constraint_on: primaryTherapist

@@ -9,6 +9,29 @@ type Mutation {
 }
 
 type Mutation {
+  createPatient(
+    inviteCode: String!
+    namePrefix: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): CreatePatient
+}
+
+type Mutation {
+  createStaff(
+    inviteCode: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): CreateStaff
+}
+
+type Mutation {
   faqAccessed: FaqAccessed
 }
 
@@ -36,10 +59,6 @@ type Mutation {
 }
 
 type Query {
-  generateOrganizationInviteCode: GenerateOrganizationInviteCode
-}
-
-type Query {
   generateSpeech(
     text: String!
   ): GenerateSpeech
@@ -50,6 +69,16 @@ type Mutation {
     redirectUrl: String!
     email: String!
   ): InviteOrganizationViaEmail
+}
+
+type Query {
+  invitePatient: InvitePatient
+}
+
+type Query {
+  inviteStaff(
+    staffType: StaffType!
+  ): InviteStaff
 }
 
 type Mutation {
@@ -210,6 +239,22 @@ enum transcodeVideoType {
   screenCapture
 }
 
+enum UserRole {
+  therapist
+  org_admin
+}
+
+enum OrgType {
+  clinic
+  hospital
+  provider
+}
+
+enum StaffType {
+  org_admin
+  therapist
+}
+
 input SampleInput {
   username: String!
   password: String!
@@ -229,7 +274,7 @@ input AdminDetails {
 
 input OrgDetails {
   name: String!
-  type: String!
+  type: OrgType!
 }
 
 type Root {
@@ -505,5 +550,37 @@ type CreateOrganization {
 
 type CreateOrganizationData {
   message: String!
+}
+
+type CreatePatient {
+  data: CreatePatientData!
+}
+
+type CreatePatientDatq {
+  message: String!
+}
+
+type CreateStaff {
+  data: CreatePatientData!
+}
+
+type CreatePatientData {
+  message: String!
+}
+
+type InvitePatient {
+  data: InvitePatientData!
+}
+
+type InvitePatientData {
+  inviteCode: String!
+}
+
+type InviteStaff {
+  data: InviteStaffData!
+}
+
+type InviteStaffData {
+  inviteCode: String!
 }
 

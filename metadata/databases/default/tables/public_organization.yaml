@@ -2,6 +2,13 @@ table:
   name: organization
   schema: public
 array_relationships:
+  - name: invite_organizations
+    using:
+      foreign_key_constraint_on:
+        column: organizationId
+        table:
+          name: invite_organization
+          schema: public
   - name: patients
     using:
       foreign_key_constraint_on:

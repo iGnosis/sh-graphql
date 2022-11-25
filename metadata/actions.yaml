@@ -15,7 +15,7 @@ actions:
   - name: createOrganization
     definition:
       kind: synchronous
-      handler: '{{ACTION_BASE_URL}}/create-organization'
+      handler: '{{ACTION_BASE_URL}}/create/organization'
       request_transform:
         body:
           action: transform
@@ -38,7 +38,54 @@ actions:
         version: 2
     permissions:
       - role: guest
-    comment: Create an organization
+    comment: Create an organization via Invite code
+  - name: createPatient
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/create/patient'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "inviteCode": {{$body.input.inviteCode}},
+              "namePrefix": {{$body.input.namePrefix}},
+              "firstName": {{$body.input.firstName}},
+              "lastName": {{$body.input.lastName}},
+              "email": {{$body.input.email}},
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Creates a patient via Invite code
+  - name: createStaff
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/create/staff'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "inviteCode": {{$body.input.inviteCode}},
+              "firstName": {{$body.input.firstName}},
+              "lastName": {{$body.input.lastName}},
+              "email": {{$body.input.email}},
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Create an staff via Invite code
   - name: faqAccessed
     definition:
       kind: synchronous
@@ -113,23 +160,6 @@ actions:
     permissions:
       - role: patient
     comment: Called when a game has been completed.
-  - name: generateOrganizationInviteCode
-    definition:
-      kind: ""
-      handler: '{{ACTION_BASE_URL}}/invite-organization/generate-invite-code'
-      forward_client_headers: true
-      request_transform:
-        method: GET
-        query_params: {}
-        request_headers:
-          add_headers: {}
-          remove_headers:
-            - content-type
-        template_engine: Kriti
-        version: 2
-    permissions:
-      - role: sh_admin
-    comment: Get Invite code
   - name: generateSpeech
     definition:
       kind: ""
@@ -151,7 +181,7 @@ actions:
   - name: inviteOrganizationViaEmail
     definition:
       kind: synchronous
-      handler: '{{ACTION_BASE_URL}}/invite-organization/send-email-invite'
+      handler: '{{ACTION_BASE_URL}}/invite/organization/email'
       forward_client_headers: true
       request_transform:
         body:
@@ -168,6 +198,41 @@ actions:
     permissions:
       - role: sh_admin
     comment: Sends invite via Email
+  - name: invitePatient
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/invite/patient'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Invite Patient
+  - name: inviteStaff
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/invite/staff'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          staffType: '{{$body.input.staffType}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Invite Staff
   - name: isTutorialNeeded
     definition:
       kind: synchronous
@@ -556,6 +621,33 @@ custom_types:
         - description: null
           is_deprecated: null
           value: screenCapture
+    - name: UserRole
+      values:
+        - description: null
+          is_deprecated: null
+          value: therapist
+        - description: null
+          is_deprecated: null
+          value: org_admin
+    - name: OrgType
+      values:
+        - description: null
+          is_deprecated: null
+          value: clinic
+        - description: null
+          is_deprecated: null
+          value: hospital
+        - description: null
+          is_deprecated: null
+          value: provider
+    - name: StaffType
+      values:
+        - description: null
+          is_deprecated: null
+          value: org_admin
+        - description: null
+          is_deprecated: null
+          value: therapist
   input_objects:
     - name: SampleInput
     - name: CreateOrganizationInput
@@ -623,4 +715,12 @@ custom_types:
     - name: InviteOrganizationViaEmailData
     - name: CreateOrganization
     - name: CreateOrganizationData
+    - name: CreatePatient
+    - name: CreatePatientDatq
+    - name: CreateStaff
+    - name: CreatePatientData
+    - name: InvitePatient
+    - name: InvitePatientData
+    - name: InviteStaff
+    - name: InviteStaffData
   scalars: []
