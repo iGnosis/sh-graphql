@@ -8,6 +8,7 @@ insert_permissions:
       columns:
         - expiryAt
         - maxUseCount
+        - organizationId
 select_permissions:
   - role: sh_admin
     permission:
