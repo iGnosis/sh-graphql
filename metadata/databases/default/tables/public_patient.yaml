@@ -181,9 +181,13 @@ event_triggers:
   - name: event_new_patient
     definition:
       enable_manual: true
+      insert:
+        columns: '*'
       update:
         columns:
+          - id
           - email
+          - nickname
     retry_conf:
       interval_sec: 10
       num_retries: 0
@@ -200,3 +204,10 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
