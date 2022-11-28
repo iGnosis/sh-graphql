@@ -103,6 +103,13 @@ select_permissions:
         - updatedAt
       filter: {}
       allow_aggregations: true
+update_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - email
+      filter: {}
+      check: null
 event_triggers:
   - name: event_new_therapist
     definition:

@@ -63,6 +63,13 @@ select_permissions:
         id:
           _eq: x-hasura-organization-id
 update_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - name
+        - type
+      filter: {}
+      check: null
   - role: sh_admin
     permission:
       columns:

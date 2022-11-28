@@ -10,6 +10,11 @@ insert_permissions:
         - maxUseCount
         - organizationId
 select_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - inviteCode
+      filter: {}
   - role: sh_admin
     permission:
       columns:
