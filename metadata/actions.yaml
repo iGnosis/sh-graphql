@@ -455,7 +455,8 @@ actions:
           template: |-
             {
               "phoneCountryCode": {{$body.input.phoneCountryCode}},
-              "phoneNumber": {{$body.input.phoneNumber}}
+              "phoneNumber": {{$body.input.phoneNumber}},
+              "inviteCode": {{$body.input.inviteCode}}
             }
         method: POST
         query_params: {}

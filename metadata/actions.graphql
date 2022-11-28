@@ -172,6 +172,7 @@ type Mutation {
   requestLoginOtp(
     phoneCountryCode: String!
     phoneNumber: String!
+    inviteCode: String
   ): RequestLoginOtp
 }
 
