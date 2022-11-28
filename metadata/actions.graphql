@@ -3,12 +3,6 @@ type Mutation {
 }
 
 type Mutation {
-  createOrganization(
-    createOrganizationInput: CreateOrganizationInput!
-  ): CreateOrganization
-}
-
-type Mutation {
   createPatient(
     inviteCode: String!
     namePrefix: String!
