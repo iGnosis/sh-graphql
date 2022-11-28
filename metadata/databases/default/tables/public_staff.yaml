@@ -84,6 +84,14 @@ insert_permissions:
         type: patient
       columns: []
 select_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - email
+        - id
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
   - role: sh_admin
     permission:
       columns:
@@ -108,7 +116,9 @@ update_permissions:
     permission:
       columns:
         - email
-      filter: {}
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
       check: null
 event_triggers:
   - name: event_new_therapist
