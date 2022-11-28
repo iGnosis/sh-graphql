@@ -199,6 +199,10 @@ type Mutation {
 }
 
 type Mutation {
+  uploadOrganizationLogo: UploadOrganizationLogo
+}
+
+type Mutation {
   verifyLoginOtp(
     phoneCountryCode: String!
     phoneNumber: String!
@@ -583,5 +587,14 @@ type InviteStaff {
 
 type InviteStaffData {
   inviteCode: String!
+}
+
+type UploadOrganizationLogo {
+  data: UploadOrganizationLogoData!
+}
+
+type UploadOrganizationLogoData {
+  uploadUrl: String!
+  logoAccessUrl: String!
 }
 
