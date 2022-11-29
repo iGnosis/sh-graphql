@@ -23,6 +23,7 @@ insert_permissions:
         patient:
           _eq: X-Hasura-User-Id
       set:
+        organization: x-hasura-organization-id
         patient: x-hasura-user-id
       columns:
         - createdAt
