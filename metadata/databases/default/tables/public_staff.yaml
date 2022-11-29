@@ -132,9 +132,10 @@ update_permissions:
     permission:
       columns:
         - email
+        - status
       filter:
-        id:
-          _eq: X-Hasura-User-Id
+        organizationId:
+          _eq: x-hasura-organization-id
       check: null
 event_triggers:
   - name: event_new_therapist
