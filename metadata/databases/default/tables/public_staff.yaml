@@ -78,7 +78,9 @@ array_relationships:
 insert_permissions:
   - role: org_admin
     permission:
-      check: {}
+      check:
+        organizationId:
+          _eq: x-hasura-organization-id
       columns:
         - email
         - firstName
