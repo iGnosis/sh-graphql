@@ -36,9 +36,9 @@ array_relationships:
 insert_permissions:
   - role: org_admin
     permission:
-      check:
-        organizationId:
-          _eq: x-hasura-organization-id
+      check: {}
+      set:
+        organizationId: x-hasura-organizationId
       columns:
         - email
         - firstName
@@ -82,7 +82,9 @@ select_permissions:
         - firstName
         - id
         - lastName
-      filter: {}
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
   - role: patient
     permission:
       columns:
@@ -155,6 +157,14 @@ update_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
+      check: null
+  - role: org_admin
+    permission:
+      columns:
+        - status
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
       check: null
   - role: patient
     permission:

@@ -78,9 +78,9 @@ array_relationships:
 insert_permissions:
   - role: org_admin
     permission:
-      check:
-        organizationId:
-          _eq: x-hasura-organization-id
+      check: {}
+      set:
+        organizationId: x-hasura-organization-id
       columns:
         - email
         - firstName
@@ -105,7 +105,9 @@ select_permissions:
         - id
         - lastName
         - type
-      filter: {}
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
   - role: sh_admin
     permission:
       columns:
