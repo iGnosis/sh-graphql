@@ -75,7 +75,9 @@ select_permissions:
         - patient
         - calibrationDuration
         - aggregateAnalytics
-      filter: {}
+      filter:
+        organization:
+          _eq: x-hasura-organization-id
       allow_aggregations: true
 update_permissions:
   - role: patient
