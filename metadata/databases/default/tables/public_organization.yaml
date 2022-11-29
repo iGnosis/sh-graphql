@@ -39,6 +39,7 @@ select_permissions:
     permission:
       columns:
         - id
+        - logoUrl
         - name
         - type
       filter:
@@ -48,11 +49,12 @@ select_permissions:
     permission:
       columns:
         - configuration
+        - createdAt
+        - id
+        - logoUrl
         - name
         - type
-        - createdAt
         - updatedAt
-        - id
       filter: {}
   - role: sh_admin
     permission:
@@ -68,6 +70,7 @@ select_permissions:
     permission:
       columns:
         - configuration
+        - logoUrl
       filter:
         id:
           _eq: x-hasura-organization-id
