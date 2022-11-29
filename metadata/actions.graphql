@@ -3,12 +3,6 @@ type Mutation {
 }
 
 type Mutation {
-  createOrganization(
-    createOrganizationInput: CreateOrganizationInput!
-  ): CreateOrganization
-}
-
-type Mutation {
   createPatient(
     inviteCode: String!
     namePrefix: String!
@@ -202,6 +196,10 @@ type Mutation {
   uploadBenchmarkVideos(
     benchmarkConfigId: ID!
   ): UploadBenchmarkVideosOutput
+}
+
+type Mutation {
+  uploadOrganizationLogo: UploadOrganizationLogo
 }
 
 type Mutation {
@@ -589,5 +587,14 @@ type InviteStaff {
 
 type InviteStaffData {
   inviteCode: String!
+}
+
+type UploadOrganizationLogo {
+  data: UploadOrganizationLogoData!
+}
+
+type UploadOrganizationLogoData {
+  uploadUrl: String!
+  logoAccessUrl: String!
 }
 

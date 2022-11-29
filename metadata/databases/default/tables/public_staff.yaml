@@ -76,6 +76,17 @@ array_relationships:
           name: user_preferred_genre
           schema: public
 insert_permissions:
+  - role: org_admin
+    permission:
+      check: {}
+      columns:
+        - email
+        - firstName
+        - lastName
+        - phoneCountryCode
+        - phoneNumber
+        - status
+        - type
   - role: therapist
     permission:
       check: {}
@@ -88,10 +99,11 @@ select_permissions:
     permission:
       columns:
         - email
+        - firstName
         - id
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
+        - lastName
+        - type
+      filter: {}
   - role: sh_admin
     permission:
       columns:

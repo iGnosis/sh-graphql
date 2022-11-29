@@ -12,33 +12,6 @@ actions:
     permissions:
       - role: patient
     comment: Pinpoint - called when Soundhealth App is accessed.
-  - name: createOrganization
-    definition:
-      kind: synchronous
-      handler: '{{ACTION_BASE_URL}}/create/organization'
-      request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "inviteCode": {{$body.input.createOrganizationInput.inviteCode}},
-              "adminDetails": {
-                "phoneCountryCode": {{$body.input.createOrganizationInput.adminDetails.phoneCountryCode}},
-                "phoneNumber": {{$body.input.createOrganizationInput.adminDetails.phoneNumber}},
-                "email": {{$body.input.createOrganizationInput.adminDetails.email}}
-              },
-              "orgDetails": {
-                "name": {{$body.input.createOrganizationInput.orgDetails.name}},
-                "type": {{$body.input.createOrganizationInput.orgDetails.type}}
-              }
-            }
-        method: POST
-        query_params: {}
-        template_engine: Kriti
-        version: 2
-    permissions:
-      - role: guest
-    comment: Create an organization via Invite code
   - name: createPatient
     definition:
       kind: synchronous
@@ -544,6 +517,23 @@ actions:
     permissions:
       - role: benchmark
     comment: Returns signed URLs that are to be used for uploading benchmarking videos.
+  - name: uploadOrganizationLogo
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/upload/organization/logo'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Returns signed URL that are to be used for uploading Organization logo
   - name: verifyLoginOtp
     definition:
       kind: synchronous
@@ -729,4 +719,6 @@ custom_types:
     - name: InvitePatientData
     - name: InviteStaff
     - name: InviteStaffData
+    - name: UploadOrganizationLogo
+    - name: UploadOrganizationLogoData
   scalars: []

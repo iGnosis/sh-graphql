@@ -34,6 +34,16 @@ array_relationships:
           name: session
           schema: public
 insert_permissions:
+  - role: org_admin
+    permission:
+      check: {}
+      columns:
+        - email
+        - firstName
+        - lastName
+        - namePrefix
+        - phoneCountryCode
+        - phoneNumber
   - role: therapist
     permission:
       check: {}
@@ -62,6 +72,14 @@ select_permissions:
         - nickname
         - preferredGenres
         - updatedAt
+      filter: {}
+  - role: org_admin
+    permission:
+      columns:
+        - email
+        - firstName
+        - id
+        - lastName
       filter: {}
   - role: patient
     permission:
@@ -181,9 +199,13 @@ event_triggers:
   - name: event_new_patient
     definition:
       enable_manual: true
+      insert:
+        columns: '*'
       update:
         columns:
+          - id
           - email
+          - nickname
     retry_conf:
       interval_sec: 10
       num_retries: 0
