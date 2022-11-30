@@ -38,6 +38,7 @@ select_permissions:
   - role: org_admin
     permission:
       columns:
+        - configuration
         - id
         - logoUrl
         - name
