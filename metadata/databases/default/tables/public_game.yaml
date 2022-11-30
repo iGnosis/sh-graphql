@@ -94,6 +94,7 @@ select_permissions:
         - patient
         - calibrationDuration
         - aggregateAnalytics
+        - organization
       filter:
         organization:
           _eq: x-hasura-organization-id
