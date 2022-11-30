@@ -63,6 +63,7 @@ select_permissions:
       filter:
         organization:
           _eq: x-hasura-organization-id
+      allow_aggregations: true
   - role: patient
     permission:
       columns:
