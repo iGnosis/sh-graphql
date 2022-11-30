@@ -45,6 +45,24 @@ select_permissions:
         - id
         - patient
       filter: {}
+  - role: org_admin
+    permission:
+      columns:
+        - calibrationDuration
+        - repsCompleted
+        - totalDuration
+        - aggregateAnalytics
+        - analytics
+        - game
+        - createdAt
+        - endedAt
+        - updatedAt
+        - id
+        - organization
+        - patient
+      filter:
+        organization:
+          _eq: x-hasura-organization-id
   - role: patient
     permission:
       columns:
