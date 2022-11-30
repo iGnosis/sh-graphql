@@ -82,6 +82,9 @@ select_permissions:
         - firstName
         - id
         - lastName
+        - namePrefix
+        - nickname
+        - status
       filter:
         organizationId:
           _eq: x-hasura-organization-id
