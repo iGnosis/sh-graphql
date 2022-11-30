@@ -78,13 +78,20 @@ select_permissions:
   - role: org_admin
     permission:
       columns:
+        - createdAt
         - email
         - firstName
         - id
+        - identifier
         - lastName
         - namePrefix
         - nickname
+        - phoneCountryCode
+        - phoneNumber
+        - preferredActivities
+        - preferredGenres
         - status
+        - updatedAt
       filter:
         organizationId:
           _eq: x-hasura-organization-id
