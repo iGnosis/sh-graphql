@@ -104,6 +104,8 @@ select_permissions:
         - firstName
         - id
         - lastName
+        - phoneCountryCode
+        - phoneNumber
         - type
       filter:
         organizationId:
@@ -132,7 +134,12 @@ update_permissions:
     permission:
       columns:
         - email
+        - firstName
+        - lastName
+        - phoneCountryCode
+        - phoneNumber
         - status
+        - type
       filter:
         organizationId:
           _eq: x-hasura-organization-id

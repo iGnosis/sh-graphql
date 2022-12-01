@@ -196,7 +196,16 @@ update_permissions:
   - role: org_admin
     permission:
       columns:
+        - email
+        - firstName
+        - identifier
+        - lastName
+        - namePrefix
+        - nickname
+        - phoneCountryCode
+        - phoneNumber
         - status
+        - type
       filter:
         organizationId:
           _eq: x-hasura-organization-id
