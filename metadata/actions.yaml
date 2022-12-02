@@ -181,6 +181,7 @@ actions:
         method: GET
         query_params:
           email: '{{$body.input.email}}'
+          expiryAt: '{{$body.input.expiryAt}}'
           shouldSendEmail: '{{$body.input.shouldSendEmail}}'
         request_headers:
           add_headers: {}
@@ -200,6 +201,7 @@ actions:
         method: GET
         query_params:
           email: '{{$body.input.email}}'
+          expiryAt: '{{$body.input.expiryAt}}'
           shouldSendEmail: '{{$body.input.shouldSendEmail}}'
           staffType: '{{$body.input.staffType}}'
         request_headers:
