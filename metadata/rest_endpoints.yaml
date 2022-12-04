@@ -1,9 +1,1 @@
-- comment: null
-  definition:
-    query:
-      collection_name: allowed-queries
-      query_name: Insert Event
-  methods:
-    - POST
-  name: Insert Event
-  url: event
+[]

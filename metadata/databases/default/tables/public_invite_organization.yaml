@@ -1,0 +1,32 @@
+table:
+  name: invite_organization
+  schema: public
+insert_permissions:
+  - role: sh_admin
+    permission:
+      check: {}
+      columns:
+        - expiryAt
+        - maxUseCount
+        - organizationId
+select_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - inviteCode
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
+  - role: sh_admin
+    permission:
+      columns:
+        - inviteCode
+      filter: {}
+update_permissions:
+  - role: sh_admin
+    permission:
+      columns:
+        - expiryAt
+        - maxUseCount
+      filter: {}
+      check: null

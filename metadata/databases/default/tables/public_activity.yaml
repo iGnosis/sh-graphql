@@ -5,14 +5,6 @@ object_relationships:
   - name: activity_difficulty
     using:
       foreign_key_constraint_on: difficulty
-array_relationships:
-  - name: events
-    using:
-      foreign_key_constraint_on:
-        column: activity
-        table:
-          name: events
-          schema: public
 select_permissions:
   - role: patient
     permission:

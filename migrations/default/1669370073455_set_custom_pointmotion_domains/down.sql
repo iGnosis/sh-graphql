@@ -1,0 +1,3 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- UPDATE organization SET "patientDomain" = 'app.pointmotion.us', "organizationDomain" = 'org.pointmotion.us' WHERE name = 'pointmotion';

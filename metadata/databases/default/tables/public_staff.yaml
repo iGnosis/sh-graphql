@@ -1,0 +1,170 @@
+table:
+  name: staff
+  schema: public
+object_relationships:
+  - name: organization
+    using:
+      foreign_key_constraint_on: organizationId
+  - name: user_profile
+    using:
+      foreign_key_constraint_on:
+        column: user
+        table:
+          name: user_profile
+          schema: public
+  - name: user_status
+    using:
+      foreign_key_constraint_on: status
+  - name: user_type
+    using:
+      foreign_key_constraint_on: type
+array_relationships:
+  - name: patient_notes
+    using:
+      foreign_key_constraint_on:
+        column: author
+        table:
+          name: patient_notes
+          schema: public
+  - name: patients
+    using:
+      foreign_key_constraint_on:
+        column: onboardedBy
+        table:
+          name: patient
+          schema: public
+  - name: patientsByPrimarytherapist
+    using:
+      foreign_key_constraint_on:
+        column: primaryTherapist
+        table:
+          name: patient
+          schema: public
+  - name: subscriptions
+    using:
+      foreign_key_constraint_on:
+        column: user
+        table:
+          name: subscription
+          schema: public
+  - name: userRelationsByFrom
+    using:
+      foreign_key_constraint_on:
+        column: from
+        table:
+          name: user_relation
+          schema: public
+  - name: userRelationsByTo
+    using:
+      foreign_key_constraint_on:
+        column: to
+        table:
+          name: user_relation
+          schema: public
+  - name: user_medical_conditions
+    using:
+      foreign_key_constraint_on:
+        column: user
+        table:
+          name: user_medical_condition
+          schema: public
+  - name: user_preferred_genres
+    using:
+      foreign_key_constraint_on:
+        column: user
+        table:
+          name: user_preferred_genre
+          schema: public
+insert_permissions:
+  - role: org_admin
+    permission:
+      check: {}
+      set:
+        organizationId: x-hasura-organization-id
+      columns:
+        - email
+        - firstName
+        - lastName
+        - phoneCountryCode
+        - phoneNumber
+        - status
+        - type
+  - role: therapist
+    permission:
+      check: {}
+      set:
+        status: active
+        type: patient
+      columns: []
+select_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - email
+        - firstName
+        - id
+        - lastName
+        - phoneCountryCode
+        - phoneNumber
+        - type
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
+  - role: sh_admin
+    permission:
+      columns:
+        - id
+      filter: {}
+      allow_aggregations: true
+  - role: therapist
+    permission:
+      columns:
+        - createdAt
+        - email
+        - firstName
+        - id
+        - lastName
+        - status
+        - type
+        - updatedAt
+      filter: {}
+      allow_aggregations: true
+update_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - email
+        - firstName
+        - lastName
+        - phoneCountryCode
+        - phoneNumber
+        - status
+        - type
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
+      check: null
+event_triggers:
+  - name: event_new_therapist
+    definition:
+      enable_manual: true
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/events/therapist/new'
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "id": {{$body.event.data.new.id}},
+            "email": {{$body.event.data.new.email}},
+            "firstName": {{$body.event.data.new.firstName}},
+            "lastName": {{$body.event.data.new.lastName}},
+            "type": {{$body.event.data.new.type}}
+          }
+      template_engine: Kriti
+      version: 2

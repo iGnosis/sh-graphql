@@ -23,6 +23,7 @@ insert_permissions:
         patient:
           _eq: X-Hasura-User-Id
       set:
+        organizationId: x-hasura-organization-id
         patient: x-hasura-user-id
       columns:
         - createdAt
@@ -44,6 +45,25 @@ select_permissions:
         - id
         - patient
       filter: {}
+  - role: org_admin
+    permission:
+      columns:
+        - calibrationDuration
+        - repsCompleted
+        - totalDuration
+        - aggregateAnalytics
+        - analytics
+        - game
+        - createdAt
+        - endedAt
+        - updatedAt
+        - id
+        - organizationId
+        - patient
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
+      allow_aggregations: true
   - role: patient
     permission:
       columns:
@@ -74,7 +94,10 @@ select_permissions:
         - patient
         - calibrationDuration
         - aggregateAnalytics
-      filter: {}
+        - organizationId
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
       allow_aggregations: true
 update_permissions:
   - role: patient

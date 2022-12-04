@@ -12,6 +12,53 @@ actions:
     permissions:
       - role: patient
     comment: Pinpoint - called when Soundhealth App is accessed.
+  - name: createPatient
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/create/patient'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "inviteCode": {{$body.input.inviteCode}},
+              "namePrefix": {{$body.input.namePrefix}},
+              "firstName": {{$body.input.firstName}},
+              "lastName": {{$body.input.lastName}},
+              "email": {{$body.input.email}},
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Creates a patient via Invite code
+  - name: createStaff
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/create/staff'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "inviteCode": {{$body.input.inviteCode}},
+              "firstName": {{$body.input.firstName}},
+              "lastName": {{$body.input.lastName}},
+              "email": {{$body.input.email}},
+              "phoneCountryCode": {{$body.input.phoneCountryCode}},
+              "phoneNumber": {{$body.input.phoneNumber}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Create an staff via Invite code
   - name: faqAccessed
     definition:
       kind: synchronous
@@ -104,6 +151,68 @@ actions:
         template_engine: Kriti
         version: 2
     comment: Speech Synthesis API.
+  - name: inviteOrganizationViaEmail
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/invite/organization/email'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "email": {{$body.input.email}},
+              "redirectUrl": {{$body.input.redirectUrl}},
+              "inviteCode": {{$body.input.inviteCode}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: sh_admin
+    comment: Sends invite via Email
+  - name: invitePatient
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/invite/patient'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          email: '{{$body.input.email}}'
+          expiryAt: '{{$body.input.expiryAt}}'
+          shouldSendEmail: '{{$body.input.shouldSendEmail}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Invite Patient
+  - name: inviteStaff
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/invite/staff'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          email: '{{$body.input.email}}'
+          expiryAt: '{{$body.input.expiryAt}}'
+          shouldSendEmail: '{{$body.input.shouldSendEmail}}'
+          staffType: '{{$body.input.staffType}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Invite Staff
   - name: isTutorialNeeded
     definition:
       kind: synchronous
@@ -162,6 +271,26 @@ actions:
     permissions:
       - role: patient
     comment: Marks a reward as viewed.
+  - name: patientAdherenceChart
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-adherence/'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          groupBy: '{{$body.input.groupBy}}'
+          startDate: '{{$body.input.startDate}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: therapist
+    comment: Fetches Adherence chart data
   - name: patientChart
     definition:
       kind: ""
@@ -251,6 +380,25 @@ actions:
     permissions:
       - role: patient
     comment: API to fetch patient monthly goals. Start and end dates are inclusive.
+  - name: patientOverviewChart
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-overview/'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          startDate: '{{$body.input.startDate}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: therapist
+    comment: Fetches Patient Overview chart data
   - name: patientSessionStreak
     definition:
       kind: ""
@@ -282,7 +430,8 @@ actions:
           template: |-
             {
               "phoneCountryCode": {{$body.input.phoneCountryCode}},
-              "phoneNumber": {{$body.input.phoneNumber}}
+              "phoneNumber": {{$body.input.phoneNumber}},
+              "inviteCode": {{$body.input.inviteCode}}
             }
         method: POST
         query_params: {}
@@ -370,6 +519,23 @@ actions:
     permissions:
       - role: benchmark
     comment: Returns signed URLs that are to be used for uploading benchmarking videos.
+  - name: uploadOrganizationLogo
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/upload/organization/logo'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Returns signed URL that are to be used for uploading Organization logo
   - name: verifyLoginOtp
     definition:
       kind: synchronous
@@ -453,8 +619,38 @@ custom_types:
         - description: null
           is_deprecated: null
           value: screenCapture
+    - name: UserRole
+      values:
+        - description: null
+          is_deprecated: null
+          value: therapist
+        - description: null
+          is_deprecated: null
+          value: org_admin
+    - name: OrgType
+      values:
+        - description: null
+          is_deprecated: null
+          value: clinic
+        - description: null
+          is_deprecated: null
+          value: hospital
+        - description: null
+          is_deprecated: null
+          value: provider
+    - name: StaffType
+      values:
+        - description: null
+          is_deprecated: null
+          value: org_admin
+        - description: null
+          is_deprecated: null
+          value: therapist
   input_objects:
     - name: SampleInput
+    - name: CreateOrganizationInput
+    - name: AdminDetails
+    - name: OrgDetails
   objects:
     - name: Root
     - name: Day
@@ -504,4 +700,27 @@ custom_types:
     - name: UploadBenchmarkVideosOutputData
     - name: transcodeVideoOutput
     - name: transcodeVideoOutputData
+    - name: PatientAdherenceChart
+    - name: PatientAdherenceChartOutput
+    - name: PatientOverviewChart
+    - name: PatientOverviewChartData
+    - name: PatientAdherenceChartData
+    - name: GenerateOrganiationInviteCode
+    - name: GenerateOrganiationInviteCodeData
+    - name: GenerateOrganizationInviteCode
+    - name: GenerateOrganizationInviteCodeData
+    - name: InviteOrganizationViaEmail
+    - name: InviteOrganizationViaEmailData
+    - name: CreateOrganization
+    - name: CreateOrganizationData
+    - name: CreatePatient
+    - name: CreatePatientDatq
+    - name: CreateStaff
+    - name: CreatePatientData
+    - name: InvitePatient
+    - name: InvitePatientData
+    - name: InviteStaff
+    - name: InviteStaffData
+    - name: UploadOrganizationLogo
+    - name: UploadOrganizationLogoData
   scalars: []

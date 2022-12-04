@@ -2,6 +2,9 @@ table:
   name: patient
   schema: public
 object_relationships:
+  - name: organization
+    using:
+      foreign_key_constraint_on: organizationId
   - name: primaryTherapistUser
     using:
       foreign_key_constraint_on: primaryTherapist
@@ -9,13 +12,6 @@ object_relationships:
     using:
       foreign_key_constraint_on: onboardedBy
 array_relationships:
-  - name: events
-    using:
-      foreign_key_constraint_on:
-        column: patient
-        table:
-          name: events
-          schema: public
   - name: games
     using:
       foreign_key_constraint_on:
@@ -38,6 +34,18 @@ array_relationships:
           name: session
           schema: public
 insert_permissions:
+  - role: org_admin
+    permission:
+      check: {}
+      set:
+        organizationId: x-hasura-organization-id
+      columns:
+        - email
+        - firstName
+        - lastName
+        - namePrefix
+        - phoneCountryCode
+        - phoneNumber
   - role: therapist
     permission:
       check: {}
@@ -67,6 +75,39 @@ select_permissions:
         - preferredGenres
         - updatedAt
       filter: {}
+  - role: org_admin
+    permission:
+      columns:
+        - careGiverEmail
+        - careGiverPhoneCountryCode
+        - careGiverPhoneNumber
+        - careplan
+        - createdAt
+        - email
+        - firstName
+        - id
+        - identifier
+        - lastName
+        - medicalConditions
+        - namePrefix
+        - nickname
+        - onboardedBy
+        - onboardingStatus
+        - organizationId
+        - phoneCountryCode
+        - phoneNumber
+        - preferredActivities
+        - preferredGenres
+        - primaryTherapist
+        - rewards
+        - status
+        - timezone
+        - type
+        - updatedAt
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
+      allow_aggregations: true
   - role: patient
     permission:
       columns:
@@ -92,26 +133,44 @@ select_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
+  - role: sh_admin
+    permission:
+      columns:
+        - id
+      filter: {}
+      allow_aggregations: true
   - role: therapist
     permission:
       columns:
         - careGiverEmail
         - careGiverPhoneCountryCode
         - careGiverPhoneNumber
+        - careplan
         - createdAt
         - email
+        - firstName
         - id
         - identifier
+        - lastName
         - medicalConditions
+        - namePrefix
         - nickname
         - onboardedBy
+        - onboardingStatus
+        - organizationId
         - phoneCountryCode
         - phoneNumber
+        - preferredActivities
         - preferredGenres
         - primaryTherapist
+        - rewards
+        - status
         - timezone
+        - type
         - updatedAt
-      filter: {}
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
       allow_aggregations: true
 update_permissions:
   - role: benchmark
@@ -133,6 +192,23 @@ update_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
+      check: null
+  - role: org_admin
+    permission:
+      columns:
+        - email
+        - firstName
+        - identifier
+        - lastName
+        - namePrefix
+        - nickname
+        - phoneCountryCode
+        - phoneNumber
+        - status
+        - type
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
       check: null
   - role: patient
     permission:
@@ -179,9 +255,13 @@ event_triggers:
   - name: event_new_patient
     definition:
       enable_manual: true
+      insert:
+        columns: '*'
       update:
         columns:
+          - id
           - email
+          - nickname
     retry_conf:
       interval_sec: 10
       num_retries: 0
@@ -198,3 +278,10 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60

@@ -3,6 +3,29 @@ type Mutation {
 }
 
 type Mutation {
+  createPatient(
+    inviteCode: String!
+    namePrefix: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): CreatePatient
+}
+
+type Mutation {
+  createStaff(
+    inviteCode: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): CreateStaff
+}
+
+type Mutation {
   faqAccessed: FaqAccessed
 }
 
@@ -36,6 +59,31 @@ type Query {
 }
 
 type Mutation {
+  inviteOrganizationViaEmail(
+    redirectUrl: String!
+    email: String!
+    inviteCode: String!
+  ): InviteOrganizationViaEmail
+}
+
+type Query {
+  invitePatient(
+    shouldSendEmail: Boolean
+    email: String
+    expiryAt: String
+  ): InvitePatient
+}
+
+type Query {
+  inviteStaff(
+    staffType: StaffType!
+    shouldSendEmail: Boolean
+    email: String
+    expiryAt: String
+  ): InviteStaff
+}
+
+type Mutation {
   isTutorialNeeded(
     game: String!
   ): Output
@@ -51,6 +99,14 @@ type Mutation {
   markRewardAsViewed(
     rewardTier: String!
   ): MarkRewardAsViewed
+}
+
+type Query {
+  patientAdherenceChart(
+    startDate: String!
+    endDate: String!
+    groupBy: GroupByEnum!
+  ): PatientAdherenceChart
 }
 
 type Query {
@@ -96,6 +152,13 @@ type Query {
 }
 
 type Query {
+  patientOverviewChart(
+    startDate: String!
+    endDate: String!
+  ): PatientOverviewChart
+}
+
+type Query {
   patientSessionStreak(
     userTimezone: String!
   ): PatientSessionStreak
@@ -105,6 +168,7 @@ type Mutation {
   requestLoginOtp(
     phoneCountryCode: String!
     phoneNumber: String!
+    inviteCode: String
   ): RequestLoginOtp
 }
 
@@ -134,6 +198,10 @@ type Mutation {
   uploadBenchmarkVideos(
     benchmarkConfigId: ID!
   ): UploadBenchmarkVideosOutput
+}
+
+type Mutation {
+  uploadOrganizationLogo: UploadOrganizationLogo
 }
 
 type Mutation {
@@ -178,9 +246,42 @@ enum transcodeVideoType {
   screenCapture
 }
 
+enum UserRole {
+  therapist
+  org_admin
+}
+
+enum OrgType {
+  clinic
+  hospital
+  provider
+}
+
+enum StaffType {
+  org_admin
+  therapist
+}
+
 input SampleInput {
   username: String!
   password: String!
+}
+
+input CreateOrganizationInput {
+  inviteCode: String!
+  adminDetails: AdminDetails!
+  orgDetails: OrgDetails!
+}
+
+input AdminDetails {
+  phoneCountryCode: String!
+  phoneNumber: String!
+  email: String!
+}
+
+input OrgDetails {
+  name: String!
+  type: OrgType!
 }
 
 type Root {
@@ -399,5 +500,103 @@ type transcodeVideoOutput {
 
 type transcodeVideoOutputData {
   status: String!
+}
+
+type PatientAdherenceChart {
+  data: PatientAdherenceChartData!
+}
+
+type PatientAdherenceChartOutput {
+  activePatientsCount: Int!
+  totalNumOfPatients: Int!
+}
+
+type PatientOverviewChart {
+  data: [PatientOverviewChartData!]!
+}
+
+type PatientOverviewChartData {
+  patient: String!
+  gamesPlayedCount: Int!
+  engagementRatio: Int!
+  avgAchievementPercentage: Int!
+}
+
+type PatientAdherenceChartData {
+  activePatientsCount: Int!
+  totalNumOfPatients: Int!
+}
+
+type GenerateOrganiationInviteCode {
+  data: GenerateOrganiationInviteCodeData!
+}
+
+type GenerateOrganiationInviteCodeData {
+  inviteCode: String!
+}
+
+type GenerateOrganizationInviteCode {
+  data: GenerateOrganiationInviteCodeData!
+}
+
+type GenerateOrganizationInviteCodeData {
+  inviteCode: String!
+}
+
+type InviteOrganizationViaEmail {
+  data: InviteOrganizationViaEmailData!
+}
+
+type InviteOrganizationViaEmailData {
+  message: String!
+}
+
+type CreateOrganization {
+  data: CreateOrganizationData!
+}
+
+type CreateOrganizationData {
+  message: String!
+}
+
+type CreatePatient {
+  data: CreatePatientData!
+}
+
+type CreatePatientDatq {
+  message: String!
+}
+
+type CreateStaff {
+  data: CreatePatientData!
+}
+
+type CreatePatientData {
+  message: String!
+}
+
+type InvitePatient {
+  data: InvitePatientData!
+}
+
+type InvitePatientData {
+  inviteCode: String!
+}
+
+type InviteStaff {
+  data: InviteStaffData!
+}
+
+type InviteStaffData {
+  inviteCode: String!
+}
+
+type UploadOrganizationLogo {
+  data: UploadOrganizationLogoData!
+}
+
+type UploadOrganizationLogoData {
+  uploadUrl: String!
+  logoAccessUrl: String!
 }
 
