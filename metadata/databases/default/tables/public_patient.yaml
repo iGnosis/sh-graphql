@@ -38,7 +38,7 @@ insert_permissions:
     permission:
       check: {}
       set:
-        organizationId: x-hasura-organizationId
+        organizationId: x-hasura-organization-id
       columns:
         - email
         - firstName
