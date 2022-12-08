@@ -34,6 +34,9 @@ services:
       # Use the script `run.sh` to open the console
       HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
 
+      # To secure NestJS Hasura events endpoints
+      EVENTS_SECRET: admin_secret
+
       # Keep this same as NestJS .env value of GQL_API_ADMIN_SECRET
       HASURA_GRAPHQL_ADMIN_SECRET: admin_secret
 
