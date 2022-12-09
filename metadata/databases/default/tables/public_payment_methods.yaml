@@ -1,0 +1,3 @@
+table:
+  name: payment_methods
+  schema: public
