@@ -1,8 +1,13 @@
 {
   "scripts": {
-    "generate-config": "node ci/scripts/generateConfig.js"
+    "generate-config": "node ci/scripts/generateConfig.js",
+    "prepare": "husky install",
+    "restart-container": "docker restart local_hasura"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0"
   }
 }

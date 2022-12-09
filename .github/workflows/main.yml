@@ -51,7 +51,7 @@ jobs:
           ls -la
 
       - name: Installing Node dependencies
-        run: npm i
+        run: npm ci --ignore-scripts
 
       - name: Generating a config file
         run: npm run generate-config
