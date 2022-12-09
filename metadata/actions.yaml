@@ -72,6 +72,27 @@ actions:
     permissions:
       - role: patient
     comment: Pinpoint - called when Soundhealth FAQs are accessed.
+  - name: fetchUserRbac
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/rbac'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: sh_admin
+      - role: org_admin
+      - role: benchmark
+      - role: therapist
+      - role: patient
+    comment: Fetches user RBAC
   - name: freeParkinsonResourcesAccessed
     definition:
       kind: synchronous
@@ -213,26 +234,6 @@ actions:
     permissions:
       - role: org_admin
     comment: Invite Staff
-  - name: isTutorialNeeded
-    definition:
-      kind: synchronous
-      handler: https://webhook.site/3c0034f3-142d-4a2f-aff1-71003eea7997
-      request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "game": {{$body.input.game}}
-            }
-        method: GET
-        query_params: {}
-        request_headers:
-          add_headers: {}
-          remove_headers:
-            - content-type
-        template_engine: Kriti
-        version: 2
-    comment: isTutorialNeeded
   - name: markRewardAsAccessed
     definition:
       kind: synchronous
@@ -723,4 +724,5 @@ custom_types:
     - name: InviteStaffData
     - name: UploadOrganizationLogo
     - name: UploadOrganizationLogoData
+    - name: FetchUserRbac
   scalars: []

@@ -29,6 +29,10 @@ type Mutation {
   faqAccessed: FaqAccessed
 }
 
+type Query {
+  fetchUserRbac: FetchUserRbac
+}
+
 type Mutation {
   freeParkinsonResourcesAccessed: FreeParkinsonResourcesAccessed
 }
@@ -81,12 +85,6 @@ type Query {
     email: String
     expiryAt: String
   ): InviteStaff
-}
-
-type Mutation {
-  isTutorialNeeded(
-    game: String!
-  ): Output
 }
 
 type Mutation {
@@ -598,5 +596,9 @@ type UploadOrganizationLogo {
 type UploadOrganizationLogoData {
   uploadUrl: String!
   logoAccessUrl: String!
+}
+
+type FetchUserRbac {
+  data: String!
 }
 
