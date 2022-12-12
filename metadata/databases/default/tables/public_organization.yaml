@@ -42,6 +42,7 @@ select_permissions:
         - id
         - logoUrl
         - name
+        - subscriptionPlan
         - type
       filter:
         id:

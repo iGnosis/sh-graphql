@@ -27,7 +27,7 @@ type Mutation {
 
 type Mutation {
   createSubscriptionPlan(
-    subscriptionFee: Float!
+    subscriptionFee: Int!
     trialPeriod: Int!
   ): CreateSubscriptionPlan
 }
@@ -197,6 +197,13 @@ type Mutation {
     endDate: String!
     userTimezone: String!
   ): UpdateRewards
+}
+
+type Mutation {
+  updateSubscriptionPlan(
+    subscriptionFee: Int!
+    trialPeriod: Int!
+  ): UpdateSubscriptionPlan
 }
 
 type Mutation {
@@ -614,6 +621,14 @@ type CreateSubscriptionPlan {
 }
 
 type CreateSubscriptionPlanData {
+  subscriptionPlanId: String!
+}
+
+type UpdateSubscriptionPlan {
+  data: UpdateSubscriptionPlanData!
+}
+
+type UpdateSubscriptionPlanData {
   subscriptionPlanId: String!
 }
 
