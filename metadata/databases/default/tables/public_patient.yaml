@@ -241,9 +241,6 @@ event_triggers:
       num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/events/therapist/added-first-patient'
-    headers:
-      - name: x-hasura-admin-secret
-        value_from_env: EVENTS_SECRET
     request_transform:
       body:
         action: transform
@@ -255,13 +252,6 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
-    cleanup_config:
-      batch_size: 10000
-      clean_invocation_logs: false
-      clear_older_than: 168
-      paused: true
-      schedule: 0 0 * * *
-      timeout: 60
   - name: event_new_patient
     definition:
       enable_manual: true
@@ -277,9 +267,6 @@ event_triggers:
       num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/events/patient/new'
-    headers:
-      - name: x-hasura-admin-secret
-        value_from_env: EVENTS_SECRET
     request_transform:
       body:
         action: transform

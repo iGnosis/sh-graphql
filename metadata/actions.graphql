@@ -26,6 +26,13 @@ type Mutation {
 }
 
 type Mutation {
+  createSubscriptionPlan(
+    subscriptionFee: Float!
+    trialPeriod: Int!
+  ): CreateSubscriptionPlan
+}
+
+type Mutation {
   faqAccessed: FaqAccessed
 }
 
@@ -600,5 +607,13 @@ type UploadOrganizationLogoData {
 
 type FetchUserRbac {
   data: String!
+}
+
+type CreateSubscriptionPlan {
+  data: CreateSubscriptionPlanData!
+}
+
+type CreateSubscriptionPlanData {
+  subscriptionPlanId: String!
 }
 

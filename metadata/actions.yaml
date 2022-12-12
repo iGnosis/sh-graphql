@@ -59,6 +59,26 @@ actions:
     permissions:
       - role: guest
     comment: Create an staff via Invite code
+  - name: createSubscriptionPlan
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/organization-payment'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+                "subscriptionFee": {{$body.input.subscriptionFee}},
+                "trialPeriod": {{$body.input.trialPeriod}}
+              }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Creates a subscription plan
   - name: faqAccessed
     definition:
       kind: synchronous
@@ -725,4 +745,6 @@ custom_types:
     - name: UploadOrganizationLogo
     - name: UploadOrganizationLogoData
     - name: FetchUserRbac
+    - name: CreateSubscriptionPlan
+    - name: CreateSubscriptionPlanData
   scalars: []

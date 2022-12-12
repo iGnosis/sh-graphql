@@ -1,3 +1,12 @@
 table:
   name: subscription_plans
   schema: public
+insert_permissions:
+  - role: org_admin
+    permission:
+      check: {}
+      columns:
+        - priceId
+        - productId
+        - subscriptionFee
+        - trialPeriod

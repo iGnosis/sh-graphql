@@ -79,11 +79,8 @@ update_permissions:
   - role: org_admin
     permission:
       columns:
-        - configuration
-        - logoUrl
         - name
-        - organizationDomain
-        - patientDomain
+        - subscriptionPlan
         - type
       filter:
         id:
