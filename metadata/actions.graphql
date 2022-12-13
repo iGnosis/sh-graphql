@@ -1,5 +1,19 @@
 type Mutation {
+  addPaymentMethod(
+    cardDetails: CardDetailsDTO
+  ): AddPaymentMethodResp!
+}
+
+type Mutation {
   appAccessed: AppAccessed
+}
+
+type Mutation {
+  cancelSubscription: Subscription!
+}
+
+type Mutation {
+  createCustomer: CreateCustomer!
 }
 
 type Mutation {
@@ -23,6 +37,10 @@ type Mutation {
     phoneCountryCode: String!
     phoneNumber: String!
   ): CreateStaff
+}
+
+type Mutation {
+  createSubscription: SubscriptionId!
 }
 
 type Mutation {
@@ -67,6 +85,16 @@ type Query {
   generateSpeech(
     text: String!
   ): GenerateSpeech
+}
+
+type Query {
+  getPaymentMethodDetails(
+    paymentMethodId: String!
+  ): PaymentMethod!
+}
+
+type Query {
+  getSubscriptionDetails: Subscription!
 }
 
 type Mutation {
@@ -170,6 +198,12 @@ type Query {
 }
 
 type Mutation {
+  removePaymentMethod(
+    paymentMethodId: String!
+  ): Status
+}
+
+type Mutation {
   requestLoginOtp(
     phoneCountryCode: String!
     phoneNumber: String!
@@ -189,6 +223,13 @@ type Mutation {
     benchmarkConfigId: ID!
     type: transcodeVideoType!
   ): transcodeVideoOutput
+}
+
+type Mutation {
+  updatePaymentMethod(
+    cardDetails: UpdatePaymentMethodDTO!
+    paymentMethodId: String!
+  ): UpdatedPaymentMethod!
 }
 
 type Mutation {
@@ -222,12 +263,6 @@ type Mutation {
     phoneNumber: String!
     otp: Int!
   ): VerifyLoginOtp
-}
-
-enum Status {
-  completed
-  partiallycompleted
-  exceeded
 }
 
 enum ChartTypeEnum {
@@ -294,6 +329,22 @@ input AdminDetails {
 input OrgDetails {
   name: String!
   type: OrgType!
+}
+
+input CardDetailsDTO {
+  exp_month: Int!
+  exp_year: Int!
+  number: String!
+}
+
+input UpdateCardDetailsDTO {
+  exp_month: Int!
+  exp_year: Int!
+}
+
+input UpdatePaymentMethodDTO {
+  exp_month: Int!
+  exp_year: Int!
 }
 
 type Root {
@@ -630,5 +681,37 @@ type UpdateSubscriptionPlan {
 
 type UpdateSubscriptionPlanData {
   subscriptionPlanId: String!
+}
+
+type CreateCustomer {
+  customerId: String!
+}
+
+type AddPaymentMethodResp {
+  paymentMethod: String!
+}
+
+type PaymentMethodId {
+  paymentMethodId: String!
+}
+
+type Status {
+  status: String!
+}
+
+type PaymentMethod {
+  data: String!
+}
+
+type UpdatedPaymentMethod {
+  data: String!
+}
+
+type SubscriptionId {
+  subscriptionId: String!
+}
+
+type Subscription {
+  subscription: String!
 }
 
