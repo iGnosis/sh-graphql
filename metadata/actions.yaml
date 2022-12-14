@@ -1,4 +1,23 @@
 actions:
+  - name: addPaymentMethod
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/add-payment-method'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "cardDetails": {{$body.input.cardDetails}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Adds a payment method to stripe and attaches it to a patient
   - name: appAccessed
     definition:
       kind: synchronous
@@ -12,6 +31,32 @@ actions:
     permissions:
       - role: patient
     comment: Pinpoint - called when Soundhealth App is accessed.
+  - name: cancelSubscription
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/cancel-subscription'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: cancel subscription
+  - name: createCustomer
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/create-customer'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Creates a customer
   - name: createPatient
     definition:
       kind: synchronous
@@ -59,6 +104,19 @@ actions:
     permissions:
       - role: guest
     comment: Create an staff via Invite code
+  - name: createSubscription
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/create-subscription'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: create subscription based on org's subscription plan
   - name: createSubscriptionPlan
     definition:
       kind: synchronous
@@ -192,6 +250,38 @@ actions:
         template_engine: Kriti
         version: 2
     comment: Speech Synthesis API.
+  - name: getPaymentMethodDetails
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient-payment/get-paymentmethod-details'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "paymentMethodId": {{$body.input.paymentMethodId}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: get payment method details
+  - name: getSubscriptionDetails
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient-payment/get-subscription-details'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: get subscription details
   - name: inviteOrganizationViaEmail
     definition:
       kind: synchronous
@@ -440,6 +530,25 @@ actions:
     permissions:
       - role: patient
     comment: API to fetch patient sessions streak number.
+  - name: removePaymentMethod
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/remove-payment-method'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "paymentMethodId": {{$body.input.paymentMethodId}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: detach a payment method from a patient
   - name: requestLoginOtp
     definition:
       kind: synchronous
@@ -501,6 +610,25 @@ actions:
     permissions:
       - role: benchmark
     comment: API to transcode videos.
+  - name: updatePaymentMethod
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/update-paymentmethod-details'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "cardDetails": {{$body.input.cardDetails}},
+              "paymentMethodId": {{$body.input.paymentMethodId}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
   - name: updateRewards
     definition:
       kind: synchronous
@@ -600,17 +728,6 @@ actions:
     comment: Verify API for SMS Based Auth
 custom_types:
   enums:
-    - name: Status
-      values:
-        - description: null
-          is_deprecated: null
-          value: completed
-        - description: null
-          is_deprecated: null
-          value: partiallycompleted
-        - description: null
-          is_deprecated: null
-          value: exceeded
     - name: ChartTypeEnum
       values:
         - description: null
@@ -692,6 +809,9 @@ custom_types:
     - name: CreateOrganizationInput
     - name: AdminDetails
     - name: OrgDetails
+    - name: CardDetailsDTO
+    - name: UpdateCardDetailsDTO
+    - name: UpdatePaymentMethodDTO
   objects:
     - name: Root
     - name: Day
@@ -769,4 +889,12 @@ custom_types:
     - name: CreateSubscriptionPlanData
     - name: UpdateSubscriptionPlan
     - name: UpdateSubscriptionPlanData
+    - name: CreateCustomer
+    - name: AddPaymentMethodResp
+    - name: PaymentMethodId
+    - name: Status
+    - name: PaymentMethod
+    - name: UpdatedPaymentMethod
+    - name: SubscriptionId
+    - name: Subscription
   scalars: []
