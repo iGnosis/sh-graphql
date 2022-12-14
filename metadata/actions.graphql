@@ -29,6 +29,10 @@ type Mutation {
 }
 
 type Mutation {
+  createPaymentSetupIntent: SetupIntent!
+}
+
+type Mutation {
   createStaff(
     inviteCode: String!
     firstName: String!
@@ -713,5 +717,9 @@ type SubscriptionId {
 
 type Subscription {
   subscription: String!
+}
+
+type SetupIntent {
+  clientSecret: String!
 }
 

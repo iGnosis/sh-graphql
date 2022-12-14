@@ -81,6 +81,19 @@ actions:
     permissions:
       - role: guest
     comment: Creates a patient via Invite code
+  - name: createPaymentSetupIntent
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/create-setup-intent'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: create payment setup intent
   - name: createStaff
     definition:
       kind: synchronous
@@ -897,4 +910,5 @@ custom_types:
     - name: UpdatedPaymentMethod
     - name: SubscriptionId
     - name: Subscription
+    - name: SetupIntent
   scalars: []
