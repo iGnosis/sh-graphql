@@ -295,7 +295,7 @@ actions:
   - name: patientAdherenceChart
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-adherence/'
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-adherence'
       forward_client_headers: true
       request_transform:
         method: GET
@@ -315,7 +315,7 @@ actions:
   - name: patientChart
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/provider-charts/'
+      handler: '{{ACTION_BASE_URL}}/provider-charts'
       forward_client_headers: true
       request_transform:
         method: GET
@@ -360,7 +360,7 @@ actions:
   - name: patientMonthlyCompletion
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-monthly-completion/'
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-monthly-completion'
       forward_client_headers: true
       request_transform:
         method: GET
@@ -404,7 +404,7 @@ actions:
   - name: patientOverviewChart
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-overview/'
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-overview'
       forward_client_headers: true
       request_transform:
         method: GET
@@ -423,7 +423,7 @@ actions:
   - name: patientSessionStreak
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/patient/stats/streak/'
+      handler: '{{ACTION_BASE_URL}}/patient/stats/streak'
       forward_client_headers: true
       request_transform:
         body:
