@@ -382,6 +382,23 @@ actions:
     permissions:
       - role: patient
     comment: Marks a reward as viewed.
+  - name: mockStaffJwt
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/mock/auth/staff'
+      request_transform:
+        method: GET
+        query_params:
+          userRole: '{{$body.input.userRole}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Returns mock JWT for staff roles
   - name: patientAdherenceChart
     definition:
       kind: ""
@@ -804,6 +821,9 @@ custom_types:
         - description: null
           is_deprecated: null
           value: therapist
+        - description: null
+          is_deprecated: null
+          value: sh_admin
   input_objects:
     - name: SampleInput
     - name: CreateOrganizationInput
@@ -897,4 +917,6 @@ custom_types:
     - name: UpdatedPaymentMethod
     - name: SubscriptionId
     - name: Subscription
+    - name: MockStaffJwt
+    - name: MockStaffJwtData
   scalars: []

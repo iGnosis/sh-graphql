@@ -135,6 +135,12 @@ type Mutation {
 }
 
 type Query {
+  mockStaffJwt(
+    userRole: StaffType!
+  ): MockStaffJwt
+}
+
+type Query {
   patientAdherenceChart(
     startDate: String!
     endDate: String!
@@ -307,6 +313,7 @@ enum OrgType {
 enum StaffType {
   org_admin
   therapist
+  sh_admin
 }
 
 input SampleInput {
@@ -713,5 +720,13 @@ type SubscriptionId {
 
 type Subscription {
   subscription: String!
+}
+
+type MockStaffJwt {
+  data: MockStaffJwtData!
+}
+
+type MockStaffJwtData {
+  jwt: String!
 }
 
