@@ -22,6 +22,7 @@
 - "!include public_payment_methods.yaml"
 - "!include public_session.yaml"
 - "!include public_session_type.yaml"
+- "!include public_sh_admin.yaml"
 - "!include public_staff.yaml"
 - "!include public_subscription.yaml"
 - "!include public_subscription_plans.yaml"

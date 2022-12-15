@@ -165,7 +165,7 @@ actions:
     comment: Pinpoint - called when Soundhealth FAQs are accessed.
   - name: fetchUserRbac
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/rbac'
       forward_client_headers: true
       request_transform:
@@ -207,7 +207,7 @@ actions:
     comment: Free reward accessed.
   - name: gameAchievementRatio
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/provider-charts/game-achievement-ratio'
       forward_client_headers: true
       request_transform:
@@ -247,7 +247,7 @@ actions:
     comment: Called when a game has been completed.
   - name: generateSpeech
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/speech/generate'
       forward_client_headers: true
       request_transform:
@@ -265,7 +265,7 @@ actions:
     comment: Speech Synthesis API.
   - name: getPaymentMethodDetails
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/patient-payment/get-paymentmethod-details'
       forward_client_headers: true
       request_transform:
@@ -284,7 +284,7 @@ actions:
     comment: get payment method details
   - name: getSubscriptionDetails
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/patient-payment/get-subscription-details'
       forward_client_headers: true
       request_transform:
@@ -318,7 +318,7 @@ actions:
     comment: Sends invite via Email
   - name: invitePatient
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/invite/patient'
       forward_client_headers: true
       request_transform:
@@ -338,7 +338,7 @@ actions:
     comment: Invite Patient
   - name: inviteStaff
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/invite/staff'
       forward_client_headers: true
       request_transform:
@@ -397,7 +397,7 @@ actions:
     comment: Marks a reward as viewed.
   - name: mockStaffJwt
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/mock/auth/staff'
       request_transform:
         method: GET
@@ -414,7 +414,7 @@ actions:
     comment: Returns mock JWT for staff roles
   - name: patientAdherenceChart
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/provider-charts/patient-adherence'
       forward_client_headers: true
       request_transform:
@@ -434,7 +434,7 @@ actions:
     comment: Fetches Adherence chart data
   - name: patientChart
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/provider-charts'
       forward_client_headers: true
       request_transform:
@@ -458,7 +458,7 @@ actions:
     comment: API for consuming chartable data
   - name: patientEngagementChart
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/provider-charts/patient/engagement-ratio'
       forward_client_headers: true
       request_transform:
@@ -479,7 +479,7 @@ actions:
     comment: API to fetch patient engagement chart data.
   - name: patientMonthlyCompletion
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/provider-charts/patient-monthly-completion'
       forward_client_headers: true
       request_transform:
@@ -503,7 +503,7 @@ actions:
       - role: therapist
   - name: patientMonthlyGoals
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/patient/stats/monthly-goals'
       forward_client_headers: true
       request_transform:
@@ -523,7 +523,7 @@ actions:
     comment: API to fetch patient monthly goals. Start and end dates are inclusive.
   - name: patientOverviewChart
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/provider-charts/patient-overview'
       forward_client_headers: true
       request_transform:
@@ -542,7 +542,7 @@ actions:
     comment: Fetches Patient Overview chart data
   - name: patientSessionStreak
     definition:
-      kind: ''
+      kind: ""
       handler: '{{ACTION_BASE_URL}}/patient/stats/streak'
       forward_client_headers: true
       request_transform:
