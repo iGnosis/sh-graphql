@@ -263,6 +263,27 @@ actions:
         template_engine: Kriti
         version: 2
     comment: Speech Synthesis API.
+  - name: getBillingHistory
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/get-billing-history'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+                "startingAfter": {{$body.input.startingAfter}},
+                "endingBefore": {{$body.input.endingBefore}},
+                "limit": {{$body.input.limit}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Get Billing History
   - name: getPaymentMethodDetails
     definition:
       kind: ""
@@ -953,4 +974,9 @@ custom_types:
     - name: MockStaffJwt
     - name: MockStaffJwtData
     - name: StripeCustomer
+    - name: BillingHistory
+    - name: SubscriptionPeriod
+    - name: CardDetails
+    - name: BillingHistoryData
+    - name: Invoice
   scalars: []

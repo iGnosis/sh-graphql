@@ -725,3 +725,35 @@ type MockStaffJwtData {
 type StripeCustomer {
   data: String!
 }
+
+type BillingHistory {
+  paymentDate: Int!
+  subscriptionPeriod: SubscriptionPeriod
+  cardDetails: CardDetails
+  amountPaid: Int!
+  url: String
+}
+
+type SubscriptionPeriod {
+  start: Int!
+  end: Int!
+}
+
+type CardDetails {
+  last4: Int
+  brand: String
+}
+
+type BillingHistoryData {
+  invoices: [Invoice]
+  hasMore: Boolean!
+}
+
+type Invoice {
+  paymentDate: Int!
+  subscriptionPeriod: SubscriptionPeriod
+  cardDetails: CardDetails
+  amountPaid: Int!
+  url: String
+}
+
