@@ -795,3 +795,7 @@ type Invoice {
   url: String
 }
 
+type SubscriptionStatus {
+  data: String!
+}
+
