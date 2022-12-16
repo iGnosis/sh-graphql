@@ -1,5 +1,7 @@
 type Mutation {
-  addPaymentMethod(cardDetails: CardDetailsDTO): AddPaymentMethodResp!
+  addPaymentMethod(
+    cardDetails: CardDetailsDTO
+  ): AddPaymentMethodResp!
 }
 
 type Mutation {
@@ -42,7 +44,7 @@ type Mutation {
 }
 
 type Mutation {
-  createSubscription: SubscriptionId!
+  createSubscription: Subscription!
 }
 
 type Mutation {
@@ -69,7 +71,9 @@ type Mutation {
 }
 
 type Query {
-  gameAchievementRatio(gameId: ID!): GameAchievementRatio
+  gameAchievementRatio(
+    gameId: ID!
+  ): GameAchievementRatio
 }
 
 type Mutation {
@@ -82,15 +86,27 @@ type Mutation {
 }
 
 type Query {
-  generateSpeech(text: String!): GenerateSpeech
+  generateSpeech(
+    text: String!
+  ): GenerateSpeech
 }
 
 type Query {
-  getPaymentMethodDetails(paymentMethodId: String!): PaymentMethod!
+  getDefaultPaymentMethod: PaymentMethod!
+}
+
+type Query {
+  getPaymentMethodDetails(
+    paymentMethodId: String!
+  ): PaymentMethod!
 }
 
 type Query {
   getSubscriptionDetails: Subscription!
+}
+
+type Query {
+  getSubscriptionStatus: SubscriptionStatus!
 }
 
 type Mutation {
@@ -119,15 +135,21 @@ type Query {
 }
 
 type Mutation {
-  markRewardAsAccessed(rewardTier: String!): MarkRewardAsAccessed
+  markRewardAsAccessed(
+    rewardTier: String!
+  ): MarkRewardAsAccessed
 }
 
 type Mutation {
-  markRewardAsViewed(rewardTier: String!): MarkRewardAsViewed
+  markRewardAsViewed(
+    rewardTier: String!
+  ): MarkRewardAsViewed
 }
 
 type Query {
-  mockStaffJwt(userRole: StaffType!): MockStaffJwt
+  mockStaffJwt(
+    userRole: StaffType!
+  ): MockStaffJwt
 }
 
 type Query {
@@ -188,11 +210,15 @@ type Query {
 }
 
 type Query {
-  patientSessionStreak(userTimezone: String!): PatientSessionStreak
+  patientSessionStreak(
+    userTimezone: String!
+  ): PatientSessionStreak
 }
 
 type Mutation {
-  removePaymentMethod(paymentMethodId: String!): Status
+  removePaymentMethod(
+    paymentMethodId: String!
+  ): Status
 }
 
 type Mutation {
@@ -211,7 +237,9 @@ type Mutation {
 }
 
 type Mutation {
-  setDefaultPaymentMethod(paymentMethodId: String!): StripeCustomer!
+  setDefaultPaymentMethod(
+    paymentMethodId: String!
+  ): StripeCustomer!
 }
 
 type Mutation {
@@ -244,7 +272,9 @@ type Mutation {
 }
 
 type Mutation {
-  uploadBenchmarkVideos(benchmarkConfigId: ID!): UploadBenchmarkVideosOutput
+  uploadBenchmarkVideos(
+    benchmarkConfigId: ID!
+  ): UploadBenchmarkVideosOutput
 }
 
 type Mutation {
@@ -725,3 +755,8 @@ type MockStaffJwtData {
 type StripeCustomer {
   data: String!
 }
+
+type SubscriptionStatus {
+  data: String!
+}
+

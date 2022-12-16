@@ -116,8 +116,10 @@ select_permissions:
         - careGiverPhoneNumber
         - createdAt
         - email
+        - firstName
         - id
         - identifier
+        - lastName
         - medicalConditions
         - nickname
         - onboardedBy

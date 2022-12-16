@@ -263,6 +263,23 @@ actions:
         template_engine: Kriti
         version: 2
     comment: Speech Synthesis API.
+  - name: getDefaultPaymentMethod
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient-payment/get-default-paymentmethod'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: get default payment method
   - name: getPaymentMethodDetails
     definition:
       kind: ""
@@ -295,6 +312,23 @@ actions:
     permissions:
       - role: patient
     comment: get subscription details
+  - name: getSubscriptionStatus
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient-payment/subscription-status'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: get subscription status
   - name: inviteOrganizationViaEmail
     definition:
       kind: synchronous
@@ -953,4 +987,5 @@ custom_types:
     - name: MockStaffJwt
     - name: MockStaffJwtData
     - name: StripeCustomer
+    - name: SubscriptionStatus
   scalars: []
