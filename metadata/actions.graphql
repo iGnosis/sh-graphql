@@ -113,6 +113,10 @@ type Query {
   getSubscriptionDetails: Subscription!
 }
 
+type Query {
+  getSubscriptionStatus: SubscriptionStatus!
+}
+
 type Mutation {
   inviteOrganizationViaEmail(
     redirectUrl: String!
