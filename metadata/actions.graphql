@@ -1,5 +1,7 @@
 type Mutation {
-  addPaymentMethod(cardDetails: CardDetailsDTO): AddPaymentMethodResp!
+  addPaymentMethod(
+    cardDetails: CardDetailsDTO
+  ): AddPaymentMethodResp!
 }
 
 type Mutation {
