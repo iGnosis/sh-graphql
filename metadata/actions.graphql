@@ -85,8 +85,12 @@ type Query {
   generateSpeech(text: String!): GenerateSpeech
 }
 
-type Query {
-  getDefaultPaymentMethod: PaymentMethod!
+type Mutation {
+  getBillingHistory(
+    startingAfter: String!
+    endingBefore: String!
+    limit: Int!
+  ): BillingHistoryData
 }
 
 type Query {
@@ -768,3 +772,4 @@ type Invoice {
   amountPaid: Int!
   url: String
 }
+
