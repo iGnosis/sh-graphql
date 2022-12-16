@@ -24,6 +24,13 @@ select_permissions:
       filter:
         organization:
           _eq: x-hasura-organization-id
+  - role: patient
+    permission:
+      columns:
+        - requirePaymentDetails
+      filter:
+        organization:
+          _eq: x-hasura-organization-id
 update_permissions:
   - role: org_admin
     permission:
