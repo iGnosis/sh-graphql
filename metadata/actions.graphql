@@ -741,7 +741,7 @@ type UpdatedPaymentMethod {
 }
 
 type SubscriptionId {
-  subscriptionId: String!
+  subscription: String!
 }
 
 type Subscription {
