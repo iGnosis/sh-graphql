@@ -13,3 +13,16 @@ select_permissions:
         - id
         - patient
       filter: {}
+  - role: patient
+    permission:
+      columns:
+        - createdAt
+        - game
+        - id
+        - key
+        - noOfSamples
+        - patient
+        - value
+      filter:
+        patient:
+          _eq: x-hasura-user-id
