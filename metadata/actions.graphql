@@ -613,6 +613,7 @@ type PatientOverviewChart {
 
 type PatientOverviewChartData {
   patient: String!
+  nickname: String!
   gamesPlayedCount: Int!
   engagementRatio: Int!
   avgAchievementPercentage: Int!
