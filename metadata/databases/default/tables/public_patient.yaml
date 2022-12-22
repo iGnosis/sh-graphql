@@ -78,32 +78,7 @@ select_permissions:
   - role: org_admin
     permission:
       columns:
-        - careGiverEmail
-        - careGiverPhoneCountryCode
-        - careGiverPhoneNumber
-        - careplan
-        - createdAt
-        - email
-        - firstName
         - id
-        - identifier
-        - lastName
-        - medicalConditions
-        - namePrefix
-        - nickname
-        - onboardedBy
-        - onboardingStatus
-        - organizationId
-        - phoneCountryCode
-        - phoneNumber
-        - preferredActivities
-        - preferredGenres
-        - primaryTherapist
-        - rewards
-        - status
-        - timezone
-        - type
-        - updatedAt
       filter:
         organizationId:
           _eq: x-hasura-organization-id
@@ -194,23 +169,6 @@ update_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
-      check: null
-  - role: org_admin
-    permission:
-      columns:
-        - email
-        - firstName
-        - identifier
-        - lastName
-        - namePrefix
-        - nickname
-        - phoneCountryCode
-        - phoneNumber
-        - status
-        - type
-      filter:
-        organizationId:
-          _eq: x-hasura-organization-id
       check: null
   - role: patient
     permission:
