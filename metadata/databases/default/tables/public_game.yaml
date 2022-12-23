@@ -165,6 +165,7 @@ event_triggers:
         template: |-
           {
             "gameId": {{$body.event.data.new.id}},
+            "organizationId": {{$body.event.data.new.organizationId}},
             "patientId": {{$body.event.data.new.patient}},
             "analytics": {{$body.event.data.new.analytics}},
             "endedAt": {{$body.event.data.new.endedAt}}

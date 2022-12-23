@@ -26,3 +26,17 @@ select_permissions:
       filter:
         patient:
           _eq: x-hasura-user-id
+  - role: therapist
+    permission:
+      columns:
+        - id
+        - createdAt
+        - patient
+        - game
+        - key
+        - value
+        - noOfSamples
+        - organizationId
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
