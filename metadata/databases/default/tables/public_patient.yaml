@@ -190,6 +190,20 @@ update_permissions:
         id:
           _eq: X-Hasura-User-Id
       check: null
+  - role: therapist
+    permission:
+      columns:
+        - email
+        - firstName
+        - lastName
+        - namePrefix
+        - phoneCountryCode
+        - phoneNumber
+        - status
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
+      check: null
 event_triggers:
   - name: event_added_first_patient
     definition:
