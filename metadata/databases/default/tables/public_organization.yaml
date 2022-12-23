@@ -80,6 +80,7 @@ update_permissions:
   - role: org_admin
     permission:
       columns:
+        - configuration
         - name
         - subscriptionPlan
         - type

@@ -19,6 +19,7 @@ select_permissions:
         - organization
         - priceId
         - productId
+        - requirePaymentDetails
         - subscriptionFee
         - trialPeriod
       filter:
