@@ -6,6 +6,7 @@ insert_permissions:
     permission:
       check: {}
       set:
+        organizationId: x-hasura-organization-id
         patient: x-hasura-user-id
       columns:
         - type
@@ -21,6 +22,19 @@ select_permissions:
       filter:
         patient:
           _eq: X-Hasura-User-Id
+  - role: therapist
+    permission:
+      columns:
+        - type
+        - value
+        - createdAt
+        - updatedAt
+        - id
+        - organizationId
+        - patient
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
 update_permissions:
   - role: patient
     permission:
