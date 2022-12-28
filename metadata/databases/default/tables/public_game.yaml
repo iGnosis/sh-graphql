@@ -138,13 +138,6 @@ event_triggers:
       query_params: {}
       template_engine: Kriti
       version: 2
-    cleanup_config:
-      batch_size: 10000
-      clean_invocation_logs: false
-      clear_older_than: 168
-      paused: true
-      schedule: 0 0 * * *
-      timeout: 60
   - name: game_ended
     definition:
       enable_manual: true
@@ -174,10 +167,3 @@ event_triggers:
       query_params: {}
       template_engine: Kriti
       version: 2
-    cleanup_config:
-      batch_size: 10000
-      clean_invocation_logs: false
-      clear_older_than: 168
-      paused: true
-      schedule: 0 0 * * *
-      timeout: 60
