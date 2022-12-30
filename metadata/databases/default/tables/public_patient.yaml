@@ -79,6 +79,8 @@ select_permissions:
     permission:
       columns:
         - id
+        - nickname
+        - subscription
       filter:
         organizationId:
           _eq: x-hasura-organization-id

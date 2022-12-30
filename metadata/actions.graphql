@@ -92,6 +92,10 @@ type Query {
 }
 
 type Mutation {
+  generateSubscriptionPlanReport: SubscriptionPlanReport
+}
+
+type Mutation {
   getBillingHistory(
     startingAfter: String!
     endingBefore: String!
@@ -798,5 +802,9 @@ type Invoice {
 
 type SubscriptionStatus {
   data: String!
+}
+
+type SubscriptionPlanReport {
+  report: String
 }
 

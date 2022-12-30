@@ -263,6 +263,23 @@ actions:
         template_engine: Kriti
         version: 2
     comment: Speech Synthesis API.
+  - name: generateSubscriptionPlanReport
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/organization-payment/report'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Generates and downloads a subscription plan report
   - name: getBillingHistory
     definition:
       kind: synchronous
@@ -1014,4 +1031,5 @@ custom_types:
     - name: BillingHistoryData
     - name: Invoice
     - name: SubscriptionStatus
+    - name: SubscriptionPlanReport
   scalars: []
