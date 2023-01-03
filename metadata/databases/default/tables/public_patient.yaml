@@ -58,8 +58,11 @@ insert_permissions:
         - careGiverPhoneNumber
         - careplan
         - email
+        - firstName
         - identifier
+        - lastName
         - medicalConditions
+        - namePrefix
         - phoneCountryCode
         - phoneNumber
         - preferredGenres
@@ -78,6 +81,7 @@ select_permissions:
   - role: org_admin
     permission:
       columns:
+        - createdAt
         - id
         - nickname
         - subscription
