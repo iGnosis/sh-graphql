@@ -29,6 +29,7 @@ select_permissions:
     permission:
       columns:
         - requirePaymentDetails
+        - trialPeriod
       filter:
         organization:
           _eq: x-hasura-organization-id
