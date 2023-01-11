@@ -4,12 +4,14 @@ GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
 echo;
-echo -e "${YELLOW}Please be patient... restarting docker container to apply migrations & metadata.${NC}";
-npm run restart-container;
+echo -e "${YELLOW}Please be patient... applying migrations & metadata.${NC}";
+npm run apply-migrations;
+npm run apply-metadata;
+npm run reload-metadata;
 
 if [ $? = 0 ];
 then
-    echo "${GREEN}[√] Restart successful. Run ./run.sh script to start Hasura console.${NC}";
+    echo "${GREEN}[√] Migrations applied. Run ./run.sh script to start Hasura console.${NC}";
 else
     echo "${RED}[x] Error while restarting container.${NC}";
 fi
