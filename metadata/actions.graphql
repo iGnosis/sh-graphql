@@ -1,5 +1,19 @@
 type Mutation {
+  addPaymentMethod(
+    cardDetails: CardDetailsDTO
+  ): AddPaymentMethodResp!
+}
+
+type Mutation {
   appAccessed: AppAccessed
+}
+
+type Mutation {
+  cancelSubscription: Subscription!
+}
+
+type Mutation {
+  createCustomer: CreateCustomer!
 }
 
 type Mutation {
@@ -15,6 +29,10 @@ type Mutation {
 }
 
 type Mutation {
+  createPaymentSetupIntent: SetupIntent!
+}
+
+type Mutation {
   createStaff(
     inviteCode: String!
     firstName: String!
@@ -26,7 +44,22 @@ type Mutation {
 }
 
 type Mutation {
+  createSubscription: SubscriptionId!
+}
+
+type Mutation {
+  createSubscriptionPlan(
+    subscriptionFee: Int!
+    trialPeriod: Int!
+  ): CreateSubscriptionPlan
+}
+
+type Mutation {
   faqAccessed: FaqAccessed
+}
+
+type Query {
+  fetchUserRbac: FetchUserRbac
 }
 
 type Mutation {
@@ -59,6 +92,36 @@ type Query {
 }
 
 type Mutation {
+  generateSubscriptionPlanReport: SubscriptionPlanReport
+}
+
+type Mutation {
+  getBillingHistory(
+    startingAfter: String!
+    endingBefore: String!
+    limit: Int!
+  ): BillingHistoryData
+}
+
+type Query {
+  getDefaultPaymentMethod: PaymentMethod!
+}
+
+type Query {
+  getPaymentMethodDetails(
+    paymentMethodId: String!
+  ): PaymentMethod!
+}
+
+type Query {
+  getSubscriptionDetails: Subscription!
+}
+
+type Query {
+  getSubscriptionStatus: SubscriptionStatus!
+}
+
+type Mutation {
   inviteOrganizationViaEmail(
     redirectUrl: String!
     email: String!
@@ -84,12 +147,6 @@ type Query {
 }
 
 type Mutation {
-  isTutorialNeeded(
-    game: String!
-  ): Output
-}
-
-type Mutation {
   markRewardAsAccessed(
     rewardTier: String!
   ): MarkRewardAsAccessed
@@ -99,6 +156,12 @@ type Mutation {
   markRewardAsViewed(
     rewardTier: String!
   ): MarkRewardAsViewed
+}
+
+type Query {
+  mockStaffJwt(
+    userRole: StaffType!
+  ): MockStaffJwt
 }
 
 type Query {
@@ -165,6 +228,12 @@ type Query {
 }
 
 type Mutation {
+  removePaymentMethod(
+    paymentMethodId: String!
+  ): Status
+}
+
+type Mutation {
   requestLoginOtp(
     phoneCountryCode: String!
     phoneNumber: String!
@@ -180,10 +249,23 @@ type Mutation {
 }
 
 type Mutation {
+  setDefaultPaymentMethod(
+    paymentMethodId: String!
+  ): StripeCustomer!
+}
+
+type Mutation {
   transcodeVideo(
     benchmarkConfigId: ID!
     type: transcodeVideoType!
   ): transcodeVideoOutput
+}
+
+type Mutation {
+  updatePaymentMethod(
+    cardDetails: UpdatePaymentMethodDTO!
+    paymentMethodId: String!
+  ): UpdatedPaymentMethod!
 }
 
 type Mutation {
@@ -192,6 +274,13 @@ type Mutation {
     endDate: String!
     userTimezone: String!
   ): UpdateRewards
+}
+
+type Mutation {
+  updateSubscriptionPlan(
+    subscriptionFee: Int!
+    trialPeriod: Int!
+  ): UpdateSubscriptionPlan
 }
 
 type Mutation {
@@ -210,12 +299,6 @@ type Mutation {
     phoneNumber: String!
     otp: Int!
   ): VerifyLoginOtp
-}
-
-enum Status {
-  completed
-  partiallycompleted
-  exceeded
 }
 
 enum ChartTypeEnum {
@@ -260,6 +343,7 @@ enum OrgType {
 enum StaffType {
   org_admin
   therapist
+  sh_admin
 }
 
 input SampleInput {
@@ -282,6 +366,22 @@ input AdminDetails {
 input OrgDetails {
   name: String!
   type: OrgType!
+}
+
+input CardDetailsDTO {
+  exp_month: Int!
+  exp_year: Int!
+  number: String!
+}
+
+input UpdateCardDetailsDTO {
+  exp_month: Int!
+  exp_year: Int!
+}
+
+input UpdatePaymentMethodDTO {
+  exp_month: Int!
+  exp_year: Int!
 }
 
 type Root {
@@ -517,6 +617,7 @@ type PatientOverviewChart {
 
 type PatientOverviewChartData {
   patient: String!
+  nickname: String!
   gamesPlayedCount: Int!
   engagementRatio: Int!
   avgAchievementPercentage: Int!
@@ -598,5 +699,112 @@ type UploadOrganizationLogo {
 type UploadOrganizationLogoData {
   uploadUrl: String!
   logoAccessUrl: String!
+}
+
+type FetchUserRbac {
+  data: String!
+}
+
+type CreateSubscriptionPlan {
+  data: CreateSubscriptionPlanData!
+}
+
+type CreateSubscriptionPlanData {
+  subscriptionPlanId: String!
+}
+
+type UpdateSubscriptionPlan {
+  data: UpdateSubscriptionPlanData!
+}
+
+type UpdateSubscriptionPlanData {
+  subscriptionPlanId: String!
+}
+
+type CreateCustomer {
+  customerId: String!
+}
+
+type AddPaymentMethodResp {
+  paymentMethod: String!
+}
+
+type PaymentMethodId {
+  paymentMethodId: String!
+}
+
+type Status {
+  status: String!
+}
+
+type PaymentMethod {
+  data: String!
+}
+
+type UpdatedPaymentMethod {
+  data: String!
+}
+
+type SubscriptionId {
+  subscription: String!
+}
+
+type Subscription {
+  subscription: String!
+}
+
+type SetupIntent {
+  clientSecret: String!
+}
+
+type MockStaffJwt {
+  data: MockStaffJwtData!
+}
+
+type MockStaffJwtData {
+  jwt: String!
+}
+
+type StripeCustomer {
+  data: String!
+}
+
+type BillingHistory {
+  paymentDate: Int!
+  subscriptionPeriod: SubscriptionPeriod
+  cardDetails: CardDetails
+  amountPaid: Int!
+  url: String
+}
+
+type SubscriptionPeriod {
+  start: Int!
+  end: Int!
+}
+
+type CardDetails {
+  last4: Int
+  brand: String
+}
+
+type BillingHistoryData {
+  invoices: [Invoice]
+  hasMore: Boolean!
+}
+
+type Invoice {
+  paymentDate: Int!
+  subscriptionPeriod: SubscriptionPeriod
+  cardDetails: CardDetails
+  amountPaid: Int!
+  url: String
+}
+
+type SubscriptionStatus {
+  data: String!
+}
+
+type SubscriptionPlanReport {
+  report: String
 }
 

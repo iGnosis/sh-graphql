@@ -58,8 +58,11 @@ insert_permissions:
         - careGiverPhoneNumber
         - careplan
         - email
+        - firstName
         - identifier
+        - lastName
         - medicalConditions
+        - namePrefix
         - phoneCountryCode
         - phoneNumber
         - preferredGenres
@@ -78,32 +81,10 @@ select_permissions:
   - role: org_admin
     permission:
       columns:
-        - careGiverEmail
-        - careGiverPhoneCountryCode
-        - careGiverPhoneNumber
-        - careplan
         - createdAt
-        - email
-        - firstName
         - id
-        - identifier
-        - lastName
-        - medicalConditions
-        - namePrefix
         - nickname
-        - onboardedBy
-        - onboardingStatus
-        - organizationId
-        - phoneCountryCode
-        - phoneNumber
-        - preferredActivities
-        - preferredGenres
-        - primaryTherapist
-        - rewards
-        - status
-        - timezone
-        - type
-        - updatedAt
+        - subscription
       filter:
         organizationId:
           _eq: x-hasura-organization-id
@@ -115,9 +96,12 @@ select_permissions:
         - careGiverPhoneCountryCode
         - careGiverPhoneNumber
         - createdAt
+        - customerId
         - email
+        - firstName
         - id
         - identifier
+        - lastName
         - medicalConditions
         - nickname
         - onboardedBy
@@ -193,23 +177,6 @@ update_permissions:
         id:
           _eq: X-Hasura-User-Id
       check: null
-  - role: org_admin
-    permission:
-      columns:
-        - email
-        - firstName
-        - identifier
-        - lastName
-        - namePrefix
-        - nickname
-        - phoneCountryCode
-        - phoneNumber
-        - status
-        - type
-      filter:
-        organizationId:
-          _eq: x-hasura-organization-id
-      check: null
   - role: patient
     permission:
       columns:
@@ -229,6 +196,20 @@ update_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
+      check: null
+  - role: therapist
+    permission:
+      columns:
+        - email
+        - firstName
+        - lastName
+        - namePrefix
+        - phoneCountryCode
+        - phoneNumber
+        - status
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
       check: null
 event_triggers:
   - name: event_added_first_patient
@@ -255,13 +236,6 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
-    cleanup_config:
-      batch_size: 10000
-      clean_invocation_logs: false
-      clear_older_than: 168
-      paused: true
-      schedule: 0 0 * * *
-      timeout: 60
   - name: event_new_patient
     definition:
       enable_manual: true
@@ -291,10 +265,3 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
-    cleanup_config:
-      batch_size: 10000
-      clean_invocation_logs: false
-      clear_older_than: 168
-      paused: true
-      schedule: 0 0 * * *
-      timeout: 60

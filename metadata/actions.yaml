@@ -1,4 +1,23 @@
 actions:
+  - name: addPaymentMethod
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/add-payment-method'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "cardDetails": {{$body.input.cardDetails}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Adds a payment method to stripe and attaches it to a patient
   - name: appAccessed
     definition:
       kind: synchronous
@@ -12,6 +31,32 @@ actions:
     permissions:
       - role: patient
     comment: Pinpoint - called when Soundhealth App is accessed.
+  - name: cancelSubscription
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/cancel-subscription'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: cancel subscription
+  - name: createCustomer
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/create-customer'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Creates a customer
   - name: createPatient
     definition:
       kind: synchronous
@@ -36,6 +81,19 @@ actions:
     permissions:
       - role: guest
     comment: Creates a patient via Invite code
+  - name: createPaymentSetupIntent
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/create-setup-intent'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: create payment setup intent
   - name: createStaff
     definition:
       kind: synchronous
@@ -59,6 +117,39 @@ actions:
     permissions:
       - role: guest
     comment: Create an staff via Invite code
+  - name: createSubscription
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/create-subscription'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: create subscription based on org's subscription plan
+  - name: createSubscriptionPlan
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/organization-payment'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+                "subscriptionFee": {{$body.input.subscriptionFee}},
+                "trialPeriod": {{$body.input.trialPeriod}}
+              }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Creates a subscription plan
   - name: faqAccessed
     definition:
       kind: synchronous
@@ -72,6 +163,27 @@ actions:
     permissions:
       - role: patient
     comment: Pinpoint - called when Soundhealth FAQs are accessed.
+  - name: fetchUserRbac
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/rbac'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: sh_admin
+      - role: org_admin
+      - role: benchmark
+      - role: therapist
+      - role: patient
+    comment: Fetches user RBAC
   - name: freeParkinsonResourcesAccessed
     definition:
       kind: synchronous
@@ -151,6 +263,110 @@ actions:
         template_engine: Kriti
         version: 2
     comment: Speech Synthesis API.
+  - name: generateSubscriptionPlanReport
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/organization-payment/report'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Generates and downloads a subscription plan report
+  - name: getBillingHistory
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/get-billing-history'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+                "startingAfter": {{$body.input.startingAfter}},
+                "endingBefore": {{$body.input.endingBefore}},
+                "limit": {{$body.input.limit}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Get Billing History
+  - name: getDefaultPaymentMethod
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient-payment/get-default-paymentmethod'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 1
+    permissions:
+      - role: patient
+    comment: get default payment method
+  - name: getPaymentMethodDetails
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient-payment/get-paymentmethod-details'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "paymentMethodId": {{$body.input.paymentMethodId}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: get payment method details
+  - name: getSubscriptionDetails
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient-payment/get-subscription-details'
+      forward_client_headers: true
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: get subscription details
+  - name: getSubscriptionStatus
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/patient-payment/subscription-status'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: get subscription status
   - name: inviteOrganizationViaEmail
     definition:
       kind: synchronous
@@ -213,26 +429,6 @@ actions:
     permissions:
       - role: org_admin
     comment: Invite Staff
-  - name: isTutorialNeeded
-    definition:
-      kind: synchronous
-      handler: https://webhook.site/3c0034f3-142d-4a2f-aff1-71003eea7997
-      request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "game": {{$body.input.game}}
-            }
-        method: GET
-        query_params: {}
-        request_headers:
-          add_headers: {}
-          remove_headers:
-            - content-type
-        template_engine: Kriti
-        version: 2
-    comment: isTutorialNeeded
   - name: markRewardAsAccessed
     definition:
       kind: synchronous
@@ -271,10 +467,27 @@ actions:
     permissions:
       - role: patient
     comment: Marks a reward as viewed.
+  - name: mockStaffJwt
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/mock/auth/staff'
+      request_transform:
+        method: GET
+        query_params:
+          userRole: '{{$body.input.userRole}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
+    comment: Returns mock JWT for staff roles
   - name: patientAdherenceChart
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-adherence/'
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-adherence'
       forward_client_headers: true
       request_transform:
         method: GET
@@ -294,7 +507,7 @@ actions:
   - name: patientChart
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/provider-charts/'
+      handler: '{{ACTION_BASE_URL}}/provider-charts'
       forward_client_headers: true
       request_transform:
         method: GET
@@ -339,7 +552,7 @@ actions:
   - name: patientMonthlyCompletion
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-monthly-completion/'
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-monthly-completion'
       forward_client_headers: true
       request_transform:
         method: GET
@@ -383,7 +596,7 @@ actions:
   - name: patientOverviewChart
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-overview/'
+      handler: '{{ACTION_BASE_URL}}/provider-charts/patient-overview'
       forward_client_headers: true
       request_transform:
         method: GET
@@ -402,7 +615,7 @@ actions:
   - name: patientSessionStreak
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/patient/stats/streak/'
+      handler: '{{ACTION_BASE_URL}}/patient/stats/streak'
       forward_client_headers: true
       request_transform:
         body:
@@ -419,6 +632,25 @@ actions:
     permissions:
       - role: patient
     comment: API to fetch patient sessions streak number.
+  - name: removePaymentMethod
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/remove-payment-method'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "paymentMethodId": {{$body.input.paymentMethodId}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: detach a payment method from a patient
   - name: requestLoginOtp
     definition:
       kind: synchronous
@@ -460,6 +692,25 @@ actions:
     permissions:
       - role: guest
     comment: Re-send OTP API for SMS Based Auth
+  - name: setDefaultPaymentMethod
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/set-default-paymentmethod'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "paymentMethodId": {{$body.input.paymentMethodId}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: make a payment method default for subscriptions
   - name: transcodeVideo
     definition:
       kind: synchronous
@@ -480,6 +731,25 @@ actions:
     permissions:
       - role: benchmark
     comment: API to transcode videos.
+  - name: updatePaymentMethod
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/update-paymentmethod-details'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "cardDetails": {{$body.input.cardDetails}},
+              "paymentMethodId": {{$body.input.paymentMethodId}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
   - name: updateRewards
     definition:
       kind: synchronous
@@ -501,6 +771,26 @@ actions:
     permissions:
       - role: patient
     comment: Updates Rewards based on patient's monthly activity.
+  - name: updateSubscriptionPlan
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/organization-payment'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+                "subscriptionFee": {{$body.input.subscriptionFee}},
+                "trialPeriod": {{$body.input.trialPeriod}}
+              }
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+    comment: Update  a subscription plan
   - name: uploadBenchmarkVideos
     definition:
       kind: synchronous
@@ -559,17 +849,6 @@ actions:
     comment: Verify API for SMS Based Auth
 custom_types:
   enums:
-    - name: Status
-      values:
-        - description: null
-          is_deprecated: null
-          value: completed
-        - description: null
-          is_deprecated: null
-          value: partiallycompleted
-        - description: null
-          is_deprecated: null
-          value: exceeded
     - name: ChartTypeEnum
       values:
         - description: null
@@ -646,11 +925,17 @@ custom_types:
         - description: null
           is_deprecated: null
           value: therapist
+        - description: null
+          is_deprecated: null
+          value: sh_admin
   input_objects:
     - name: SampleInput
     - name: CreateOrganizationInput
     - name: AdminDetails
     - name: OrgDetails
+    - name: CardDetailsDTO
+    - name: UpdateCardDetailsDTO
+    - name: UpdatePaymentMethodDTO
   objects:
     - name: Root
     - name: Day
@@ -723,4 +1008,28 @@ custom_types:
     - name: InviteStaffData
     - name: UploadOrganizationLogo
     - name: UploadOrganizationLogoData
+    - name: FetchUserRbac
+    - name: CreateSubscriptionPlan
+    - name: CreateSubscriptionPlanData
+    - name: UpdateSubscriptionPlan
+    - name: UpdateSubscriptionPlanData
+    - name: CreateCustomer
+    - name: AddPaymentMethodResp
+    - name: PaymentMethodId
+    - name: Status
+    - name: PaymentMethod
+    - name: UpdatedPaymentMethod
+    - name: SubscriptionId
+    - name: Subscription
+    - name: SetupIntent
+    - name: MockStaffJwt
+    - name: MockStaffJwtData
+    - name: StripeCustomer
+    - name: BillingHistory
+    - name: SubscriptionPeriod
+    - name: CardDetails
+    - name: BillingHistoryData
+    - name: Invoice
+    - name: SubscriptionStatus
+    - name: SubscriptionPlanReport
   scalars: []

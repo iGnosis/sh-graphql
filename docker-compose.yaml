@@ -1,6 +1,7 @@
 version: '3.6'
 services:
   postgres:
+    container_name: "local_postgres"
     image: postgres:12
     ports:
     - "5432:5432"
@@ -10,6 +11,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
+    container_name: "local_hasura"
     image: hasura/graphql-engine:v2.13.0.cli-migrations-v3
     extra_hosts:
       - "host.docker.internal:host-gateway"

@@ -42,6 +42,7 @@ select_permissions:
         - id
         - logoUrl
         - name
+        - subscriptionPlan
         - type
       filter:
         id:
@@ -81,6 +82,7 @@ update_permissions:
       columns:
         - configuration
         - name
+        - subscriptionPlan
         - type
       filter:
         id:

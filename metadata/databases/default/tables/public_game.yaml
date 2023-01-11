@@ -75,6 +75,7 @@ select_permissions:
         - id
         - patient
         - repsCompleted
+        - settings
         - totalDuration
         - updatedAt
       filter:
@@ -107,6 +108,7 @@ update_permissions:
         - calibrationDuration
         - endedAt
         - repsCompleted
+        - settings
         - totalDuration
       filter:
         patient:
@@ -138,13 +140,6 @@ event_triggers:
       query_params: {}
       template_engine: Kriti
       version: 2
-    cleanup_config:
-      batch_size: 10000
-      clean_invocation_logs: false
-      clear_older_than: 168
-      paused: true
-      schedule: 0 0 * * *
-      timeout: 60
   - name: game_ended
     definition:
       enable_manual: true
@@ -165,6 +160,7 @@ event_triggers:
         template: |-
           {
             "gameId": {{$body.event.data.new.id}},
+            "organizationId": {{$body.event.data.new.organizationId}},
             "patientId": {{$body.event.data.new.patient}},
             "analytics": {{$body.event.data.new.analytics}},
             "endedAt": {{$body.event.data.new.endedAt}}
@@ -173,10 +169,3 @@ event_triggers:
       query_params: {}
       template_engine: Kriti
       version: 2
-    cleanup_config:
-      batch_size: 10000
-      clean_invocation_logs: false
-      clear_older_than: 168
-      paused: true
-      schedule: 0 0 * * *
-      timeout: 60
