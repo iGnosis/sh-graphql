@@ -1,8 +1,8 @@
 {
   "scripts": {
     "generate-config": "node ci/scripts/generateConfig.js",
-    "apply-metadata": "hasura metadata --endpoint http://localhost:8080 --admin-secret admin_secret apply",
-    "reload-metadata": "hasura metadata --endpoint http://localhost:8080 --admin-secret admin_secret reload",
+    "apply-metadata": "hasura metadata --endpoint http://localhost:8080 --admin-secret admin_secret --skip-update-check apply",
+    "reload-metadata": "hasura metadata --endpoint http://localhost:8080 --admin-secret admin_secret --skip-update-check reload",
     "apply-migrations": "hasura migrate --endpoint http://localhost:8080 --admin-secret admin_secret --database-name default --skip-update-check apply",
     "prepare": "husky install",
     "restart-container": "docker restart local_hasura"
