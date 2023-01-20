@@ -808,3 +808,7 @@ type SubscriptionPlanReport {
   report: String
 }
 
+type ReportStatus {
+  result: String!
+}
+

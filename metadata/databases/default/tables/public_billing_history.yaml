@@ -1,0 +1,19 @@
+table:
+  name: billing_history
+  schema: public
+insert_permissions:
+  - role: org_admin
+    permission:
+      check: {}
+      columns:
+        - organization
+        - revenue
+select_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - createdAt
+        - revenue
+      filter:
+        organization:
+          _eq: x-hasura-organization-id
