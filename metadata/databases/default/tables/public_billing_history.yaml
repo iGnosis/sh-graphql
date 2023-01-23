@@ -13,6 +13,8 @@ select_permissions:
     permission:
       columns:
         - createdAt
+        - id
+        - organization
         - revenue
       filter:
         organization:
