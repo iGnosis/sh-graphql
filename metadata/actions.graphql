@@ -63,6 +63,12 @@ type Mutation {
 }
 
 type Mutation {
+  createSubscriptionWithPromocode(
+    promocode: String!
+  ): SubscriptionId!
+}
+
+type Mutation {
   faqAccessed: FaqAccessed
 }
 
