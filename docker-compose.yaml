@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
     container_name: "local_hasura"
-    image: hasura/graphql-engine:v2.13.0.cli-migrations-v3
+    image: hasura/graphql-engine:v2.13.2.cli-migrations-v3
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
