@@ -425,6 +425,7 @@ actions:
         template_engine: Kriti
         version: 2
     permissions:
+      - role: therapist
       - role: org_admin
     comment: Invite Patient
   - name: inviteStaff
