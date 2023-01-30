@@ -17,6 +17,14 @@ type Mutation {
 }
 
 type Mutation {
+  createErpNextIssue(
+    subject: String!
+    description: String!
+    email: String!
+  ): CreateErpNextIssue
+}
+
+type Mutation {
   createPatient(
     inviteCode: String!
     namePrefix: String!
@@ -806,5 +814,13 @@ type SubscriptionStatus {
 
 type SubscriptionPlanReport {
   report: String
+}
+
+type ReportStatus {
+  result: String!
+}
+
+type CreateErpNextIssue {
+  data: String!
 }
 

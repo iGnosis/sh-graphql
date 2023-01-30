@@ -29,6 +29,7 @@ select_permissions:
     permission:
       columns:
         - requirePaymentDetails
+        - subscriptionFee
         - trialPeriod
       filter:
         organization:

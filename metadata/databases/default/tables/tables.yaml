@@ -2,6 +2,7 @@
 - "!include public_activity_difficulty.yaml"
 - "!include public_aggregate_analytics.yaml"
 - "!include public_auth.yaml"
+- "!include public_billing_history.yaml"
 - "!include public_checkin.yaml"
 - "!include public_checkin_type.yaml"
 - "!include public_game.yaml"

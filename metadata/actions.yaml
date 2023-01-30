@@ -57,6 +57,25 @@ actions:
     permissions:
       - role: patient
     comment: Creates a customer
+  - name: createErpNextIssue
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/erpnext/issue'
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "subject": {{$body.input.subject}},
+              "description": {{$body.input.description}},
+              "email": {{$body.input.email}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: guest
   - name: createPatient
     definition:
       kind: synchronous
@@ -406,6 +425,7 @@ actions:
         template_engine: Kriti
         version: 2
     permissions:
+      - role: therapist
       - role: org_admin
     comment: Invite Patient
   - name: inviteStaff
@@ -1032,4 +1052,6 @@ custom_types:
     - name: Invoice
     - name: SubscriptionStatus
     - name: SubscriptionPlanReport
+    - name: ReportStatus
+    - name: CreateErpNextIssue
   scalars: []
