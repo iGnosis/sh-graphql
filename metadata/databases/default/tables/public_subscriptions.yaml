@@ -6,4 +6,5 @@ select_permissions:
     permission:
       columns:
         - paymentAuthUrl
+        - subscriptionId
       filter: {}
