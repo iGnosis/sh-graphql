@@ -184,7 +184,10 @@ update_permissions:
         - careGiverPhoneCountryCode
         - careGiverPhoneNumber
         - email
+        - firstName
+        - lastName
         - medicalConditions
+        - namePrefix
         - nickname
         - onboardingStatus
         - password
