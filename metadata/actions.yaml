@@ -169,6 +169,25 @@ actions:
     permissions:
       - role: org_admin
     comment: Creates a subscription plan
+  - name: createSubscriptionWithPromocode
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/patient-payment/create-subscription-with-promocode'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "promoCode": {{$body.input.promocode}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: create subscription based on org's subscription plan using a promocode
   - name: faqAccessed
     definition:
       kind: synchronous
