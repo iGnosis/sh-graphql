@@ -40,6 +40,7 @@ select_permissions:
       columns:
         - configuration
         - id
+        - isPublicSignUpEnabled
         - logoUrl
         - name
         - subscriptionPlan
@@ -81,6 +82,7 @@ update_permissions:
     permission:
       columns:
         - configuration
+        - isPublicSignUpEnabled
         - name
         - subscriptionPlan
         - type
