@@ -73,6 +73,7 @@ select_permissions:
     permission:
       columns:
         - configuration
+        - isPublicSignUpEnabled
         - logoUrl
       filter:
         id:
