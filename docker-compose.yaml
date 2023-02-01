@@ -1,0 +1,48 @@
+version: '3.6'
+services:
+  postgres:
+    container_name: "local_postgres"
+    image: postgres:12
+    ports:
+    - "5432:5432"
+    restart: unless-stopped
+    volumes:
+    - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+  graphql-engine:
+    container_name: "local_hasura"
+    image: hasura/graphql-engine:v2.13.2.cli-migrations-v3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+    - "8080:8080"
+    depends_on:
+    - "postgres"
+    restart: unless-stopped
+    volumes:
+      - ./migrations:/hasura-migrations
+      - ./metadata:/hasura-metadata
+    environment:
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: guest
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+
+      # NestJS Origin
+      ACTION_BASE_URL: http://host.docker.internal:9000
+
+      # Use the script `run.sh` to open the console
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+
+      # To secure NestJS Hasura events endpoints
+      EVENTS_SECRET: admin_secret
+
+      # Keep this same as NestJS .env value of GQL_API_ADMIN_SECRET
+      HASURA_GRAPHQL_ADMIN_SECRET: admin_secret
+
+      # Keep this same as NestJS .env value of JWT_SECRET
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256","key":"YDuE3a4hbjS6o/QwRg9F0AgDTujOjmEchMaa5YrVCeM="}'
+volumes:
+  db_data:

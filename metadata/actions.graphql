@@ -1,9 +1,79 @@
 type Mutation {
+  addPaymentMethod(
+    cardDetails: CardDetailsDTO
+  ): AddPaymentMethodResp!
+}
+
+type Mutation {
   appAccessed: AppAccessed
 }
 
 type Mutation {
+  cancelSubscription: Subscription!
+}
+
+type Mutation {
+  createCustomer: CreateCustomer!
+}
+
+type Mutation {
+  createErpNextIssue(
+    subject: String!
+    description: String!
+    email: String!
+  ): CreateErpNextIssue
+}
+
+type Mutation {
+  createPatient(
+    inviteCode: String!
+    namePrefix: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): CreatePatient
+}
+
+type Mutation {
+  createPaymentSetupIntent: SetupIntent!
+}
+
+type Mutation {
+  createStaff(
+    inviteCode: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneCountryCode: String!
+    phoneNumber: String!
+  ): CreateStaff
+}
+
+type Mutation {
+  createSubscription: SubscriptionId!
+}
+
+type Mutation {
+  createSubscriptionPlan(
+    subscriptionFee: Int!
+    trialPeriod: Int!
+  ): CreateSubscriptionPlan
+}
+
+type Mutation {
+  createSubscriptionWithPromocode(
+    promocode: String!
+  ): SubscriptionId!
+}
+
+type Mutation {
   faqAccessed: FaqAccessed
+}
+
+type Query {
+  fetchUserRbac: FetchUserRbac
 }
 
 type Mutation {
@@ -36,9 +106,58 @@ type Query {
 }
 
 type Mutation {
-  isTutorialNeeded(
-    game: String!
-  ): Output
+  generateSubscriptionPlanReport: SubscriptionPlanReport
+}
+
+type Mutation {
+  getBillingHistory(
+    startingAfter: String!
+    endingBefore: String!
+    limit: Int!
+  ): BillingHistoryData
+}
+
+type Query {
+  getDefaultPaymentMethod: PaymentMethod!
+}
+
+type Query {
+  getPaymentMethodDetails(
+    paymentMethodId: String!
+  ): PaymentMethod!
+}
+
+type Query {
+  getSubscriptionDetails: Subscription!
+}
+
+type Query {
+  getSubscriptionStatus: SubscriptionStatus!
+}
+
+type Mutation {
+  inviteOrganizationViaEmail(
+    redirectUrl: String!
+    email: String!
+    inviteCode: String!
+  ): InviteOrganizationViaEmail
+}
+
+type Query {
+  invitePatient(
+    shouldSendEmail: Boolean
+    email: String
+    expiryAt: String
+  ): InvitePatient
+}
+
+type Query {
+  inviteStaff(
+    staffType: StaffType!
+    shouldSendEmail: Boolean
+    email: String
+    expiryAt: String
+  ): InviteStaff
 }
 
 type Mutation {
@@ -51,6 +170,20 @@ type Mutation {
   markRewardAsViewed(
     rewardTier: String!
   ): MarkRewardAsViewed
+}
+
+type Query {
+  mockStaffJwt(
+    userRole: StaffType!
+  ): MockStaffJwt
+}
+
+type Query {
+  patientAdherenceChart(
+    startDate: String!
+    endDate: String!
+    groupBy: GroupByEnum!
+  ): PatientAdherenceChart
 }
 
 type Query {
@@ -96,15 +229,29 @@ type Query {
 }
 
 type Query {
+  patientOverviewChart(
+    startDate: String!
+    endDate: String!
+  ): PatientOverviewChart
+}
+
+type Query {
   patientSessionStreak(
     userTimezone: String!
   ): PatientSessionStreak
 }
 
 type Mutation {
+  removePaymentMethod(
+    paymentMethodId: String!
+  ): Status
+}
+
+type Mutation {
   requestLoginOtp(
     phoneCountryCode: String!
     phoneNumber: String!
+    inviteCode: String
   ): RequestLoginOtp
 }
 
@@ -116,6 +263,26 @@ type Mutation {
 }
 
 type Mutation {
+  setDefaultPaymentMethod(
+    paymentMethodId: String!
+  ): StripeCustomer!
+}
+
+type Mutation {
+  transcodeVideo(
+    benchmarkConfigId: ID!
+    type: transcodeVideoType!
+  ): transcodeVideoOutput
+}
+
+type Mutation {
+  updatePaymentMethod(
+    cardDetails: UpdatePaymentMethodDTO!
+    paymentMethodId: String!
+  ): UpdatedPaymentMethod!
+}
+
+type Mutation {
   updateRewards(
     startDate: String!
     endDate: String!
@@ -124,17 +291,28 @@ type Mutation {
 }
 
 type Mutation {
+  updateSubscriptionPlan(
+    subscriptionFee: Int!
+    trialPeriod: Int!
+  ): UpdateSubscriptionPlan
+}
+
+type Mutation {
+  uploadBenchmarkVideos(
+    benchmarkConfigId: ID!
+  ): UploadBenchmarkVideosOutput
+}
+
+type Mutation {
+  uploadOrganizationLogo: UploadOrganizationLogo
+}
+
+type Mutation {
   verifyLoginOtp(
     phoneCountryCode: String!
     phoneNumber: String!
     otp: Int!
   ): VerifyLoginOtp
-}
-
-enum Status {
-  completed
-  partiallycompleted
-  exceeded
 }
 
 enum ChartTypeEnum {
@@ -160,9 +338,64 @@ enum SortDirectionEnum {
   desc
 }
 
+enum transcodeVideoType {
+  webcam
+  screenCapture
+}
+
+enum UserRole {
+  therapist
+  org_admin
+}
+
+enum OrgType {
+  clinic
+  hospital
+  provider
+}
+
+enum StaffType {
+  org_admin
+  therapist
+  sh_admin
+}
+
 input SampleInput {
   username: String!
   password: String!
+}
+
+input CreateOrganizationInput {
+  inviteCode: String!
+  adminDetails: AdminDetails!
+  orgDetails: OrgDetails!
+}
+
+input AdminDetails {
+  phoneCountryCode: String!
+  phoneNumber: String!
+  email: String!
+}
+
+input OrgDetails {
+  name: String!
+  type: OrgType!
+}
+
+input CardDetailsDTO {
+  exp_month: Int!
+  exp_year: Int!
+  number: String!
+}
+
+input UpdateCardDetailsDTO {
+  exp_month: Int!
+  exp_year: Int!
+}
+
+input UpdatePaymentMethodDTO {
+  exp_month: Int!
+  exp_year: Int!
 }
 
 type Root {
@@ -316,6 +549,7 @@ type RequestLoginOtp {
 
 type RequestLoginOtpData {
   message: String
+  isExistingUser: Boolean
 }
 
 type VerifyLoginOtp {
@@ -332,6 +566,7 @@ type ResendLoginOtp {
 
 type ResendLoginOtpData {
   message: String
+  isExistingUser: Boolean
 }
 
 type SampleOutput {
@@ -361,6 +596,237 @@ type GameAchievementRatioData {
 }
 
 type PatientMonthlyCompletion {
+  data: String!
+}
+
+type UploadBenchmarkVideosOutput {
+  data: UploadBenchmarkVideosOutputData!
+}
+
+type UploadBenchmarkVideosOutputData {
+  webcamUploadUrl: String
+  screenCaptureUploadUrl: String
+}
+
+type transcodeVideoOutput {
+  data: transcodeVideoOutputData
+}
+
+type transcodeVideoOutputData {
+  status: String!
+}
+
+type PatientAdherenceChart {
+  data: PatientAdherenceChartData!
+}
+
+type PatientAdherenceChartOutput {
+  activePatientsCount: Int!
+  totalNumOfPatients: Int!
+}
+
+type PatientOverviewChart {
+  data: [PatientOverviewChartData!]!
+}
+
+type PatientOverviewChartData {
+  patient: String!
+  nickname: String!
+  gamesPlayedCount: Int!
+  engagementRatio: Int!
+  avgAchievementPercentage: Int!
+}
+
+type PatientAdherenceChartData {
+  activePatientsCount: Int!
+  totalNumOfPatients: Int!
+}
+
+type GenerateOrganiationInviteCode {
+  data: GenerateOrganiationInviteCodeData!
+}
+
+type GenerateOrganiationInviteCodeData {
+  inviteCode: String!
+}
+
+type GenerateOrganizationInviteCode {
+  data: GenerateOrganiationInviteCodeData!
+}
+
+type GenerateOrganizationInviteCodeData {
+  inviteCode: String!
+}
+
+type InviteOrganizationViaEmail {
+  data: InviteOrganizationViaEmailData!
+}
+
+type InviteOrganizationViaEmailData {
+  message: String!
+}
+
+type CreateOrganization {
+  data: CreateOrganizationData!
+}
+
+type CreateOrganizationData {
+  message: String!
+}
+
+type CreatePatient {
+  data: CreatePatientData!
+}
+
+type CreatePatientDatq {
+  message: String!
+}
+
+type CreateStaff {
+  data: CreatePatientData!
+}
+
+type CreatePatientData {
+  message: String!
+}
+
+type InvitePatient {
+  data: InvitePatientData!
+}
+
+type InvitePatientData {
+  inviteCode: String!
+}
+
+type InviteStaff {
+  data: InviteStaffData!
+}
+
+type InviteStaffData {
+  inviteCode: String!
+}
+
+type UploadOrganizationLogo {
+  data: UploadOrganizationLogoData!
+}
+
+type UploadOrganizationLogoData {
+  uploadUrl: String!
+  logoAccessUrl: String!
+}
+
+type FetchUserRbac {
+  data: String!
+}
+
+type CreateSubscriptionPlan {
+  data: CreateSubscriptionPlanData!
+}
+
+type CreateSubscriptionPlanData {
+  subscriptionPlanId: String!
+}
+
+type UpdateSubscriptionPlan {
+  data: UpdateSubscriptionPlanData!
+}
+
+type UpdateSubscriptionPlanData {
+  subscriptionPlanId: String!
+}
+
+type CreateCustomer {
+  customerId: String!
+}
+
+type AddPaymentMethodResp {
+  paymentMethod: String!
+}
+
+type PaymentMethodId {
+  paymentMethodId: String!
+}
+
+type Status {
+  status: String!
+}
+
+type PaymentMethod {
+  data: String!
+}
+
+type UpdatedPaymentMethod {
+  data: String!
+}
+
+type SubscriptionId {
+  subscription: String!
+}
+
+type Subscription {
+  subscription: String!
+}
+
+type SetupIntent {
+  clientSecret: String!
+}
+
+type MockStaffJwt {
+  data: MockStaffJwtData!
+}
+
+type MockStaffJwtData {
+  jwt: String!
+}
+
+type StripeCustomer {
+  data: String!
+}
+
+type BillingHistory {
+  paymentDate: Int!
+  subscriptionPeriod: SubscriptionPeriod
+  cardDetails: CardDetails
+  amountPaid: Int!
+  url: String
+}
+
+type SubscriptionPeriod {
+  start: Int!
+  end: Int!
+}
+
+type CardDetails {
+  last4: Int
+  brand: String
+}
+
+type BillingHistoryData {
+  invoices: [Invoice]
+  hasMore: Boolean!
+}
+
+type Invoice {
+  paymentDate: Int!
+  subscriptionPeriod: SubscriptionPeriod
+  cardDetails: CardDetails
+  amountPaid: Int!
+  url: String
+}
+
+type SubscriptionStatus {
+  data: String!
+}
+
+type SubscriptionPlanReport {
+  report: String
+}
+
+type ReportStatus {
+  result: String!
+}
+
+type CreateErpNextIssue {
   data: String!
 }
 

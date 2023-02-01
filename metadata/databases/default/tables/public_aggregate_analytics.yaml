@@ -1,3 +1,42 @@
 table:
   name: aggregate_analytics
   schema: public
+select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - noOfSamples
+        - value
+        - key
+        - createdAt
+        - game
+        - id
+        - patient
+      filter: {}
+  - role: patient
+    permission:
+      columns:
+        - createdAt
+        - game
+        - id
+        - key
+        - noOfSamples
+        - patient
+        - value
+      filter:
+        patient:
+          _eq: x-hasura-user-id
+  - role: therapist
+    permission:
+      columns:
+        - id
+        - createdAt
+        - patient
+        - game
+        - key
+        - value
+        - noOfSamples
+        - organizationId
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id

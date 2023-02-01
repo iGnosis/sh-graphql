@@ -1,6 +1,21 @@
 table:
   name: game
   schema: public
+object_relationships:
+  - name: game_name
+    using:
+      foreign_key_constraint_on: game
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
+array_relationships:
+  - name: aggregate_analytics
+    using:
+      foreign_key_constraint_on:
+        column: game
+        table:
+          name: aggregate_analytics
+          schema: public
 insert_permissions:
   - role: patient
     permission:
@@ -8,12 +23,47 @@ insert_permissions:
         patient:
           _eq: X-Hasura-User-Id
       set:
+        organizationId: x-hasura-organization-id
         patient: x-hasura-user-id
       columns:
         - createdAt
         - game
         - updatedAt
 select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - calibrationDuration
+        - repsCompleted
+        - totalDuration
+        - aggregateAnalytics
+        - analytics
+        - game
+        - createdAt
+        - endedAt
+        - updatedAt
+        - id
+        - patient
+      filter: {}
+  - role: org_admin
+    permission:
+      columns:
+        - calibrationDuration
+        - repsCompleted
+        - totalDuration
+        - aggregateAnalytics
+        - analytics
+        - game
+        - createdAt
+        - endedAt
+        - updatedAt
+        - id
+        - organizationId
+        - patient
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
+      allow_aggregations: true
   - role: patient
     permission:
       columns:
@@ -25,6 +75,7 @@ select_permissions:
         - id
         - patient
         - repsCompleted
+        - settings
         - totalDuration
         - updatedAt
       filter:
@@ -44,7 +95,10 @@ select_permissions:
         - patient
         - calibrationDuration
         - aggregateAnalytics
-      filter: {}
+        - organizationId
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
       allow_aggregations: true
 update_permissions:
   - role: patient
@@ -54,6 +108,7 @@ update_permissions:
         - calibrationDuration
         - endedAt
         - repsCompleted
+        - settings
         - totalDuration
       filter:
         patient:
@@ -70,6 +125,9 @@ event_triggers:
       num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/events/game/start'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
     request_transform:
       body:
         action: transform
@@ -88,20 +146,21 @@ event_triggers:
       update:
         columns:
           - endedAt
-          - analytics
-          - id
-          - patient
     retry_conf:
       interval_sec: 10
       num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/events/game/end'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
     request_transform:
       body:
         action: transform
         template: |-
           {
             "gameId": {{$body.event.data.new.id}},
+            "organizationId": {{$body.event.data.new.organizationId}},
             "patientId": {{$body.event.data.new.patient}},
             "analytics": {{$body.event.data.new.analytics}},
             "endedAt": {{$body.event.data.new.endedAt}}

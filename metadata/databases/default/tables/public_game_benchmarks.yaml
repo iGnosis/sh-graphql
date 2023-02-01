@@ -1,0 +1,38 @@
+table:
+  name: game_benchmarks
+  schema: public
+object_relationships:
+  - name: game
+    using:
+      foreign_key_constraint_on: gameId
+insert_permissions:
+  - role: benchmark
+    permission:
+      check: {}
+      columns:
+        - analytics
+        - gameId
+        - originalGameId
+        - systemSpec
+select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - analytics
+        - avgAccuracy
+        - createdAt
+        - gameId
+        - id
+        - originalGameId
+        - systemSpec
+      filter: {}
+      allow_aggregations: true
+update_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - analytics
+        - originalGameId
+        - systemSpec
+      filter: {}
+      check: null

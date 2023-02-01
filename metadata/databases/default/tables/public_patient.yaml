@@ -2,6 +2,9 @@ table:
   name: patient
   schema: public
 object_relationships:
+  - name: organization
+    using:
+      foreign_key_constraint_on: organizationId
   - name: primaryTherapistUser
     using:
       foreign_key_constraint_on: primaryTherapist
@@ -9,13 +12,6 @@ object_relationships:
     using:
       foreign_key_constraint_on: onboardedBy
 array_relationships:
-  - name: events
-    using:
-      foreign_key_constraint_on:
-        column: patient
-        table:
-          name: events
-          schema: public
   - name: games
     using:
       foreign_key_constraint_on:
@@ -38,6 +34,18 @@ array_relationships:
           name: session
           schema: public
 insert_permissions:
+  - role: org_admin
+    permission:
+      check: {}
+      set:
+        organizationId: x-hasura-organization-id
+      columns:
+        - email
+        - firstName
+        - lastName
+        - namePrefix
+        - phoneCountryCode
+        - phoneNumber
   - role: therapist
     permission:
       check: {}
@@ -50,12 +58,37 @@ insert_permissions:
         - careGiverPhoneNumber
         - careplan
         - email
+        - firstName
         - identifier
+        - lastName
         - medicalConditions
+        - namePrefix
         - phoneCountryCode
         - phoneNumber
         - preferredGenres
 select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - canBenchmark
+        - createdAt
+        - id
+        - identifier
+        - nickname
+        - preferredGenres
+        - updatedAt
+      filter: {}
+  - role: org_admin
+    permission:
+      columns:
+        - createdAt
+        - id
+        - nickname
+        - subscription
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
+      allow_aggregations: true
   - role: patient
     permission:
       columns:
@@ -63,9 +96,12 @@ select_permissions:
         - careGiverPhoneCountryCode
         - careGiverPhoneNumber
         - createdAt
+        - customerId
         - email
+        - firstName
         - id
         - identifier
+        - lastName
         - medicalConditions
         - nickname
         - onboardedBy
@@ -81,29 +117,47 @@ select_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
+  - role: sh_admin
+    permission:
+      columns:
+        - id
+      filter: {}
+      allow_aggregations: true
   - role: therapist
     permission:
       columns:
         - careGiverEmail
         - careGiverPhoneCountryCode
         - careGiverPhoneNumber
+        - careplan
         - createdAt
         - email
+        - firstName
         - id
         - identifier
+        - lastName
         - medicalConditions
+        - namePrefix
         - nickname
         - onboardedBy
+        - onboardingStatus
+        - organizationId
         - phoneCountryCode
         - phoneNumber
+        - preferredActivities
         - preferredGenres
         - primaryTherapist
+        - rewards
+        - status
         - timezone
+        - type
         - updatedAt
-      filter: {}
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
       allow_aggregations: true
 update_permissions:
-  - role: patient
+  - role: benchmark
     permission:
       columns:
         - careGiverEmail
@@ -123,6 +177,43 @@ update_permissions:
         id:
           _eq: X-Hasura-User-Id
       check: null
+  - role: patient
+    permission:
+      columns:
+        - careGiverEmail
+        - careGiverPhoneCountryCode
+        - careGiverPhoneNumber
+        - email
+        - firstName
+        - lastName
+        - medicalConditions
+        - namePrefix
+        - nickname
+        - onboardingStatus
+        - password
+        - phoneCountryCode
+        - phoneNumber
+        - preferredActivities
+        - preferredGenres
+        - timezone
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: therapist
+    permission:
+      columns:
+        - email
+        - firstName
+        - lastName
+        - namePrefix
+        - phoneCountryCode
+        - phoneNumber
+        - status
+      filter:
+        organizationId:
+          _eq: x-hasura-organization-id
+      check: null
 event_triggers:
   - name: event_added_first_patient
     definition:
@@ -134,6 +225,9 @@ event_triggers:
       num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/events/therapist/added-first-patient'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
     request_transform:
       body:
         action: transform
@@ -148,14 +242,21 @@ event_triggers:
   - name: event_new_patient
     definition:
       enable_manual: true
+      insert:
+        columns: '*'
       update:
         columns:
+          - id
           - email
+          - nickname
     retry_conf:
       interval_sec: 10
       num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/events/patient/new'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
     request_transform:
       body:
         action: transform

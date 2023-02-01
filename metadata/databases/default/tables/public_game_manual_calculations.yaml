@@ -1,0 +1,32 @@
+table:
+  name: game_manual_calculations
+  schema: public
+insert_permissions:
+  - role: benchmark
+    permission:
+      check: {}
+      columns:
+        - gameId
+        - metricName
+        - metricValue
+        - promptId
+select_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - metricValue
+        - metricName
+        - createdAt
+        - updatedAt
+        - gameId
+        - id
+        - promptId
+      filter: {}
+update_permissions:
+  - role: benchmark
+    permission:
+      columns:
+        - metricName
+        - metricValue
+      filter: {}
+      check: null

@@ -1,0 +1,46 @@
+table:
+  name: subscription_plans
+  schema: public
+insert_permissions:
+  - role: org_admin
+    permission:
+      check: {}
+      columns:
+        - organization
+        - priceId
+        - productId
+        - subscriptionFee
+        - trialPeriod
+select_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - id
+        - organization
+        - priceId
+        - productId
+        - requirePaymentDetails
+        - subscriptionFee
+        - trialPeriod
+      filter:
+        organization:
+          _eq: x-hasura-organization-id
+  - role: patient
+    permission:
+      columns:
+        - requirePaymentDetails
+        - subscriptionFee
+        - trialPeriod
+      filter:
+        organization:
+          _eq: x-hasura-organization-id
+update_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - subscriptionFee
+        - trialPeriod
+      filter:
+        organization:
+          _eq: x-hasura-organization-id
+      check: null

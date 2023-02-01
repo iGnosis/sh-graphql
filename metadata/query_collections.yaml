@@ -1,10 +1,1 @@
-- name: allowed-queries
-  definition:
-    queries:
-      - name: Insert Event
-        query: |
-          mutation InsertEvent ($patient: uuid, $session: uuid, $event_type: String, $created_at: bigint!) {
-          	insert_events_one(object: {patient:$patient,session:$session,event_type:$event_type,created_at:$created_at}) {
-          		id
-          	}
-          }
+[]

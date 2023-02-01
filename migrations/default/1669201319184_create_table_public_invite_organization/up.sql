@@ -1,0 +1,2 @@
+CREATE TABLE "public"."invite_organization" ("id" uuid NOT NULL DEFAULT gen_random_uuid(), "createdAt" timestamptz NOT NULL DEFAULT now(), "inviteCode" uuid NOT NULL DEFAULT gen_random_uuid(), "expiryAt" timestamptz, "useCounter" integer NOT NULL DEFAULT 1, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("inviteCode"));COMMENT ON TABLE "public"."invite_organization" IS E'Contains secret code to create an organization';
+CREATE EXTENSION IF NOT EXISTS pgcrypto;

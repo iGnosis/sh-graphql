@@ -1,0 +1,106 @@
+table:
+  name: organization
+  schema: public
+array_relationships:
+  - name: invite_organizations
+    using:
+      foreign_key_constraint_on:
+        column: organizationId
+        table:
+          name: invite_organization
+          schema: public
+  - name: patients
+    using:
+      foreign_key_constraint_on:
+        column: organizationId
+        table:
+          name: patient
+          schema: public
+  - name: staffs
+    using:
+      foreign_key_constraint_on:
+        column: organizationId
+        table:
+          name: staff
+          schema: public
+insert_permissions:
+  - role: sh_admin
+    permission:
+      check: {}
+      columns:
+        - configuration
+        - createdAt
+        - id
+        - name
+        - type
+        - updatedAt
+select_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - configuration
+        - id
+        - isPublicSignUpEnabled
+        - logoUrl
+        - name
+        - subscriptionPlan
+        - type
+      filter:
+        id:
+          _eq: x-hasura-organization-id
+  - role: patient
+    permission:
+      columns:
+        - configuration
+        - createdAt
+        - id
+        - logoUrl
+        - name
+        - type
+        - updatedAt
+      filter: {}
+  - role: sh_admin
+    permission:
+      columns:
+        - configuration
+        - name
+        - type
+        - createdAt
+        - updatedAt
+        - id
+      filter: {}
+  - role: therapist
+    permission:
+      columns:
+        - configuration
+        - isPublicSignUpEnabled
+        - logoUrl
+      filter:
+        id:
+          _eq: x-hasura-organization-id
+update_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - configuration
+        - isPublicSignUpEnabled
+        - name
+        - subscriptionPlan
+        - type
+      filter:
+        id:
+          _eq: x-hasura-organization-id
+      check: null
+  - role: sh_admin
+    permission:
+      columns:
+        - configuration
+        - name
+        - type
+      filter: {}
+      check: null
+delete_permissions:
+  - role: sh_admin
+    permission:
+      backend_only: false
+      filter: {}
