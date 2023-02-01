@@ -1,0 +1,1 @@
+alter table "public"."staff" add column IF NOT EXISTS "resetPasswordCode" text null;
