@@ -307,6 +307,10 @@ type Mutation {
   uploadOrganizationLogo: UploadOrganizationLogo
 }
 
+type Query {
+  uploadTestingVideoUrl: UploadTestingVideoUrlData
+}
+
 type Mutation {
   verifyLoginOtp(
     phoneCountryCode: String!
@@ -828,5 +832,13 @@ type ReportStatus {
 
 type CreateErpNextIssue {
   data: String!
+}
+
+type UploadTestingVideoUrlData {
+  data: UploadTestingVideoUrl!
+}
+
+type UploadTestingVideoUrl {
+  uploadUrl: String!
 }
 

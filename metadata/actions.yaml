@@ -865,6 +865,23 @@ actions:
     permissions:
       - role: org_admin
     comment: Returns signed URL that are to be used for uploading Organization logo
+  - name: uploadTestingVideoUrl
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/tester-videos/upload-video-url'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Returns S3 signed URL to make upload
   - name: verifyLoginOtp
     definition:
       kind: synchronous
@@ -1073,4 +1090,6 @@ custom_types:
     - name: SubscriptionPlanReport
     - name: ReportStatus
     - name: CreateErpNextIssue
+    - name: UploadTestingVideoUrlData
+    - name: UploadTestingVideoUrl
   scalars: []
