@@ -865,10 +865,10 @@ actions:
     permissions:
       - role: org_admin
     comment: Returns signed URL that are to be used for uploading Organization logo
-  - name: uploadTestingVideoUrl
+  - name: uploadTestingVideoSts
     definition:
       kind: ""
-      handler: '{{ACTION_BASE_URL}}/tester-videos/upload-video-url'
+      handler: '{{ACTION_BASE_URL}}/tester-videos/upload-video-creds'
       forward_client_headers: true
       request_transform:
         method: GET
@@ -881,7 +881,7 @@ actions:
         version: 2
     permissions:
       - role: patient
-    comment: Returns S3 signed URL to make upload
+    comment: Returns S3 temporary credentails to upload video.
   - name: verifyLoginOtp
     definition:
       kind: synchronous
@@ -1092,4 +1092,8 @@ custom_types:
     - name: CreateErpNextIssue
     - name: UploadTestingVideoUrlData
     - name: UploadTestingVideoUrl
+    - name: UploadTestingVideoUrlStsCredentials
+    - name: UploadTestingVideoStsData
+    - name: UploadTestingVideoSts
+    - name: UploadTestingVideoStsCreds
   scalars: []

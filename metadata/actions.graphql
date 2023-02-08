@@ -308,7 +308,7 @@ type Mutation {
 }
 
 type Query {
-  uploadTestingVideoUrl: UploadTestingVideoUrlData
+  uploadTestingVideoSts: UploadTestingVideoStsData
 }
 
 type Mutation {
@@ -839,6 +839,30 @@ type UploadTestingVideoUrlData {
 }
 
 type UploadTestingVideoUrl {
-  uploadUrl: String!
+  credentials: UploadTestingVideoUrlStsCredentials!
+}
+
+type UploadTestingVideoUrlStsCredentials {
+  AccessKeyId: String!
+  SecretAccessKey: String!
+  SessionToken: String!
+  Expiration: String!
+}
+
+type UploadTestingVideoStsData {
+  data: UploadTestingVideoSts!
+}
+
+type UploadTestingVideoSts {
+  credentials: UploadTestingVideoStsCreds!
+  file: String!
+  bucket: String!
+}
+
+type UploadTestingVideoStsCreds {
+  AccessKeyId: String!
+  SecretAccessKey: String!
+  SessionToken: String!
+  Expiration: String!
 }
 
