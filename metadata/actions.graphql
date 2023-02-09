@@ -307,6 +307,10 @@ type Mutation {
   uploadOrganizationLogo: UploadOrganizationLogo
 }
 
+type Query {
+  uploadTestingVideoSts: UploadTestingVideoStsData
+}
+
 type Mutation {
   verifyLoginOtp(
     phoneCountryCode: String!
@@ -828,5 +832,37 @@ type ReportStatus {
 
 type CreateErpNextIssue {
   data: String!
+}
+
+type UploadTestingVideoUrlData {
+  data: UploadTestingVideoUrl!
+}
+
+type UploadTestingVideoUrl {
+  credentials: UploadTestingVideoUrlStsCredentials!
+}
+
+type UploadTestingVideoUrlStsCredentials {
+  AccessKeyId: String!
+  SecretAccessKey: String!
+  SessionToken: String!
+  Expiration: String!
+}
+
+type UploadTestingVideoStsData {
+  data: UploadTestingVideoSts!
+}
+
+type UploadTestingVideoSts {
+  credentials: UploadTestingVideoStsCreds!
+  folder: String!
+  bucket: String!
+}
+
+type UploadTestingVideoStsCreds {
+  AccessKeyId: String!
+  SecretAccessKey: String!
+  SessionToken: String!
+  Expiration: String!
 }
 
