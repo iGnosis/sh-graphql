@@ -855,7 +855,7 @@ type UploadTestingVideoStsData {
 
 type UploadTestingVideoSts {
   credentials: UploadTestingVideoStsCreds!
-  file: String!
+  folder: String!
   bucket: String!
 }
 
