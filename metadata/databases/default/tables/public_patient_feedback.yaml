@@ -12,20 +12,16 @@ insert_permissions:
       set:
         patient: x-hasura-user-id
       columns:
-        - description
-        - rating
-        - recommendationScore
+        - response
 select_permissions:
   - role: patient
     permission:
       columns:
-        - rating
-        - recommendationScore
-        - description
         - createdAt
-        - updatedAt
         - id
         - patient
+        - response
+        - updatedAt
       filter:
         patient:
           _eq: x-hasura-user-id
@@ -33,11 +29,13 @@ update_permissions:
   - role: patient
     permission:
       columns:
-        - recommendationScore
+        - response
       filter:
         patient:
           _eq: x-hasura-user-id
       check: {}
+      set:
+        patient: x-hasura-user-id
 event_triggers:
   - name: schedule_email_feedback
     definition:
