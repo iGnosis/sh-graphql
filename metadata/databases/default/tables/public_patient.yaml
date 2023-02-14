@@ -51,6 +51,7 @@ insert_permissions:
       check: {}
       set:
         onboardedBy: x-hasura-user-id
+        organizationId: x-hasura-organization-id
         primaryTherapist: x-hasura-user-id
       columns:
         - careGiverEmail
