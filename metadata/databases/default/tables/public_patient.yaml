@@ -51,6 +51,7 @@ insert_permissions:
       check: {}
       set:
         onboardedBy: x-hasura-user-id
+        organizationId: x-hasura-organization-id
         primaryTherapist: x-hasura-user-id
       columns:
         - careGiverEmail
@@ -99,6 +100,7 @@ select_permissions:
         - customerId
         - email
         - firstName
+        - genreChoice
         - id
         - identifier
         - lastName
@@ -185,6 +187,7 @@ update_permissions:
         - careGiverPhoneNumber
         - email
         - firstName
+        - genreChoice
         - lastName
         - medicalConditions
         - namePrefix
