@@ -100,6 +100,7 @@ select_permissions:
         - customerId
         - email
         - firstName
+        - genreChoice
         - id
         - identifier
         - lastName
@@ -186,6 +187,7 @@ update_permissions:
         - careGiverPhoneNumber
         - email
         - firstName
+        - genreChoice
         - lastName
         - medicalConditions
         - namePrefix
