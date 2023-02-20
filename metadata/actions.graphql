@@ -68,6 +68,30 @@ type Mutation {
   ): SubscriptionId!
 }
 
+type Query {
+  dashboardConversion(
+    startDate: String!
+    endDate: String!
+    type: DashboardConversionMetricsEnum!
+  ): DashboardMetrics
+}
+
+type Query {
+  dashboardEngagement(
+    startDate: String!
+    endDate: String!
+    type: DashboardEngagementMetricsEnum!
+  ): DashboardMetrics
+}
+
+type Query {
+  dashboardRetention(
+    startDate: String!
+    endDate: String!
+    type: DashboardRetentionMetricsEnum!
+  ): DashboardMetrics
+}
+
 type Mutation {
   faqAccessed: FaqAccessed
 }
@@ -362,6 +386,24 @@ enum StaffType {
   org_admin
   therapist
   sh_admin
+}
+
+enum DashboardConversionMetricsEnum {
+  new_users
+  activation_milestone
+  activation_rate
+}
+
+enum DashboardEngagementMetricsEnum {
+  avg_user_engagement
+  avg_activities_played
+  adoption_rate
+}
+
+enum DashboardRetentionMetricsEnum {
+  active_users
+  total_active_users
+  stickiness
 }
 
 input SampleInput {
@@ -864,5 +906,26 @@ type UploadTestingVideoStsCreds {
   SecretAccessKey: String!
   SessionToken: String!
   Expiration: String!
+}
+
+type DashboardConversionNewUsers {
+  data: DashboardConversionNewUsersData!
+}
+
+type DashboardConversionNewUsersData {
+  showPercentageChange: Boolean!
+  newUsersCount: Int!
+  percentageChange: Float
+}
+
+type DashboardMetrics {
+  data: DashboardMetricsData!
+}
+
+type DashboardMetricsData {
+  showPercentageChange: Boolean!
+  newCount: Int!
+  percentageChange: Float
+  metric: String!
 }
 
