@@ -11,6 +11,7 @@ insert_permissions:
         patient: x-hasura-user-id
       columns:
         - configKey
+        - endedAt
         - videoKey
 select_permissions:
   - role: patient
