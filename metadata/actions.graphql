@@ -343,6 +343,12 @@ type Mutation {
   ): VerifyLoginOtp
 }
 
+type Query {
+  viewTesterRecording(
+    recordingId: String!
+  ): ViewTesterRecording
+}
+
 enum ChartTypeEnum {
   avgAchievementRatio
   avgCompletionTime
@@ -927,5 +933,14 @@ type DashboardMetricsData {
   newCount: Int!
   percentageChange: Float
   metric: String!
+}
+
+type ViewTesterRecording {
+  data: ViewTesterRecordingData!
+}
+
+type ViewTesterRecordingData {
+  configUrl: String!
+  videoUrl: String!
 }
 

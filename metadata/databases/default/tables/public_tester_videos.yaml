@@ -8,12 +8,26 @@ insert_permissions:
         patient:
           _eq: x-hasura-user-id
       set:
+        organization: x-hasura-organization-id
         patient: x-hasura-user-id
       columns:
         - configKey
         - endedAt
         - videoKey
 select_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - configKey
+        - videoKey
+        - createdAt
+        - endedAt
+        - id
+        - organization
+        - patient
+      filter:
+        organization:
+          _eq: x-hasura-organization-id
   - role: patient
     permission:
       columns:
