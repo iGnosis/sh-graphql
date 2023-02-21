@@ -1,0 +1,27 @@
+table:
+  name: tester_videos
+  schema: public
+insert_permissions:
+  - role: patient
+    permission:
+      check:
+        patient:
+          _eq: x-hasura-user-id
+      set:
+        patient: x-hasura-user-id
+      columns:
+        - configKey
+        - videoKey
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - configKey
+        - videoKey
+        - createdAt
+        - endedAt
+        - id
+        - patient
+      filter:
+        patient:
+          _eq: x-hasura-user-id
