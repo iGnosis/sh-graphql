@@ -1091,7 +1091,7 @@ custom_types:
           value: active_users
         - description: null
           is_deprecated: null
-          value: total_active_users
+          value: total_users
         - description: null
           is_deprecated: null
           value: stickiness
