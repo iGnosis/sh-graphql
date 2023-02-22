@@ -1,0 +1,3 @@
+table:
+  name: subscriptions_history
+  schema: public

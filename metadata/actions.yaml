@@ -964,6 +964,23 @@ actions:
     permissions:
       - role: guest
     comment: Verify API for SMS Based Auth
+  - name: viewTesterRecording
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/tester-videos/view-recording'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          recordingId: '{{$body.input.recordingId}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
 custom_types:
   enums:
     - name: ChartTypeEnum
@@ -1074,7 +1091,7 @@ custom_types:
           value: active_users
         - description: null
           is_deprecated: null
-          value: total_active_users
+          value: total_users
         - description: null
           is_deprecated: null
           value: stickiness
@@ -1194,4 +1211,6 @@ custom_types:
     - name: DashboardConversionNewUsersData
     - name: DashboardMetrics
     - name: DashboardMetricsData
+    - name: ViewTesterRecording
+    - name: ViewTesterRecordingData
   scalars: []
