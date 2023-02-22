@@ -13,6 +13,7 @@ insert_permissions:
       columns:
         - configKey
         - endedAt
+        - startedAt
         - videoKey
 select_permissions:
   - role: org_admin
@@ -20,7 +21,7 @@ select_permissions:
       columns:
         - configKey
         - videoKey
-        - createdAt
+        - startedAt
         - endedAt
         - id
         - organization
@@ -33,7 +34,7 @@ select_permissions:
       columns:
         - configKey
         - videoKey
-        - createdAt
+        - startedAt
         - endedAt
         - id
         - patient
