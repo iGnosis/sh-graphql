@@ -29,6 +29,7 @@
 - "!include public_subscription_plans.yaml"
 - "!include public_subscription_status.yaml"
 - "!include public_subscriptions.yaml"
+- "!include public_subscriptions_history.yaml"
 - "!include public_tester_videos.yaml"
 - "!include public_user_medical_condition.yaml"
 - "!include public_user_preferred_genre.yaml"
