@@ -41,3 +41,14 @@ select_permissions:
       filter:
         patient:
           _eq: x-hasura-user-id
+  - role: therapist
+    permission:
+      columns:
+        - endedAt
+        - id
+        - organization
+        - patient
+        - startedAt
+      filter:
+        organization:
+          _eq: x-hasura-organization-id
