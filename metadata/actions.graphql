@@ -408,7 +408,7 @@ enum DashboardEngagementMetricsEnum {
 
 enum DashboardRetentionMetricsEnum {
   active_users
-  total_active_users
+  total_users
   stickiness
 }
 
