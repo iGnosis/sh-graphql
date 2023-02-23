@@ -980,7 +980,7 @@ actions:
         template_engine: Kriti
         version: 2
     permissions:
-      - role: org_admin
+      - role: therapist
 custom_types:
   enums:
     - name: ChartTypeEnum
