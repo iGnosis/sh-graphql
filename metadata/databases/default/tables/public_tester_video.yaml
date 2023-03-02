@@ -1,0 +1,3 @@
+table:
+  name: tester_video
+  schema: public

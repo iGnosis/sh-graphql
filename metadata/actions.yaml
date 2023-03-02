@@ -188,6 +188,67 @@ actions:
     permissions:
       - role: patient
     comment: create subscription based on org's subscription plan using a promocode
+  - name: dashboardConversion
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/dashboard/conversion'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          startDate: '{{$body.input.startDate}}'
+          type: '{{$body.input.type}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+      - role: therapist
+    comment: DashboardConversion
+  - name: dashboardEngagement
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/dashboard/engagement'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          startDate: '{{$body.input.startDate}}'
+          type: '{{$body.input.type}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: org_admin
+      - role: therapist
+  - name: dashboardRetention
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/dashboard/retention'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          endDate: '{{$body.input.endDate}}'
+          startDate: '{{$body.input.startDate}}'
+          type: '{{$body.input.type}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: therapist
+      - role: org_admin
   - name: faqAccessed
     definition:
       kind: synchronous
@@ -865,6 +926,23 @@ actions:
     permissions:
       - role: org_admin
     comment: Returns signed URL that are to be used for uploading Organization logo
+  - name: uploadTestingVideoSts
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/tester-videos/upload-video-creds'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Returns S3 temporary credentails to upload video.
   - name: verifyLoginOtp
     definition:
       kind: synchronous
@@ -886,6 +964,23 @@ actions:
     permissions:
       - role: guest
     comment: Verify API for SMS Based Auth
+  - name: viewTesterRecording
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/tester-videos/view-recording'
+      forward_client_headers: true
+      request_transform:
+        method: GET
+        query_params:
+          recordingId: '{{$body.input.recordingId}}'
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: therapist
 custom_types:
   enums:
     - name: ChartTypeEnum
@@ -967,6 +1062,39 @@ custom_types:
         - description: null
           is_deprecated: null
           value: sh_admin
+    - name: DashboardConversionMetricsEnum
+      values:
+        - description: null
+          is_deprecated: null
+          value: new_users
+        - description: null
+          is_deprecated: null
+          value: activation_milestone
+        - description: null
+          is_deprecated: null
+          value: activation_rate
+    - name: DashboardEngagementMetricsEnum
+      values:
+        - description: null
+          is_deprecated: null
+          value: avg_user_engagement
+        - description: null
+          is_deprecated: null
+          value: avg_activities_played
+        - description: null
+          is_deprecated: null
+          value: adoption_rate
+    - name: DashboardRetentionMetricsEnum
+      values:
+        - description: null
+          is_deprecated: null
+          value: active_users
+        - description: null
+          is_deprecated: null
+          value: total_users
+        - description: null
+          is_deprecated: null
+          value: stickiness
   input_objects:
     - name: SampleInput
     - name: CreateOrganizationInput
@@ -1073,4 +1201,16 @@ custom_types:
     - name: SubscriptionPlanReport
     - name: ReportStatus
     - name: CreateErpNextIssue
+    - name: UploadTestingVideoUrlData
+    - name: UploadTestingVideoUrl
+    - name: UploadTestingVideoUrlStsCredentials
+    - name: UploadTestingVideoStsData
+    - name: UploadTestingVideoSts
+    - name: UploadTestingVideoStsCreds
+    - name: DashboardConversionNewUsers
+    - name: DashboardConversionNewUsersData
+    - name: DashboardMetrics
+    - name: DashboardMetricsData
+    - name: ViewTesterRecording
+    - name: ViewTesterRecordingData
   scalars: []
