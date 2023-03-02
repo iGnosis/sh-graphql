@@ -83,8 +83,15 @@ select_permissions:
     permission:
       columns:
         - createdAt
+        - email
+        - firstName
         - id
+        - identifier
+        - lastName
+        - namePrefix
         - nickname
+        - phoneCountryCode
+        - phoneNumber
         - subscription
       filter:
         organizationId:
