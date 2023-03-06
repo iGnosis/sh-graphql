@@ -8,3 +8,8 @@ select_permissions:
         - paymentAuthUrl
         - subscriptionId
       filter: {}
+  - role: therapist
+    permission:
+      columns:
+        - status
+      filter: {}
