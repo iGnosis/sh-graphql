@@ -161,6 +161,7 @@ select_permissions:
         - primaryTherapist
         - rewards
         - status
+        - subscription
         - timezone
         - type
         - updatedAt
