@@ -8,6 +8,9 @@ object_relationships:
   - name: primaryTherapistUser
     using:
       foreign_key_constraint_on: primaryTherapist
+  - name: subscriptionBySubscription
+    using:
+      foreign_key_constraint_on: subscription
   - name: user
     using:
       foreign_key_constraint_on: onboardedBy
@@ -158,6 +161,7 @@ select_permissions:
         - primaryTherapist
         - rewards
         - status
+        - subscription
         - timezone
         - type
         - updatedAt
