@@ -1,0 +1,7 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- DROP TRIGGER trigger_log_subscriptions_history_update ON subscriptions;
+-- CREATE TRIGGER trigger_log_subscriptions_history_update
+-- AFTER UPDATE OF "endDate", "status"
+-- ON subscriptions
+-- FOR EACH ROW EXECUTE PROCEDURE triggerLogSubscriptionsHistory();
