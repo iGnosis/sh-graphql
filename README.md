@@ -20,3 +20,8 @@ Install it from https://hasura.io/docs/latest/graphql/core/hasura-cli/install-ha
 - run `./run.sh` script
 
 Open the console that gets served, any change to schema / GraphQL APIs you make should now be tracked in this repository. <strong>Do not forget to commit your changes periodically so that they can be published across the environments</strong>
+
+## Adding a new secret
+- add secret to `.env.sample`file so we can track it
+- add secret to `.env` file
+- run `npm run reload-env`

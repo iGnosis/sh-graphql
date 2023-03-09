@@ -24,25 +24,28 @@ services:
       - ./migrations:/hasura-migrations
       - ./metadata:/hasura-metadata
     environment:
-      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
-      HASURA_GRAPHQL_DEV_MODE: "true"
-      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: guest
-      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: ${HASURA_GRAPHQL_METADATA_DATABASE_URL}
+      HASURA_GRAPHQL_DATABASE_URL: ${HASURA_GRAPHQL_DATABASE_URL}
+      HASURA_GRAPHQL_DEV_MODE: ${HASURA_GRAPHQL_DEV_MODE}
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: ${HASURA_GRAPHQL_UNAUTHORIZED_ROLE}
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES}
 
       # NestJS Origin
-      ACTION_BASE_URL: http://host.docker.internal:9000
+      ACTION_BASE_URL: ${ACTION_BASE_URL}
 
       # Use the script `run.sh` to open the console
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: ${HASURA_GRAPHQL_ENABLE_CONSOLE}
+
+      PHI_REMOTE_SCHEMA_ADMIN_SECRET: ${PHI_REMOTE_SCHEMA_ADMIN_SECRET}
+      PHI_REMOTE_SCHEMA_URL: ${PHI_REMOTE_SCHEMA_URL}
 
       # To secure NestJS Hasura events endpoints
-      EVENTS_SECRET: admin_secret
+      EVENTS_SECRET: ${EVENTS_SECRET}
 
       # Keep this same as NestJS .env value of GQL_API_ADMIN_SECRET
-      HASURA_GRAPHQL_ADMIN_SECRET: admin_secret
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
 
       # Keep this same as NestJS .env value of JWT_SECRET
-      HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256","key":"YDuE3a4hbjS6o/QwRg9F0AgDTujOjmEchMaa5YrVCeM="}'
+      HASURA_GRAPHQL_JWT_SECRET: ${HASURA_GRAPHQL_JWT_SECRET}
 volumes:
   db_data:
