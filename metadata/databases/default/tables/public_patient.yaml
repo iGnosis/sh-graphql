@@ -254,11 +254,6 @@ event_triggers:
       enable_manual: true
       insert:
         columns: '*'
-      update:
-        columns:
-          - id
-          - email
-          - nickname
     retry_conf:
       interval_sec: 10
       num_retries: 0
@@ -274,7 +269,64 @@ event_triggers:
           {
             "id": {{$body.event.data.new.id}},
             "email": {{$body.event.data.new.email}},
-            "nickname": {{$body.event.data.new.nickname}}
+            "nickname": {{$body.event.data.new.nickname}},
+            "namePrefix": {{$body.event.data.new.namePrefix}},
+            "firstName": {{$body.event.data.new.firstName}},
+            "lastName": {{$body.event.data.new.lastName}},
+            "phoneCountryCode": {{$body.event.data.new.phoneCountryCode}},
+            "phoneNumber": {{$body.event.data.new.phoneNumber}}
           }
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
+  - name: update_patient
+    definition:
+      enable_manual: true
+      update:
+        columns:
+          - id
+          - lastName
+          - phoneCountryCode
+          - email
+          - namePrefix
+          - identifier
+          - phoneNumber
+          - nickname
+          - firstName
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/events/patient/update'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "id": {{$body.event.data.new.id}},
+            "email": {{$body.event.data.new.email}},
+            "nickname": {{$body.event.data.new.nickname}},
+            "namePrefix": {{$body.event.data.new.namePrefix}},
+            "firstName": {{$body.event.data.new.firstName}},
+            "lastName": {{$body.event.data.new.lastName}},
+            "phoneCountryCode": {{$body.event.data.new.phoneCountryCode}},
+            "phoneNumber": {{$body.event.data.new.phoneNumber}}
+          }
+      template_engine: Kriti
+      version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
