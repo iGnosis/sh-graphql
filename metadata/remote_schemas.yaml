@@ -14,3 +14,16 @@
       - name: x-hasura-role
         value: admin
   comment: ""
+  remote_relationships:
+    - relationships:
+        - definition:
+            to_source:
+              field_mapping:
+                id: email
+              relationship_type: object
+              source: default
+              table:
+                name: patient
+                schema: public
+          name: patient_health_record
+      type_name: health_records

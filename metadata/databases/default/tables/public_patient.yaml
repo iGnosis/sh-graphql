@@ -36,6 +36,14 @@ array_relationships:
         table:
           name: session
           schema: public
+remote_relationships:
+  - definition:
+      hasura_fields: []
+      remote_field:
+        health_records:
+          arguments: {}
+      remote_schema: PHI
+    name: patient_email
 insert_permissions:
   - role: org_admin
     permission:
@@ -289,6 +297,41 @@ event_triggers:
       paused: true
       schedule: 0 0 * * *
       timeout: 60
+  - name: event_new_phi
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - email
+          - phoneNumber
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/phi/tokenize'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "event": {{$body.event}},
+            "table": {{$body.table}},
+            "userId": {{$body.event.session_variables['x-hasura-user-id']}}
+          }
+      template_engine: Kriti
+      version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: update_patient
     definition:
       enable_manual: true
@@ -303,15 +346,6 @@ event_triggers:
           - phoneNumber
           - nickname
           - firstName
-  - name: event_new_phi
-    definition:
-      enable_manual: false
-      insert:
-        columns: '*'
-      update:
-        columns:
-          - email
-          - phoneNumber
     retry_conf:
       interval_sec: 10
       num_retries: 0
@@ -336,10 +370,6 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
-    webhook: '{{ACTION_BASE_URL}}/phi/tokenize'
-    headers:
-      - name: x-hasura-admin-secret
-        value_from_env: EVENTS_SECRET
     cleanup_config:
       batch_size: 10000
       clean_invocation_logs: false
