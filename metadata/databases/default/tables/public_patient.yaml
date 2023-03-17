@@ -303,6 +303,15 @@ event_triggers:
           - phoneNumber
           - nickname
           - firstName
+  - name: event_new_phi
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - email
+          - phoneNumber
     retry_conf:
       interval_sec: 10
       num_retries: 0
@@ -327,6 +336,10 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
+    webhook: '{{ACTION_BASE_URL}}/phi/tokenize'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
     cleanup_config:
       batch_size: 10000
       clean_invocation_logs: false

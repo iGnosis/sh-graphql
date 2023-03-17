@@ -3,3 +3,14 @@
     url: https://countries.trevorblades.com/
     timeout_seconds: 60
   comment: ""
+- name: PHI
+  definition:
+    url_from_env: PHI_REMOTE_SCHEMA_URL
+    timeout_seconds: 60
+    customization: {}
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: PHI_REMOTE_SCHEMA_ADMIN_SECRET
+      - name: x-hasura-role
+        value: admin
+  comment: ""

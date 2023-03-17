@@ -293,6 +293,13 @@ type Mutation {
 }
 
 type Mutation {
+  tokenizePHI(
+    event: String
+    table: String
+  ): TokenizePHIResp!
+}
+
+type Mutation {
   transcodeVideo(
     benchmarkConfigId: ID!
     type: transcodeVideoType!
@@ -942,5 +949,13 @@ type ViewTesterRecording {
 type ViewTesterRecordingData {
   configUrl: String!
   videoUrl: String!
+}
+
+type WritePHIResp {
+  status: String!
+}
+
+type TokenizePHIResp {
+  status: String!
 }
 
