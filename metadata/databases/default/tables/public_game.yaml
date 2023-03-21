@@ -76,7 +76,8 @@ select_permissions:
         - patient
         - repsCompleted
         - settings
-        - totalCoins
+        - totalXpCoins
+        - totalMovementCoins
         - totalDuration
         - updatedAt
       filter:
