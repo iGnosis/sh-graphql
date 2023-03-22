@@ -293,13 +293,6 @@ type Mutation {
 }
 
 type Mutation {
-  tokenizePHI(
-    event: String
-    table: String
-  ): TokenizePHIResp!
-}
-
-type Mutation {
   transcodeVideo(
     benchmarkConfigId: ID!
     type: transcodeVideoType!

@@ -24,4 +24,5 @@ Open the console that gets served, any change to schema / GraphQL APIs you make 
 ## Adding a new secret
 - add secret to `.env.sample`file so we can track it
 - add secret to `.env` file
+- add secret variable to docker-compose file
 - run `npm run reload-env`

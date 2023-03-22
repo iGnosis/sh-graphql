@@ -811,26 +811,6 @@ actions:
     permissions:
       - role: patient
     comment: make a payment method default for subscriptions
-  - name: tokenizePHI
-    definition:
-      kind: synchronous
-      handler: '{{ACTION_BASE_URL}}/phi/tokenize'
-      forward_client_headers: true
-      request_transform:
-        body:
-          action: transform
-          template: |-
-            {
-              "event": {{$body.input.event}},
-              "table": {{$body.input.table}}
-            }
-        method: POST
-        query_params: {}
-        template_engine: Kriti
-        version: 2
-    permissions:
-      - role: patient
-    comment: tokenizePHI
   - name: transcodeVideo
     definition:
       kind: synchronous

@@ -14,16 +14,28 @@
       - name: x-hasura-role
         value: admin
   comment: ""
+  permissions:
+    - role: therapist
+      definition:
+        schema: |
+          schema {
+          	query: query_root
+          }
+          type health_records {
+          	createdAt: timestamptz!
+          	id: uuid!
+          	organizationId: uuid
+          	patient: uuid
+          	recordData: jsonb
+          	recordType: String!
+          	updatedAt: timestamptz!
+          }
+          scalar jsonb
+          type query_root {
+          	health_records_by_pk(id: uuid!): health_records
+          }
+          scalar timestamptz
+          scalar uuid
   remote_relationships:
-    - relationships:
-        - definition:
-            to_source:
-              field_mapping:
-                id: email
-              relationship_type: object
-              source: default
-              table:
-                name: patient
-                schema: public
-          name: patient_health_record
+    - relationships: []
       type_name: health_records

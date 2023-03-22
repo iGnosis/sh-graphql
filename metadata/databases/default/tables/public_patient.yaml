@@ -38,12 +38,29 @@ array_relationships:
           schema: public
 remote_relationships:
   - definition:
-      hasura_fields: []
+      hasura_fields:
+        - email
       remote_field:
-        health_records:
-          arguments: {}
+        health_records_by_pk:
+          arguments:
+            id: $email
+          field:
+            recordData:
+              arguments: {}
       remote_schema: PHI
-    name: patient_email
+    name: pii_email
+  - definition:
+      hasura_fields:
+        - phoneNumber
+      remote_field:
+        health_records_by_pk:
+          arguments:
+            id: $phoneNumber
+          field:
+            recordData:
+              arguments: {}
+      remote_schema: PHI
+    name: pii_phoneNumber
 insert_permissions:
   - role: org_admin
     permission:
@@ -299,13 +316,9 @@ event_triggers:
       timeout: 60
   - name: event_new_phi
     definition:
-      enable_manual: false
+      enable_manual: true
       insert:
         columns: '*'
-      update:
-        columns:
-          - email
-          - phoneNumber
     retry_conf:
       interval_sec: 10
       num_retries: 0
@@ -320,8 +333,7 @@ event_triggers:
         template: |-
           {
             "event": {{$body.event}},
-            "table": {{$body.table}},
-            "userId": {{$body.event.session_variables['x-hasura-user-id']}}
+            "table": {{$body.table}}
           }
       template_engine: Kriti
       version: 2
@@ -368,6 +380,72 @@ event_triggers:
             "phoneCountryCode": {{$body.event.data.new.phoneCountryCode}},
             "phoneNumber": {{$body.event.data.new.phoneNumber}}
           }
+      template_engine: Kriti
+      version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
+  - name: update_patient_email
+    definition:
+      enable_manual: true
+      update:
+        columns:
+          - email
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/phi/tokenize/email'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "event": {{$body.event}},
+            "table": {{$body.table}}
+          }
+      method: POST
+      query_params: {}
+      template_engine: Kriti
+      version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
+  - name: update_patient_phoneNumber
+    definition:
+      enable_manual: false
+      update:
+        columns:
+          - phoneNumber
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/phi/tokenize/phoneNumber'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "event": {{$body.event}},
+            "table": {{$body.table}}
+          }
+      method: POST
+      query_params: {}
       template_engine: Kriti
       version: 2
     cleanup_config:
