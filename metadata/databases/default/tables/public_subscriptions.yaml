@@ -2,12 +2,20 @@ table:
   name: subscriptions
   schema: public
 select_permissions:
+  - role: org_admin
+    permission:
+      columns:
+        - id
+        - status
+      filter: {}
   - role: patient
     permission:
       columns:
         - paymentAuthUrl
         - subscriptionId
-      filter: {}
+      filter:
+        patient:
+          _eq: x-hasura-user-id
   - role: therapist
     permission:
       columns:
