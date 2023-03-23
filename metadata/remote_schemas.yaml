@@ -13,8 +13,12 @@
         value_from_env: PHI_REMOTE_SCHEMA_ADMIN_SECRET
       - name: x-hasura-role
         value: admin
+    forward_client_headers: true
   comment: ""
   permissions:
+    - role: patient
+      definition:
+        schema: "schema  { query: query_root }\n\nscalar jsonb\n\nscalar timestamptz\n\nscalar uuid\n\ntype health_records { createdAt: timestamptz!\n  id: uuid!\n  organizationId: uuid\n  patient: uuid\n  recordData: jsonb\n  recordType: String!\n  updatedAt: timestamptz!\n}\n\ntype query_root { health_records(distinct_on: [health_records_select_column!], limit: Int, offset: Int, order_by: [health_records_order_by!], where: health_records_bool_exp @preset(value: {patient: {_eq: \"x-hasura-user-id\"}})): [health_records!]!\n  health_records_by_pk(id: uuid!): health_records\n}\n\nenum health_records_select_column {createdAt \n  id \n  organizationId \n  patient \n  recordData \n  recordType \n  updatedAt \n}\n\nenum order_by {asc \n  asc_nulls_first \n  asc_nulls_last \n  desc \n  desc_nulls_first \n  desc_nulls_last \n}\n\ninput String_comparison_exp {_eq: String\n  _gt: String\n  _gte: String\n  _ilike: String\n  _in: [String!]\n  _iregex: String\n  _is_null: Boolean\n  _like: String\n  _lt: String\n  _lte: String\n  _neq: String\n  _nilike: String\n  _nin: [String!]\n  _niregex: String\n  _nlike: String\n  _nregex: String\n  _nsimilar: String\n  _regex: String\n  _similar: String\n}\n\ninput health_records_bool_exp {_and: [health_records_bool_exp!]\n  _not: health_records_bool_exp\n  _or: [health_records_bool_exp!]\n  createdAt: timestamptz_comparison_exp\n  id: uuid_comparison_exp\n  organizationId: uuid_comparison_exp\n  patient: uuid_comparison_exp\n  recordData: jsonb_comparison_exp\n  recordType: String_comparison_exp\n  updatedAt: timestamptz_comparison_exp\n}\n\ninput health_records_order_by {createdAt: order_by\n  id: order_by\n  organizationId: order_by\n  patient: order_by\n  recordData: order_by\n  recordType: order_by\n  updatedAt: order_by\n}\n\ninput jsonb_cast_exp {String: String_comparison_exp\n}\n\ninput jsonb_comparison_exp {_cast: jsonb_cast_exp\n  _contained_in: jsonb\n  _contains: jsonb\n  _eq: jsonb\n  _gt: jsonb\n  _gte: jsonb\n  _has_key: String\n  _has_keys_all: [String!]\n  _has_keys_any: [String!]\n  _in: [jsonb!]\n  _is_null: Boolean\n  _lt: jsonb\n  _lte: jsonb\n  _neq: jsonb\n  _nin: [jsonb!]\n}\n\ninput timestamptz_comparison_exp {_eq: timestamptz\n  _gt: timestamptz\n  _gte: timestamptz\n  _in: [timestamptz!]\n  _is_null: Boolean\n  _lt: timestamptz\n  _lte: timestamptz\n  _neq: timestamptz\n  _nin: [timestamptz!]\n}\n\ninput uuid_comparison_exp {_eq: uuid\n  _gt: uuid\n  _gte: uuid\n  _in: [uuid!]\n  _is_null: Boolean\n  _lt: uuid\n  _lte: uuid\n  _neq: uuid\n  _nin: [uuid!]\n}"
     - role: therapist
       definition:
         schema: |
@@ -36,6 +40,3 @@
           }
           scalar timestamptz
           scalar uuid
-  remote_relationships:
-    - relationships: []
-      type_name: health_records
