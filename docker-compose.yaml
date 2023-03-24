@@ -24,6 +24,7 @@ services:
       - ./migrations:/hasura-migrations
       - ./metadata:/hasura-metadata
     environment:
+      HASURA_ENV: ${HASURA_ENV}
       HASURA_GRAPHQL_METADATA_DATABASE_URL: ${HASURA_GRAPHQL_METADATA_DATABASE_URL}
       HASURA_GRAPHQL_DATABASE_URL: ${HASURA_GRAPHQL_DATABASE_URL}
       HASURA_GRAPHQL_DEV_MODE: ${HASURA_GRAPHQL_DEV_MODE}

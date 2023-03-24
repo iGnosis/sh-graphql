@@ -13,6 +13,8 @@
         value_from_env: PHI_REMOTE_SCHEMA_ADMIN_SECRET
       - name: x-hasura-role
         value: admin
+      - name: x-hasura-env
+        value_from_env: HASURA_ENV
     forward_client_headers: true
   comment: ""
   permissions:
