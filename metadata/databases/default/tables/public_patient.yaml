@@ -51,6 +51,42 @@ remote_relationships:
     name: pii_email
   - definition:
       hasura_fields:
+        - firstName
+      remote_field:
+        health_records_by_pk:
+          arguments:
+            id: $firstName
+          field:
+            recordData:
+              arguments: {}
+      remote_schema: PHI
+    name: pii_firstName
+  - definition:
+      hasura_fields:
+        - nickname
+      remote_field:
+        health_records_by_pk:
+          arguments:
+            id: $nickname
+          field:
+            recordData:
+              arguments: {}
+      remote_schema: PHI
+    name: pii_lastName
+  - definition:
+      hasura_fields:
+        - lastName
+      remote_field:
+        health_records_by_pk:
+          arguments:
+            id: $lastName
+          field:
+            recordData:
+              arguments: {}
+      remote_schema: PHI
+    name: pii_nickname
+  - definition:
+      hasura_fields:
         - phoneNumber
       remote_field:
         health_records_by_pk:
@@ -400,6 +436,105 @@ event_triggers:
       num_retries: 0
       timeout_sec: 60
     webhook: '{{ACTION_BASE_URL}}/phi/tokenize/email'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "event": {{$body.event}},
+            "table": {{$body.table}}
+          }
+      method: POST
+      query_params: {}
+      template_engine: Kriti
+      version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
+  - name: update_patient_firstName
+    definition:
+      enable_manual: false
+      update:
+        columns:
+          - firstName
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/phi/tokenize/firstName'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "event": {{$body.event}},
+            "table": {{$body.table}}
+          }
+      method: POST
+      query_params: {}
+      template_engine: Kriti
+      version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
+  - name: update_patient_lastName
+    definition:
+      enable_manual: false
+      update:
+        columns:
+          - lastName
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/phi/tokenize/lastName'
+    headers:
+      - name: x-hasura-admin-secret
+        value_from_env: EVENTS_SECRET
+    request_transform:
+      body:
+        action: transform
+        template: |-
+          {
+            "event": {{$body.event}},
+            "table": {{$body.table}}
+          }
+      method: POST
+      query_params: {}
+      template_engine: Kriti
+      version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
+  - name: update_patient_nickname
+    definition:
+      enable_manual: false
+      update:
+        columns:
+          - nickname
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{ACTION_BASE_URL}}/phi/tokenize/nickname'
     headers:
       - name: x-hasura-admin-secret
         value_from_env: EVENTS_SECRET
