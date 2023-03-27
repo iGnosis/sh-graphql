@@ -343,6 +343,13 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: event_new_phi
     definition:
       enable_manual: true
@@ -366,6 +373,13 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: update_patient
     definition:
       enable_manual: true
@@ -404,6 +418,13 @@ event_triggers:
           }
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: update_patient_email
     definition:
       enable_manual: true
@@ -430,6 +451,13 @@ event_triggers:
       query_params: {}
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: update_patient_firstName
     definition:
       enable_manual: false
@@ -456,6 +484,13 @@ event_triggers:
       query_params: {}
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: update_patient_lastName
     definition:
       enable_manual: false
@@ -482,6 +517,13 @@ event_triggers:
       query_params: {}
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: update_patient_nickname
     definition:
       enable_manual: false
@@ -508,6 +550,13 @@ event_triggers:
       query_params: {}
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: update_patient_phoneNumber
     definition:
       enable_manual: false
@@ -534,3 +583,10 @@ event_triggers:
       query_params: {}
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
