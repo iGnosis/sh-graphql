@@ -249,6 +249,14 @@ actions:
     permissions:
       - role: therapist
       - role: org_admin
+  - name: fabFeedbackEvent
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/patient/feedback-fab-success'
+      forward_client_headers: true
+    permissions:
+      - role: patient
+    comment: Runs user submits the feedback and gets redirected to SoundHealth
   - name: faqAccessed
     definition:
       kind: synchronous
@@ -466,6 +474,25 @@ actions:
     permissions:
       - role: patient
     comment: get subscription status
+  - name: highscoreReachedEvent
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/game/highscore-reached'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "gameName": {{$body.input.gameName}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Runs when patient has reached highscore
   - name: inviteOrganizationViaEmail
     definition:
       kind: synchronous
@@ -732,6 +759,22 @@ actions:
     permissions:
       - role: patient
     comment: API to fetch patient sessions streak number.
+  - name: quitCalibrationEvent
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/patient/quit-calibration'
+      forward_client_headers: true
+    permissions:
+      - role: patient
+    comment: Runs when patient quits during calibration.
+  - name: quitTutorialEvent
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/patient/quit-tutorial'
+      forward_client_headers: true
+    permissions:
+      - role: patient
+    comment: Runs when patient quits during tutorial
   - name: removePaymentMethod
     definition:
       kind: synchronous
@@ -811,6 +854,14 @@ actions:
     permissions:
       - role: patient
     comment: make a payment method default for subscriptions
+  - name: supportIssueEvent
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/patient/contact-support-success'
+      forward_client_headers: true
+    permissions:
+      - role: patient
+    comment: Runs user submits the support issue and gets redirected to SoundHealth
   - name: transcodeVideo
     definition:
       kind: synchronous
@@ -1215,4 +1266,9 @@ custom_types:
     - name: ViewTesterRecordingData
     - name: WritePHIResp
     - name: TokenizePHIResp
+    - name: QuitCalibrationEventOutput
+    - name: QuitTutorialEventOutput
+    - name: SupportIssueEventOutput
+    - name: FabFeedbackEventOutput
+    - name: HighscoreReachedEventOutput
   scalars: []

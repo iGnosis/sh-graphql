@@ -339,7 +339,8 @@ event_triggers:
             "firstName": {{$body.event.data.new.firstName}},
             "lastName": {{$body.event.data.new.lastName}},
             "phoneCountryCode": {{$body.event.data.new.phoneCountryCode}},
-            "phoneNumber": {{$body.event.data.new.phoneNumber}}
+            "phoneNumber": {{$body.event.data.new.phoneNumber}},
+            "organizationId": {{$body.event.data.new.organizationId}}
           }
       template_engine: Kriti
       version: 2

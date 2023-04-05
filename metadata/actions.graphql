@@ -93,6 +93,10 @@ type Query {
 }
 
 type Mutation {
+  fabFeedbackEvent: FabFeedbackEventOutput
+}
+
+type Mutation {
   faqAccessed: FaqAccessed
 }
 
@@ -157,6 +161,12 @@ type Query {
 
 type Query {
   getSubscriptionStatus: SubscriptionStatus!
+}
+
+type Mutation {
+  highscoreReachedEvent(
+    gameName: String!
+  ): HighscoreReachedEventOutput
 }
 
 type Mutation {
@@ -266,6 +276,14 @@ type Query {
 }
 
 type Mutation {
+  quitCalibrationEvent: QuitCalibrationEventOutput
+}
+
+type Mutation {
+  quitTutorialEvent: QuitTutorialEventOutput
+}
+
+type Mutation {
   removePaymentMethod(
     paymentMethodId: String!
   ): Status
@@ -290,6 +308,10 @@ type Mutation {
   setDefaultPaymentMethod(
     paymentMethodId: String!
   ): StripeCustomer!
+}
+
+type Mutation {
+  supportIssueEvent: SupportIssueEventOutput
 }
 
 type Mutation {
@@ -949,6 +971,26 @@ type WritePHIResp {
 }
 
 type TokenizePHIResp {
+  status: String!
+}
+
+type QuitCalibrationEventOutput {
+  status: String!
+}
+
+type QuitTutorialEventOutput {
+  status: String!
+}
+
+type SupportIssueEventOutput {
+  status: String!
+}
+
+type FabFeedbackEventOutput {
+  status: String!
+}
+
+type HighscoreReachedEventOutput {
   status: String!
 }
 
