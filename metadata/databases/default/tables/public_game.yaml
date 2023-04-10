@@ -135,13 +135,20 @@ event_triggers:
         action: transform
         template: |-
           {
-            "patientId": {{$body.event.data.new.patient}},
+            "gameId": {{$body.event.data.new.id}},
             "createdAt": {{$body.event.data.new.createdAt}}
           }
       method: POST
       query_params: {}
       template_engine: Kriti
       version: 2
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: game_ended
     definition:
       enable_manual: true
