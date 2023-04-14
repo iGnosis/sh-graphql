@@ -261,6 +261,7 @@ update_permissions:
         - firstName
         - genreChoice
         - lastName
+        - lastPiiChangeReason
         - medicalConditions
         - namePrefix
         - nickname
@@ -281,6 +282,7 @@ update_permissions:
         - email
         - firstName
         - lastName
+        - lastPiiChangeReason
         - namePrefix
         - phoneCountryCode
         - phoneNumber
