@@ -1,0 +1,3 @@
+table:
+  name: patient_badge
+  schema: public

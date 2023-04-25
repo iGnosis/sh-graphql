@@ -1,0 +1,4 @@
+table:
+  name: badge_type
+  schema: public
+is_enum: true
