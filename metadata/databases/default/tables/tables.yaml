@@ -21,6 +21,7 @@
 - "!include public_goal_status.yaml"
 - "!include public_invite_organization.yaml"
 - "!include public_invite_user.yaml"
+- "!include public_leaderboard.yaml"
 - "!include public_medical_condition.yaml"
 - "!include public_organization.yaml"
 - "!include public_organization_type.yaml"
