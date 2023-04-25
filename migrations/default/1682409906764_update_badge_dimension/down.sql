@@ -1,0 +1,3 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- UPDATE badge SET dimension = 'engagement' WHERE name = 'newcomer_of_the_month';
