@@ -4,6 +4,7 @@
 - "!include public_auth.yaml"
 - "!include public_badge.yaml"
 - "!include public_badge_dimension.yaml"
+- "!include public_badge_metrics.yaml"
 - "!include public_badge_status.yaml"
 - "!include public_badge_tier.yaml"
 - "!include public_badge_type.yaml"
