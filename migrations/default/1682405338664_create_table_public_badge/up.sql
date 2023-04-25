@@ -1,0 +1,2 @@
+CREATE TABLE "public"."badge" ("id" uuid NOT NULL DEFAULT gen_random_uuid(), "name" text NOT NULL, "dimension" text NOT NULL, "minVal" integer NOT NULL, "maxVal" integer NOT NULL, "createdAt" timestamptz NOT NULL DEFAULT now(), "updatedAt" timestamptz NOT NULL DEFAULT now(), "status" text NOT NULL, "tier" text NOT NULL, "badgeType" text NOT NULL, PRIMARY KEY ("id","name") , UNIQUE ("id"), UNIQUE ("name"));
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
