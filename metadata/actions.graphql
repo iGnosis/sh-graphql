@@ -965,6 +965,7 @@ type DashboardMetricsData {
   newCount: Int!
   percentageChange: Float
   metric: String!
+  tooltip: String!
 }
 
 type ViewTesterRecording {
