@@ -794,6 +794,25 @@ actions:
     permissions:
       - role: patient
     comment: detach a payment method from a patient
+  - name: requestCalendarEvent
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/events/patient/request-calendar-event'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "fileValue": {{$body.input.fileDetails.fileValue}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Sends a calendar event invite to patient's email
   - name: requestLoginOtp
     definition:
       kind: synchronous
@@ -1154,6 +1173,7 @@ custom_types:
     - name: CardDetailsDTO
     - name: UpdateCardDetailsDTO
     - name: UpdatePaymentMethodDTO
+    - name: FileDetailsDTO
   objects:
     - name: Root
     - name: Day
@@ -1271,4 +1291,5 @@ custom_types:
     - name: SupportIssueEventOutput
     - name: FabFeedbackEventOutput
     - name: HighscoreReachedEventOutput
+    - name: RequestCalendarEventResp
   scalars: []

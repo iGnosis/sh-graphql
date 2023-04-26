@@ -290,6 +290,12 @@ type Mutation {
 }
 
 type Mutation {
+  requestCalendarEvent(
+    fileDetails: FileDetailsDTO
+  ): RequestCalendarEventResp
+}
+
+type Mutation {
   requestLoginOtp(
     phoneCountryCode: String!
     phoneNumber: String!
@@ -470,6 +476,10 @@ input UpdateCardDetailsDTO {
 input UpdatePaymentMethodDTO {
   exp_month: Int!
   exp_year: Int!
+}
+
+input FileDetailsDTO {
+  fileValue: String!
 }
 
 type Root {
@@ -991,6 +1001,10 @@ type FabFeedbackEventOutput {
 }
 
 type HighscoreReachedEventOutput {
+  status: String!
+}
+
+type RequestCalendarEventResp {
   status: String!
 }
 
