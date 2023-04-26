@@ -1,3 +1,49 @@
 table:
   name: badge
   schema: public
+insert_permissions:
+  - role: sh_admin
+    permission:
+      check: {}
+      columns:
+        - badgeType
+        - description
+        - dimension
+        - maxVal
+        - metric
+        - minVal
+        - name
+        - status
+        - tier
+select_permissions:
+  - role: sh_admin
+    permission:
+      columns:
+        - maxVal
+        - minVal
+        - badgeType
+        - description
+        - dimension
+        - metric
+        - name
+        - status
+        - tier
+        - createdAt
+        - updatedAt
+        - id
+      filter: {}
+update_permissions:
+  - role: sh_admin
+    permission:
+      columns:
+        - badgeType
+        - description
+        - dimension
+        - maxVal
+        - metric
+        - minVal
+        - name
+        - status
+        - tier
+      filter: {}
+      check: {}
