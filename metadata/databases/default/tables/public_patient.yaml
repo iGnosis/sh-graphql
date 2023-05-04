@@ -167,6 +167,7 @@ select_permissions:
         - careGiverEmail
         - careGiverPhoneCountryCode
         - careGiverPhoneNumber
+        - context
         - createdAt
         - customerId
         - email
