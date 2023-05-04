@@ -901,6 +901,25 @@ actions:
     permissions:
       - role: benchmark
     comment: API to transcode videos.
+  - name: updatePatientContext
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/goal-generator/update-patient-context'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "metrics": {{$body.input.metrics}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Updates patient user context object.
   - name: updatePaymentMethod
     definition:
       kind: synchronous
@@ -1165,6 +1184,71 @@ custom_types:
         - description: null
           is_deprecated: null
           value: stickiness
+    - name: MetricEnum
+      values:
+        - description: null
+          is_deprecated: null
+          value: patient_streak
+        - description: null
+          is_deprecated: null
+          value: patient_total_activity_duration
+        - description: null
+          is_deprecated: null
+          value: patient_total_activity_count
+        - description: null
+          is_deprecated: null
+          value: weekly_time_spent
+        - description: null
+          is_deprecated: null
+          value: monthly_time_spent
+        - description: null
+          is_deprecated: null
+          value: sit_stand_achieve_prompts
+        - description: null
+          is_deprecated: null
+          value: beat_boxer_prompts
+        - description: null
+          is_deprecated: null
+          value: sit_stand_achieve_combo
+        - description: null
+          is_deprecated: null
+          value: beat_boxer_combo
+        - description: null
+          is_deprecated: null
+          value: sound_explorer_combo
+        - description: null
+          is_deprecated: null
+          value: moving_tones_combo
+        - description: null
+          is_deprecated: null
+          value: sound_explorer_red_orbs
+        - description: null
+          is_deprecated: null
+          value: sound_explorer_blue_orbs
+        - description: null
+          is_deprecated: null
+          value: moving_tones_prompts
+        - description: null
+          is_deprecated: null
+          value: highscore
+        - description: null
+          is_deprecated: null
+          value: game_xp
+        - description: null
+          is_deprecated: null
+          value: leaderboard_position
+        - description: null
+          is_deprecated: null
+          value: sit_stand_achieve_leaderboard_position
+        - description: null
+          is_deprecated: null
+          value: beat_boxer_leaderboard_position
+        - description: null
+          is_deprecated: null
+          value: sound_explorer_leaderboard_position
+        - description: null
+          is_deprecated: null
+          value: moving_tones_leaderboard_position
   input_objects:
     - name: SampleInput
     - name: CreateOrganizationInput
@@ -1174,6 +1258,7 @@ custom_types:
     - name: UpdateCardDetailsDTO
     - name: UpdatePaymentMethodDTO
     - name: FileDetailsDTO
+    - name: UpdatePatientContextInput
   objects:
     - name: Root
     - name: Day
@@ -1292,4 +1377,5 @@ custom_types:
     - name: FabFeedbackEventOutput
     - name: HighscoreReachedEventOutput
     - name: RequestCalendarEventResp
+    - name: UpdatePatientContextOutput
   scalars: []

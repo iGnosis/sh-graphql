@@ -328,6 +328,12 @@ type Mutation {
 }
 
 type Mutation {
+  updatePatientContext(
+    metrics: UpdatePatientContextInput
+  ): UpdatePatientContextOutput!
+}
+
+type Mutation {
   updatePaymentMethod(
     cardDetails: UpdatePaymentMethodDTO!
     paymentMethodId: String!
@@ -440,6 +446,30 @@ enum DashboardRetentionMetricsEnum {
   stickiness
 }
 
+enum MetricEnum {
+  patient_streak
+  patient_total_activity_duration
+  patient_total_activity_count
+  weekly_time_spent
+  monthly_time_spent
+  sit_stand_achieve_prompts
+  beat_boxer_prompts
+  sit_stand_achieve_combo
+  beat_boxer_combo
+  sound_explorer_combo
+  moving_tones_combo
+  sound_explorer_red_orbs
+  sound_explorer_blue_orbs
+  moving_tones_prompts
+  highscore
+  game_xp
+  leaderboard_position
+  sit_stand_achieve_leaderboard_position
+  beat_boxer_leaderboard_position
+  sound_explorer_leaderboard_position
+  moving_tones_leaderboard_position
+}
+
 input SampleInput {
   username: String!
   password: String!
@@ -480,6 +510,10 @@ input UpdatePaymentMethodDTO {
 
 input FileDetailsDTO {
   fileValue: String!
+}
+
+input UpdatePatientContextInput {
+  metrics: [MetricEnum!]!
 }
 
 type Root {
@@ -1007,5 +1041,9 @@ type HighscoreReachedEventOutput {
 
 type RequestCalendarEventResp {
   status: String!
+}
+
+type UpdatePatientContextOutput {
+  data: String!
 }
 
