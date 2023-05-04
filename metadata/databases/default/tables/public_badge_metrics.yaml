@@ -1,3 +1,4 @@
 table:
   name: badge_metrics
   schema: public
+is_enum: true

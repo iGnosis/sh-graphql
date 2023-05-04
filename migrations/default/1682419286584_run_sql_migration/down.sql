@@ -1,0 +1,3 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- delete from badge_dimension where (name = 'score>beat_boxer>xp' or name = 'score>sound_explorer>xp' or name = 'score>moving_tones>xp' or name = 'score>sit_stand_achieve>xp');

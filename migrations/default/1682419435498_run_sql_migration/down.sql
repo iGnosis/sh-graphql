@@ -1,0 +1,3 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- delete from badge_dimension where (name = 'score|sit_stand_achieve|xp');
