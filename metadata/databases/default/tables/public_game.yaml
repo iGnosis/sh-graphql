@@ -112,6 +112,7 @@ update_permissions:
         - repsCompleted
         - settings
         - totalDuration
+        - totalXpCoins
       filter:
         patient:
           _eq: X-Hasura-User-Id

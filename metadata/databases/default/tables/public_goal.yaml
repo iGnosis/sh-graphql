@@ -1,3 +1,27 @@
 table:
   name: goal
   schema: public
+select_permissions:
+  - role: patient
+    permission:
+      columns:
+        - rewards
+        - name
+        - status
+        - createdAt
+        - expiryAt
+        - updatedAt
+        - id
+        - patientId
+      filter:
+        patientId:
+          _eq: x-hasura-user-id
+update_permissions:
+  - role: patient
+    permission:
+      columns:
+        - status
+      filter: {}
+      check:
+        patientId:
+          _eq: x-hasura-user-id
