@@ -127,6 +127,12 @@ type Mutation {
   ): GameCompleted
 }
 
+type Mutation {
+  generateGoal(
+    gameName: GenerateGoalInput!
+  ): GenerateGoalOutput
+}
+
 type Query {
   generateSpeech(
     text: String!
@@ -470,6 +476,13 @@ enum MetricEnum {
   moving_tones_leaderboard_position
 }
 
+enum GameNameEnum {
+  sit_stand_achieve
+  beat_boxer
+  sound_explorer
+  moving_tones
+}
+
 input SampleInput {
   username: String!
   password: String!
@@ -514,6 +527,10 @@ input FileDetailsDTO {
 
 input UpdatePatientContextInput {
   metrics: [MetricEnum!]!
+}
+
+input GenerateGoalInput {
+  gameName: GameNameEnum!
 }
 
 type Root {
@@ -1044,6 +1061,10 @@ type RequestCalendarEventResp {
 }
 
 type UpdatePatientContextOutput {
+  data: String!
+}
+
+type GenerateGoalOutput {
   data: String!
 }
 

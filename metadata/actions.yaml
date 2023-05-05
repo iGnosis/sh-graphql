@@ -352,6 +352,22 @@ actions:
     permissions:
       - role: patient
     comment: Called when a game has been completed.
+  - name: generateGoal
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/goal-generator/goal'
+      forward_client_headers: true
+      request_transform:
+        body:
+          action: transform
+          template: "{\n  \"gameName\": {{$body.input.gameName}} \n}"
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: patient
+    comment: Generates a goal for an activity.
   - name: generateSpeech
     definition:
       kind: ""
@@ -1249,6 +1265,20 @@ custom_types:
         - description: null
           is_deprecated: null
           value: moving_tones_leaderboard_position
+    - name: GameNameEnum
+      values:
+        - description: null
+          is_deprecated: null
+          value: sit_stand_achieve
+        - description: null
+          is_deprecated: null
+          value: beat_boxer
+        - description: null
+          is_deprecated: null
+          value: sound_explorer
+        - description: null
+          is_deprecated: null
+          value: moving_tones
   input_objects:
     - name: SampleInput
     - name: CreateOrganizationInput
@@ -1259,6 +1289,7 @@ custom_types:
     - name: UpdatePaymentMethodDTO
     - name: FileDetailsDTO
     - name: UpdatePatientContextInput
+    - name: GenerateGoalInput
   objects:
     - name: Root
     - name: Day
@@ -1378,4 +1409,5 @@ custom_types:
     - name: HighscoreReachedEventOutput
     - name: RequestCalendarEventResp
     - name: UpdatePatientContextOutput
+    - name: GenerateGoalOutput
   scalars: []
