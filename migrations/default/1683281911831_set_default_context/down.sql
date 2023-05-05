@@ -1,0 +1,5 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- UPDATE patient
+-- SET context = '{}'::jsonb
+-- WHERE context IS NULL;
