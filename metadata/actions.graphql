@@ -129,7 +129,7 @@ type Mutation {
 
 type Mutation {
   generateGoal(
-    gameName: GenerateGoalInput!
+    gameName: GameNameEnum!
   ): GenerateGoalOutput
 }
 
