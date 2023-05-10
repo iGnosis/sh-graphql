@@ -1231,10 +1231,13 @@ custom_types:
           value: beat_boxer_combo
         - description: null
           is_deprecated: null
+          value: moving_tones_combo
+        - description: null
+          is_deprecated: null
           value: sound_explorer_combo
         - description: null
           is_deprecated: null
-          value: moving_tones_combo
+          value: sound_explorer_orbs
         - description: null
           is_deprecated: null
           value: sound_explorer_red_orbs

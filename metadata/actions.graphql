@@ -462,8 +462,9 @@ enum MetricEnum {
   beat_boxer_prompts
   sit_stand_achieve_combo
   beat_boxer_combo
-  sound_explorer_combo
   moving_tones_combo
+  sound_explorer_combo
+  sound_explorer_orbs
   sound_explorer_red_orbs
   sound_explorer_blue_orbs
   moving_tones_prompts
