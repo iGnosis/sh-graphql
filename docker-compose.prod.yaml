@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  graphql-engine:
+    image: hasura/graphql-engine:v2.13.2.cli-migrations-v3
+    container_name: graphql-engine
+    ports:
+    - "8080:8080"
+    restart: unless-stopped
+    volumes:
+      - ./migrations:/hasura-migrations
+      - ./metadata:/hasura-metadata
+    environment:
+      HASURA_ENV: ${SH_GQL_HASURA_ENV}
+      HASURA_GRAPHQL_DATABASE_URL: ${SH_GQL_HASURA_GRAPHQL_DATABASE_URL}
+      HASURA_GRAPHQL_ENABLE_CONSOLE: ${SH_GQL_HASURA_GRAPHQL_ENABLE_CONSOLE}
+      HASURA_GRAPHQL_DEV_MODE: ${SH_GQL_HASURA_GRAPHQL_DEV_MODE}
+      ACTION_BASE_URL: ${SH_GQL_ACTION_BASE_URL}
+      HASURA_GRAPHQL_JWT_SECRET: ${SH_GQL_HASURA_GRAPHQL_JWT_SECRET}
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: ${SH_GQL_HASURA_GRAPHQL_UNAUTHORIZED_ROLE}
+      # HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS: ${SH_GQL_HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS}
+      EVENTS_SECRET: ${SH_GQL_EVENTS_SECRET}
+      HASURA_GRAPHQL_ADMIN_SECRET: ${SH_GQL_HASURA_GRAPHQL_ADMIN_SECRET}
+      PHI_REMOTE_SCHEMA_ADMIN_SECRET: ${SH_GQL_PHI_REMOTE_SCHEMA_ADMIN_SECRET}
+      # Reverse proxy URL
+      PHI_REMOTE_SCHEMA_URL: ${SH_GQL_PHI_REMOTE_SCHEMA_URL}
+      HASURA_GRAPHQL_IDLE_TIMEOUT: 60
+    command:
+    - graphql-engine
+    - serve

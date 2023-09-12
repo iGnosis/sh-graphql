@@ -1,6 +1,13 @@
-# A repo to keep track of database Migrations and Hasura metadata
+# Introduction
+SoundHealth uses Hasura GraphQL engine to quicky setup APIs. Read more at: <https://hasura.io/docs/latest/index/>
 
-Hasura has a CLI which will help you save each action that you do on the console, including creating tables/views and schema modifying SQL statements, as SQL files. These files are called migrations and they can be applied and rolled back step-by-step. These files can be version controlled and can be used with your CI/CD system to make incremental updates.
+To setup on a server, you can do that easily using Docker. You can use `docker-compose.prod.yaml` file for reference, alternatively, you can refer Hasura docs. <https://hasura.io/docs/latest/deployment/deployment-guides/docker/>
+
+Even if you have decided to setup Hasura on a server, you will need to setup this repository on your development machine. This is necessary to keep track of database changes you make. The changes are later applied to server via a CI/CD pipeline.
+
+# Database Migrations and Hasura Metadata
+
+Hasura has a CLI which will help you save each action that you do on the Hasura console, including creating tables/views and schema modifying SQL statements, as SQL files. These files are called migrations and they can be applied and rolled back step-by-step. These files can be version controlled and can be used with your CI/CD system to make incremental updates.
 
 To use migrations effectively, all changes must go through the console served by the CLI. Otherwise, changes could be made through the server console and they will not be tracked by migrations.
 
