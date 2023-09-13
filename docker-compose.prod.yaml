@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
     image: hasura/graphql-engine:v2.13.2.cli-migrations-v3
-    container_name: graphql-engine
+    container_name: graphql_engine
     ports:
     - "8080:8080"
     restart: unless-stopped
