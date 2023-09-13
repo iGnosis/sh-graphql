@@ -1,0 +1,3 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- UPDATE organization SET "isPublicSignUpEnabled" = TRUE WHERE id = '00000000-0000-0000-0000-000000000000';
