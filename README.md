@@ -22,7 +22,7 @@ Install it from https://hasura.io/docs/latest/graphql/core/hasura-cli/install-ha
 
 ## Opening Hasura console
 - cd to `sh_graphql`
-- create a new file `config.yaml` with the contents of `config.sample.yaml`
+- run `env.sh` script
 - run `docker compose up -d` (it can take a few minutes)
 - run `./run.sh` script
 
